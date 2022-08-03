@@ -25,7 +25,7 @@ chmod a+x build.sh\
 * In Windiws system:
 
 separate compilation of all source files in VC++
-## Background dataset generation
+## Background dataset generation: Genomic
 
 [background_genome_mono.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/background_genome_mono.cpp)
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
@@ -52,3 +52,10 @@ separate compilation of all source files in VC++
 13. genome release (hg38, mm10, dm6, ce235, sc64 and at10 for H.sapiens, M.musculus, D.,melanogaster, C.elehans, S.cerevisiae and A.thaliana  genomes, respectively)
 
 Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in fasta format. These plain files should contain only nucleotide letters, IUPAC nucleotides codes N,W,S etc. are ignored by program, all other symbols like ' ', '\t' etc. should deleted, e.g. for Arabidopsis five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. To see example unzip chr4.plain file from folder [genomes](https://github.com/parthian-sterlet/sitega/tree/master/genomes). Any one of the four output fasta files can be used as the background dataset in consequent analysis (see parameters 2, 3, 4 and 5 of the command line, genome sequences adopted by mononucleotide content, di-, tri-, or tetranucleotide measures, respectively).
+
+## Background dataset generation: Synthetic
+[mix.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix.cpp)
+1. input fasta file
+2. output fasta file 
+3. integer meaning the order of markov chain (0, 1, 2, etc. mean 0th, 1st, 2nd order)
+4. maximal number of background sequences per one peak (default value 10)
