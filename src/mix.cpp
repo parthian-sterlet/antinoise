@@ -504,8 +504,8 @@ int CheckStr(char *d)
 int main(int argc, char *argv[])
 {
 	char cyfr[11] = "0123456789";
-	char *d, *d1, s[20000], sample[100], head[1000], s1[1000];
-	char file[2][100], mfile[MIX][5] = { "~-1", "~0", "~1", "~2", "~3", "~4", "~5" };
+	char *d, *d1, s[20000], sample[500], head[1000], s1[1000];
+	char file[2][500], mfile[MIX][5] = { "~-1", "~0", "~1", "~2", "~3", "~4", "~5" };
 	//0 - 0hmm 0.25
 	//1 - 0hmm eq f
 	//2 - 1hmm eq f
@@ -525,21 +525,21 @@ int main(int argc, char *argv[])
 	//	width=2;
 	//	mix=2;
 	FILE  *input, *out;
-	if (argc != 7)
+	if (argc != 5)
 	{
-		puts("Syntax: 1<input_file> 2<mix> 3<height> 4<width> 5<join> 6<split>");
+		puts("Syntax: 1<input_file> 2<output_file> 3<mix> 4<height>"); // 5<width> 6<join> 7<split>
 		return 1;
 	}
 	strcpy(sample, argv[1]);
-	mix = atoi(argv[2]);
-	height = atoi(argv[3]);
-	width = atoi(argv[4]);
-	int join = atoi(argv[5]);
-	int split = atoi(argv[6]);
-	//strcpy(sample,"E:\\ALIGN\\satar.txt");
-	//strcpy(sample,"all160c");
-	// strcpy(sample,"D:\\SAMPLES\\hei200f");
-	//strcpy(sample,"D:\\SAMPLES\\pel300");
+	strcpy(file[1], argv[2]);
+	mix = atoi(argv[3]); mix++;
+	height = atoi(argv[4]);
+//	width = atoi(argv[5]);
+    width =1;
+	//int join = atoi(argv[6]);
+	int join =0;
+	int split = 0;
+	//int split = atoi(argv[7]);
 	strcpy(file[0], sample);
 	//strcat(file[0],".fas");
 	if ((input = fopen(file[0], "rt")) == NULL)
@@ -610,9 +610,9 @@ int main(int argc, char *argv[])
 
 	d = new char[lend + 1]; if (d == NULL) { puts("Out of memory..."); return -1; }
 	d1 = new char[lend + 1]; if (d1 == NULL) { puts("Out of memory..."); return -1; }
-	strcpy(file[1], sample);
-	strcat(file[1], mfile[mix + 1]);
-	strcat(file[1], ".txt");
+	//strcpy(file[1], sample);
+	//strcat(file[1], mfile[mix + 1]);
+	//strcat(file[1], ".txt");
 	if ((out = fopen(file[1], "wt")) == NULL)
 	{
 		puts("Output file can't be opened!");
