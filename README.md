@@ -55,7 +55,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 
 ## Background dataset generation: Synthetic
 [mix.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix.cpp)
-1. input fasta file
-2. output fasta file 
-3. integer meaning the order of markov chain (0, 1, 2, etc. mean 0th, 1st, 2nd order)
+1. input fasta file (the foreground dataset)
+2. output fasta file (the background dataset)
+3. order of Markov chain (e.g. 0, 1 and 2 mean the conservation of mono-, di- and trinucleotids)
 4. maximal number of background sequences per one peak (default value 10)
