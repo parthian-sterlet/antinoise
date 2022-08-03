@@ -58,4 +58,4 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 1. input fasta file (the foreground dataset)
 2. output fasta file (the background dataset)
 3. order of Markov chain (e.g. 0, 1 and 2 mean the conservation of mono-, di- and trinucleotids)
-4. maximal number of background sequences per one peak (default value 10)
+4. number of background sequences per one peak (default value 10)
