@@ -1,0 +1,3 @@
+./background_genome_mono.exe	/path/.../genomes/at/	PEAKS042553_AGL8_Q38876_MACS2.fa	PEAKS042553_AGL8_Q38876_MACS2_gb.fa	5	0.01	10000	at10	>PEAKS042553_AGL8_Q38876_MACS2.log
+./background_genome.exe	/path/.../genomes/hg38/	ENCSR103SZL_TFAP4_hg38.fa	ENCSR103SZL_TFAP4_hg38_gb1.fa	ENCSR103SZL_TFAP4_hg38_gb2.fa	ENCSR103SZL_TFAP4_hg38_gb3.fa	ENCSR103SZL_TFAP4_hg38_gb4.fa	5 0.01 0.5 0.7 0.8 500 	hg38	>	ENCSR103SZL_TFAP4_hg38.log
+
