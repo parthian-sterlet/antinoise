@@ -514,7 +514,7 @@ int main(int argc, char *argv[])
 	}
 	for (i = 0; i < nseq; i++)hei[i] = 0;
 	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_len);
-	len_max = sort[nseq - 1].len;
+	len_max = sort[nseq - 1].len+1;
 	len_min = sort[0].len;
 	int pr_tot = 0;
 	int fl = 0;
@@ -743,7 +743,7 @@ int main(int argc, char *argv[])
 			{
 				if (hei[i] < height)
 				{
-					len_max = sort[i].len;
+					len_max = sort[i].len+1;
 					inx = i;
 					break;
 				}
