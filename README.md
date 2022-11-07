@@ -17,7 +17,7 @@ The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/sr
 # How to compile
 * In Linux system: 
 
-git clone https://github.com/parthian-sterlet/sitega \
+git clone https://github.com/parthian-sterlet/antinoise
 cd sitega\src\
 chmod a+x build.sh\
 ./build.sh
