@@ -18,7 +18,7 @@ The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/sr
 * In Linux system: 
 
 git clone https://github.com/parthian-sterlet/antinoise
-cd sitega\src\
+cd antinoise\src\
 chmod a+x build.sh\
 ./build.sh
 
