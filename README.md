@@ -35,6 +35,7 @@ separate compilation of all source files in VC++
 5. deviation of mononucleitide content of a background sequence from that for a foreground sequence (default value 0.01)
 6. total number of attempts to get background sequences from genome per one foreground sequence (default value 5000)
 7. genome release (hg38, mm10, dm6, ce235, sc64 and at10 for H.sapiens, M.musculus, D.,melanogaster, C.elehans, S.cerevisiae and A.thaliana  genomes, respectively)
+8. threshold portion of output data that allow to stop calculation (default value 0.99)
 
 Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in fasta format. These plain files should contain only nucleotide letters, IUPAC nucleotides codes N,W,S etc. are ignored by program, all other symbols like ' ', '\t' etc. should deleted, e.g. for Arabidopsis five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Use [ftp](https://github.com/parthian-sterlet/antinoise/blob/main/src/ftp) to generate these files in plain format from the conventional genome sequences in fasta format. To see example unzip chr4.plain file from folder [genomes](https://github.com/parthian-sterlet/sitega/tree/master/genomes). 
 
