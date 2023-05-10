@@ -369,6 +369,16 @@ int main(int argc, char* argv[])
 	strcpy(genome, argv[7]);
 	double stop_thr = atof(argv[8]);//0.99;// fraction of peaks 100% covered with height background sequences
 	int win_gomol = 50;//to compare homology and min paek length	
+	char file_log[] = "background.log";
+	{
+		FILE* out_log;
+		if ((out_log = fopen(file_log, "wt")) == NULL)
+		{
+			fprintf(out_log, "Error: Input file %s can't be opened!\n", file_log);
+			return -1;
+		}
+		fclose(out_log);
+	}
 	if (strcmp(genome, "at10") == 0)
 	{
 		n_chr = n_chr_at;
@@ -749,6 +759,16 @@ int main(int argc, char* argv[])
 				}
 			}
 			printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
+			{
+				FILE* out_log;
+				if ((out_log = fopen(file_log, "wt")) == NULL)
+				{
+					fprintf(out_log, "Input file %s can't be opened!\n", file_log);
+					return -1;
+				}
+				fprintf(out_log, "Calculations are completed for %d sequences out of total %d\n", heis, nseq);
+				fclose(out_log);
+			}
 			if (heis >= stop)break;
 		}
 	}
