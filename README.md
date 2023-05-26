@@ -31,9 +31,9 @@ separate compilation of all source files in VC++
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
 2. input fasta file
 3. output fasta file with genome sequences adopted by mononucleotide content
-4. maximal number of background sequences per one peak (default value 10)
+4. maximal number of background sequences per one foreground sequence (default value 2)
 5. deviation of mononucleitide content of a background sequence from that for a foreground sequence (default value 0.01)
-6. total number of attempts to get background sequences from genome per one foreground sequence (default value 5000)
+6. total average number of attempts to get background sequences from genome per one foreground sequence (default value 1000)
 7. genome release (hg38, mm10, dm6, ce235, sc64 and at10 for H. sapiens, M. musculus, D. melanogaster, C. elegans, S. cerevisiae and A. thaliana genomes, respectively)
 8. threshold portion of output data that allows to stop calculation (default value 0.99)
 
