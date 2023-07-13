@@ -369,7 +369,7 @@ int main(int argc, char *argv[])
 	int i, j, k;
 	char d[SEQLEN], d1[SEQLEN], filesta[10], fileend[10], genome[10];
 	char filei[500], fileo1[500], fileosta1[500], fileosta2[500], file_log[500], filechr[NCHR][500], path_fasta[500];
-	FILE *out, *in_seq[NCHR], * out1, *out2;
+	FILE *out, *in_seq[NCHR], *out1, *out2;
 	if (argc != 12)
 	{
 		puts("Sintax: 1 path_genome 2file in_fa, 3file out_fa 4int height 5double mono prec 6int back_iter 7char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61) 8double stop_fraction 9file_out success_statistics 10file_out dinucl statistics 11file_log");
@@ -810,11 +810,6 @@ int main(int argc, char *argv[])
 		printf("Input file %s can't be opened!", fileo1);
 		exit(1);
 	}
-	if ((out1 = fopen(fileosta1, "wt")) == NULL)
-	{
-		printf("Input file %s can't be opened!", fileosta1);
-		exit(1);
-	}
 	int heis = 0;
 	int size = 0;
 	iter = pr_tot = 0;
@@ -938,7 +933,7 @@ int main(int argc, char *argv[])
 			printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
 			if (iter % 10000 == 0)
 			{
-				FILE* out_log;
+				FILE *out_log;
 				if ((out_log = fopen(file_log, "wt")) == NULL)
 				{
 					fprintf(out_log, "Input file %s can't be opened!\n", file_log);
@@ -950,14 +945,34 @@ int main(int argc, char *argv[])
 			if (heis >= stop)break;			
 		}
 	}
+	{
+		FILE* out_log;
+		if ((out_log = fopen(file_log, "wt")) == NULL)
+		{
+			fprintf(out_log, "Input file %s can't be opened!\n", file_log);
+			return -1;
+		}
+		fprintf(out_log, "Calculations are completed for %d sequences out of total %d\n", heis, nseq);
+		fclose(out_log);
+	}
 	//qsort((void*)(&sele[0]), pr_tot, sizeof(sele[0]), compare_num);
 	for (i = 0; i < n_chr; i++)fclose(in_seq[i]);
 	fclose(out);
 	for (i = 0; i < nseq; i++)sort[i].don = hei[i];
 	delete[] hei;
-	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_fat);
+	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_fat);	
 	{
 		int success = 0;
+		if ((out1 = fopen(fileosta1, "wt")) == NULL)
+		{
+			printf("Input file %s can't be opened!", fileosta1);
+			exit(1);
+		}
+		if ((out2 = fopen(fileosta2, "wt")) == NULL)
+		{
+			printf("Input file %s can't be opened!", fileosta2);
+			exit(1);
+		}
 		fprintf(out1, "\tSuccess rate\n");
 		for (i = 0; i < nseq; i++)
 		{
@@ -966,12 +981,7 @@ int main(int argc, char *argv[])
 		}
 		fclose(out1);
 		if (success != nseq)
-		{
-			if ((out2 = fopen(fileosta2, "wt")) == NULL)
-			{
-				printf("Input file %s can't be opened!", fileosta2);
-				exit(1);
-			}
+		{		
 			fprintf(out2, "\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
 			int di[16];
 			for (j = 0; j < 16; j++)di[j] = 0;
@@ -980,13 +990,18 @@ int main(int argc, char *argv[])
 				if (sort[i].don < height)
 				{
 					GetSost(peak_real[0][sort[i].num], 2, 16, di);
-					fprintf(out2, "Seq%d", sort[i].num + 1);
+					fprintf(out2, "Seq%d_%d_out_of_%d", sort[i].num + 1, sort[i].don, height);
 					for (j = 0; j < 16; j++)fprintf(out2, "\t%d", di[j]);
 					fprintf(out2, "\n");
 				}
 			}
 			fclose(out2);
 		}
+		else
+		{
+			fprintf(out2, "Complete success for all %d sequences!\n",nseq);
+		}
+
 	}
 	for (k = 0; k < 2; k++)
 	{
