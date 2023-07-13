@@ -67,7 +67,7 @@ int CheckStr(char *file, char *d, int n, int print, int bad)
 	{
 		di = (int)(d[i]);
 		if (strchr("atgcATGC", di )!= NULL)continue;		
-		if (strchr("nN", di) != NULL)bad++;
+		if (strchr("nN", di) != NULL) bad++;
 		else
 		{
 			printf("File %s; sequence %d position %d (%c) bad. Sequence too bad!\n", file, n, i + 1, d[i]);
@@ -76,7 +76,7 @@ int CheckStr(char *file, char *d, int n, int print, int bad)
 	}
 	if (bad>0)
 	{
-		if (print == 1)printf("File %s; sequence %d position %d (%c) bad. Sequence processed!\n", file, n, i + 1, d[i]);
+		if (print == 1)printf("File %s; sequence %d, %d positions are bad. Sequence processed!\n", file, n, bad);
 		return 1;
 	}
 	return(ret);
@@ -108,6 +108,7 @@ void EvalSeq(char *file, int &nseq, int olen)
 			int check = CheckStr(file, d, n, 1,bad);
 			lenx -= bad;
 			if (lenx >= olen && check == 1)nseq++;
+			n++;
 			if (fl == -1)
 			{
 				fclose(in);
