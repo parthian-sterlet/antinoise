@@ -76,7 +76,7 @@ int CheckStr(char *file, char *d, int n, int print, int bad)
 	}
 	if (bad>0)
 	{
-		if (print == 1)printf("File %s; sequence %d, %d positions are bad. Sequence processed!\n", file, n, bad);
+		//if (print == 1)printf("File %s; sequence %d, %d positions are bad. Sequence processed!\n", file, n, bad);
 		return 1;
 	}
 	return(ret);
@@ -276,8 +276,8 @@ void ReadSeq(char *file, int nseq, int *len, char ***peak_real, int olen)
 			}
 			else
 			{
-				if (lenx < olen)printf("Short peak %d (Len %d) ignored\n", n + 1, lenx);
-				if (check == -1)printf("Unusual symbol, peak %d ignored\n%s\n", n + 1, d[0]);
+			//	if (lenx < olen)printf("Short peak %d (Len %d) ignored\n", n + 1, lenx);
+			//	if (check == -1)printf("Unusual symbol, peak %d ignored\n%s\n", n + 1, d[0]);
 			}
 			if (fl == -1)
 			{
@@ -451,18 +451,22 @@ int main(int argc, char *argv[])
 	if (mono_prec >= 0.5 || mono_prec <= 0)
 	{
 		printf("Mononucleotide precision %f is wrong!\n", mono_prec);
+		exit(1);
 	}
 	if (stop_thr > 1 || stop_thr <= 0)
 	{
 		printf("Fraction of peaks %f is wrong!\n", stop_thr);
+		exit(1);
 	}
 	if (back_iter > 1000000 || back_iter <= 0)
 	{
 		printf("Number of iterations %d is wrong or too large!\n", back_iter);
+		exit(1);
 	}
 	if (height > 1000 || height <= 0)
 	{
 		printf("Maximal number of background sequences per one foreground sequence: %d is wrong or too large!\n", height);
+		exit(1);
 	}
 	int genome_rec = 0;
 	if (strcmp(genome, "at10") == 0)
@@ -633,7 +637,7 @@ int main(int argc, char *argv[])
 		if ((out_log = fopen(file_log, "wt")) == NULL)
 		{
 			fprintf(out_log, "Error: Input file %s can't be opened!\n", file_log);
-			return -1;
+			exit(1);
 		}
 		fclose(out_log);
 	}
@@ -646,6 +650,7 @@ int main(int argc, char *argv[])
 		if ((in_seq[i] = fopen(filechr[i], "rt")) == NULL)
 		{
 			printf("Input file %s can't be opened!\n", filechr[i]);
+			exit(1);
 		}
 	}
 	int tot_len = 0;
@@ -931,16 +936,16 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
-			printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
+			//printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
 			if (iter % 10000 == 0)
 			{
 				FILE *out_log;
 				if ((out_log = fopen(file_log, "wt")) == NULL)
 				{
 					fprintf(out_log, "Input file %s can't be opened!\n", file_log);
-					return -1;
+					exit(1);
 				}
-				fprintf(out_log, "Calculations are completed for %d sequences out of total %d\n", heis, nseq);
+				fprintf(out_log, "Calculations in progress... Required %d genomes sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
 				fclose(out_log);
 			}
 			if (heis >= stop)break;			
@@ -951,9 +956,9 @@ int main(int argc, char *argv[])
 		if ((out_log = fopen(file_log, "wt")) == NULL)
 		{
 			fprintf(out_log, "Input file %s can't be opened!\n", file_log);
-			return -1;
+			exit(1);
 		}
-		fprintf(out_log, "Calculations are completed for %d sequences out of total %d\n", heis, nseq);
+		fprintf(out_log, "Calculations are completed. Required %d genomes sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
 		fclose(out_log);
 	}
 	//qsort((void*)(&sele[0]), pr_tot, sizeof(sele[0]), compare_num);
