@@ -9,6 +9,7 @@
 #define Max(a,b) ((a)>(b))? (a):(b);
 #define SEQLEN 12000
 #define NCHR 50
+#define NBIN 20
 
 struct seqm {
 	int num;
@@ -31,6 +32,14 @@ int compare_fat(const void* X1, const void* X2)
 	struct seqm* S2 = (struct seqm*)X2;
 	if (S1->fat - S2->fat > 0)return 1;
 	if (S1->fat - S2->fat < 0)return -1;
+	return 0;
+}
+int compare_num(const void* X1, const void* X2)
+{
+	struct seqm* S1 = (struct seqm*)X1;
+	struct seqm* S2 = (struct seqm*)X2;
+	if (S1->num - S2->num > 0)return 1;
+	if (S1->num - S2->num < 0)return -1;
 	return 0;
 }
 
@@ -119,6 +128,7 @@ void EvalSeq(char *file, int &nseq, int olen)
 		{
 			memset(head, 0, sizeof(head));
 			DelChar(l, '\n');
+			DelChar(l, '\r');
 			strcpy(head, l);
 			fl = 0; continue;
 		}
@@ -126,6 +136,7 @@ void EvalSeq(char *file, int &nseq, int olen)
 		{
 			memset(d, 0, sizeof(d));
 			DelChar(l, '\n');
+			DelChar(l, '\r');
 			strcpy(d, l);
 			fl = 1; continue;
 		}
@@ -137,6 +148,7 @@ void EvalSeq(char *file, int &nseq, int olen)
 			exit(1);
 		}
 		DelChar(l, '\n');
+		DelChar(l, '\r');
 		strcat(d, l);
 	}
 }
@@ -182,6 +194,7 @@ void EvalLen(char *file, int *len, int *bad, int olen)
 		{
 			memset(head, 0, sizeof(head));
 			DelChar(l, '\n');
+			DelChar(l, '\r');
 			strcpy(head, l);
 			fl = 0; continue;
 		}
@@ -189,6 +202,7 @@ void EvalLen(char *file, int *len, int *bad, int olen)
 		{
 			memset(d, 0, sizeof(d));
 			DelChar(l, '\n');
+			DelChar(l, '\r');
 			strcpy(d, l);
 			fl = 1; continue;
 		}
@@ -200,6 +214,7 @@ void EvalLen(char *file, int *len, int *bad, int olen)
 			exit(1);
 		}
 		DelChar(l, '\n');
+		DelChar(l, '\r');
 		strcat(d, l);
 	}
 }
@@ -289,6 +304,7 @@ void ReadSeq(char *file, int nseq, int *len, char ***peak_real, int olen)
 		{
 			memset(head, 0, sizeof(head));
 			DelChar(l, '\n');
+			DelChar(l, '\r');
 			strcpy(head, l);
 			fl = 0; continue;
 		}
@@ -296,6 +312,7 @@ void ReadSeq(char *file, int nseq, int *len, char ***peak_real, int olen)
 		{
 			memset(d[0], 0, sizeof(d[0]));
 			DelChar(l, '\n');
+			DelChar(l, '\r');
 			strcpy(d[0], l);
 			fl = 1; continue;
 		}
@@ -307,6 +324,7 @@ void ReadSeq(char *file, int nseq, int *len, char ***peak_real, int olen)
 			exit(1);
 		}
 		DelChar(l, '\n');
+		DelChar(l, '\r');
 		strcat(d[0], l);
 	}
 }
@@ -936,7 +954,7 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
-			//printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
+			printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
 			if (iter % 10000 == 0)
 			{
 				FILE *out_log;
@@ -966,49 +984,87 @@ int main(int argc, char *argv[])
 	fclose(out);
 	for (i = 0; i < nseq; i++)sort[i].don = hei[i];
 	delete[] hei;
-	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_fat);	
+	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_num);		
+	int success = 0, no_success = 0;
+	double step_fr = 1 / (double)NBIN;
+	double fr_all[NBIN], fr_no[NBIN], val[NBIN];
+	for (i = 0; i < NBIN; i++)fr_all[i] = fr_no[i] = 0;
+	val[0] = step_fr;
+	for (i = 1; i < NBIN; i++)val[i] = val[i - 1] + step_fr;
+	if ((out1 = fopen(fileosta1, "wt")) == NULL)
 	{
-		int success = 0;
-		if ((out1 = fopen(fileosta1, "wt")) == NULL)
-		{
-			printf("Input file %s can't be opened!", fileosta1);
-			exit(1);
-		}
-		if ((out2 = fopen(fileosta2, "wt")) == NULL)
-		{
-			printf("Input file %s can't be opened!", fileosta2);
-			exit(1);
-		}
-		fprintf(out1, "#Sequence\tSequenceCount\tA/T-content\n");
-		for (i = 0; i < nseq; i++)
-		{
-			fprintf(out1, "%d\t%d\t%f\n", sort[i].num + 1, sort[i].don, sort[i].fat);
-			if (sort[i].don >= height)success++;
-		}
-		fclose(out1);
-		if (success != nseq)
-		{		
-			fprintf(out2, "#Sequence\tSequenceCount\tA/T-content\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
-			int di[16];
-			for (j = 0; j < 16; j++)di[j] = 0;
-			for (i = 0; i < nseq; i++)
+		printf("Input file %s can't be opened!", fileosta1);
+		exit(1);
+	}
+	if ((out2 = fopen(fileosta2, "wt")) == NULL)
+	{
+		printf("Input file %s can't be opened!", fileosta2);
+		exit(1);
+	}
+	//fprintf(out1, "#Sequence\tSequenceCount\tA/T-content\n");
+	fprintf(out1, "\tUncomplete search\tAll_sequences\n");
+	for (i = 0; i < nseq; i++)
+	{
+		//fprintf(out1, "%d\t%d\t%f\n", sort[i].num + 1, sort[i].don, sort[i].fat);			
+		int jk = 0;
+		double donj = sort[i].fat;
+		for (j = 0; j < NBIN; j++)
+		{				
+			if (donj <= val[j])
 			{
-				if (sort[i].don < height)
-				{
-					GetSost(peak_real[0][sort[i].num], 2, 16, di);
-					fprintf(out2, "%d\t%d\t%f", sort[i].num + 1, sort[i].don, sort[i].fat);
-					for (j = 0; j < 16; j++)fprintf(out2, "\t%d", di[j]);
-					fprintf(out2, "\n");
-				}
+				jk = j;
+				break;
 			}
-			fclose(out2);
 		}
+		if (sort[i].don >= height)success++;
 		else
 		{
-			fprintf(out2, "Complete success for all %d sequences!\n",nseq);
+			fr_no[jk]++;
+			no_success++;
 		}
-
+		fr_all[jk]++;
 	}
+	for (i = 0; i < NBIN; i++)fr_all[i] /= nseq;		
+	if (no_success > 0)
+	{
+		for (i = 0; i < NBIN; i++)fr_no[i] /= no_success;
+	}
+	/*for (i = 0; i < NBIN; i++)printf("\t%f", fr_no[i]);
+	printf("\n");
+	for (i = 0; i < NBIN; i++)printf("\t%f", fr_all[i]);
+	printf("\n");*/
+	//if (success != nseq)				
+	fprintf(out2, "\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
+	int di[16], ditot[16];
+	int count_tot = 0;
+	double monotot = 0, lendtot=0, lenmtot=0;
+	for (j = 0; j < 16; j++)di[j] = ditot[j] = 0;
+	for (i = 0; i < nseq; i++)
+	{
+		GetSost(peak_real[0][sort[i].num], 2, 16, di);
+		for (j = 0; j < 16; j++)ditot[j] += di[j];
+		monotot += sort[i].len * sort[i].fat;
+		count_tot += sort[i].don;
+		int lend = sort[i].len - 1;
+		lendtot += lend;
+		lenmtot += sort[i].len;
+		if (sort[i].don < height)
+		{					
+			fprintf(out2, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);					
+			for (j = 0; j < 16; j++)fprintf(out2, "\t%f", (double)di[j]/lend);
+			fprintf(out2, "\n");
+		}
+	}
+	monotot /= lenmtot;
+	fprintf(out2, "AllSeq #AvFoundSeq %f", (double)count_tot/nseq);
+	for (j = 0; j < 16; j++)fprintf(out2, "\t%f", (double)ditot[j]/lendtot);
+	fprintf(out2, "\n");									
+	for (i = 0; i < NBIN; i++)
+	{
+		fprintf(out1, "%f\t%f\t%f\n", val[i], fr_no[i], fr_all[i]);
+	}
+	fclose(out1);
+	fclose(out2);
 	for (k = 0; k < 2; k++)
 	{
 		for (i = 0; i < nseq; i++)
