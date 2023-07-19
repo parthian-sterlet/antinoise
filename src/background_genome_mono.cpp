@@ -979,16 +979,16 @@ int main(int argc, char *argv[])
 			printf("Input file %s can't be opened!", fileosta2);
 			exit(1);
 		}
-		fprintf(out1, "\tSuccess rate\n");
+		fprintf(out1, "#Sequence\tSequenceCount\tA/T-content\n");
 		for (i = 0; i < nseq; i++)
 		{
-			fprintf(out1, "%f\t%d\n", sort[i].fat, sort[i].don);
+			fprintf(out1, "%d\t%d\t%f\n", sort[i].num + 1, sort[i].don, sort[i].fat);
 			if (sort[i].don >= height)success++;
 		}
 		fclose(out1);
 		if (success != nseq)
 		{		
-			fprintf(out2, "\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
+			fprintf(out2, "#Sequence\tSequenceCount\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
 			int di[16];
 			for (j = 0; j < 16; j++)di[j] = 0;
 			for (i = 0; i < nseq; i++)
@@ -996,7 +996,7 @@ int main(int argc, char *argv[])
 				if (sort[i].don < height)
 				{
 					GetSost(peak_real[0][sort[i].num], 2, 16, di);
-					fprintf(out2, "Seq%d_%d_out_of_%d", sort[i].num + 1, sort[i].don, height);
+					fprintf(out2, "%d\t%d", sort[i].num + 1, sort[i].don);
 					for (j = 0; j < 16; j++)fprintf(out2, "\t%d", di[j]);
 					fprintf(out2, "\n");
 				}
