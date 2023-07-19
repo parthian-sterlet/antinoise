@@ -988,7 +988,7 @@ int main(int argc, char *argv[])
 		fclose(out1);
 		if (success != nseq)
 		{		
-			fprintf(out2, "#Sequence\tSequenceCount\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
+			fprintf(out2, "#Sequence\tSequenceCount\tA/T-content\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
 			int di[16];
 			for (j = 0; j < 16; j++)di[j] = 0;
 			for (i = 0; i < nseq; i++)
@@ -996,7 +996,7 @@ int main(int argc, char *argv[])
 				if (sort[i].don < height)
 				{
 					GetSost(peak_real[0][sort[i].num], 2, 16, di);
-					fprintf(out2, "%d\t%d", sort[i].num + 1, sort[i].don);
+					fprintf(out2, "%d\t%d\t%f", sort[i].num + 1, sort[i].don, sort[i].fat);
 					for (j = 0; j < 16; j++)fprintf(out2, "\t%d", di[j]);
 					fprintf(out2, "\n");
 				}
