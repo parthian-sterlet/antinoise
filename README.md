@@ -35,7 +35,7 @@ separate compilation of all source files in VC++
 5. deviation of mononucleitide content of a background sequence from that for a foreground sequence (default value 0.01)
 6. total average number of attempts to get background sequences from genome per one foreground sequence (default value 1000)
 7. genome release (hg38, mm10, dm6, ce235, sc64 and at10 for H. sapiens, M. musculus, D. melanogaster, C. elegans, S. cerevisiae and A. thaliana genomes, respectively)
-8. threshold portion of output data that allows to stop calculation (default value 0.99)
+8. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 9. output file, table for all input sequences showing A/T-content of input sequence and number of generated background sequences 
 10. output file, table listing frequncies of 16 dinucleotide for all input sequences for which the maximal number (H) of background sequences did not achieved
 11. output file, current progress in calculation showing the fraction of completely processed input sequences, i.e. for each such sequence H background sequences were found 
