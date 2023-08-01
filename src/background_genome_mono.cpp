@@ -9,7 +9,7 @@
 #define Max(a,b) ((a)>(b))? (a):(b);
 #define SEQLEN 12000
 #define NCHR 50
-#define NBIN 20
+#define NBIN 50
 
 struct seqm {
 	int num;
@@ -1002,7 +1002,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	//fprintf(out1, "#Sequence\tSequenceCount\tA/T-content\n");
-	fprintf(out1, "\tUncomplete search\tAll_sequences\n");
+	fprintf(out1, "A/T content\tSequences with #FoundSeq < %d\tAll sequences\n",height);
 	for (i = 0; i < nseq; i++)
 	{
 		//fprintf(out1, "%d\t%d\t%f\n", sort[i].num + 1, sort[i].don, sort[i].fat);			
@@ -1034,7 +1034,7 @@ int main(int argc, char *argv[])
 	for (i = 0; i < NBIN; i++)printf("\t%f", fr_all[i]);
 	printf("\n");*/
 	//if (success != nseq)				
-	fprintf(out2, "\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
+	fprintf(out2, "#Seq #FoundSeq\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
 	int di[16], ditot[16];
 	int count_tot = 0;
 	double monotot = 0, lendtot=0, lenmtot=0;
