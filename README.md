@@ -31,13 +31,13 @@ separate compilation of all source files in VC++
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
 2. input fasta file
 3. output fasta file with genome sequences adopted by A/T-content
-4. maximal number of background sequences per one foreground sequence, H (default value 2)
+4. maximal number of found background sequences per one foreground sequence, H (default value 2)
 5. deviation of mononucleitide content of a background sequence from that for a foreground sequence (default value 0.01)
 6. total average number of attempts to get background sequences from genome per one foreground sequence (default value 1000)
 7. genome release (hg38, mm10, dm6, ce235, sc64 and at10 for H. sapiens, M. musculus, D. melanogaster, C. elegans, S. cerevisiae and A. thaliana genomes, respectively)
 8. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
-9. output file, table for all input sequences showing A/T-content of input sequence and number of generated background sequences 
-10. output file, table listing frequncies of 16 dinucleotide for all input sequences for which the maximal number (H) of background sequences did not achieved
+9. output file, additional output table shows the average number of found background sequences as a function of the A/T content (a) for the subset of input sequences that did not achieve the maximal number of found background sequences per one foreground sequence and (b) for all input sequences.
+10. output file, additional output table lists indices of input sequences (#Seq) and shows the counts of found background sequences (#FoundSeq) and frequncies of 16 dinucleotides (AA, AT, etc.) for all input sequences that did not achieve the maximal number of found background sequences per one foreground sequence, shows the same statistics for all input sequences.
 11. output file, current progress in calculation showing the fraction of completely processed input sequences, i.e. for each such sequence H background sequences were found 
 
 Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in fasta format. These plain files should contain only nucleotide letters, IUPAC nucleotides codes N,W,S etc. are ignored by program, all other symbols like ' ', '\t' etc. should deleted, e.g. for Arabidopsis five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Use [ftp](https://github.com/parthian-sterlet/antinoise/blob/main/src/ftp) to generate these files in plain format from the conventional genome sequences in fasta format. To see example unzip chr4.plain file from folder [genomes](https://github.com/parthian-sterlet/sitega/tree/master/genomes). 
