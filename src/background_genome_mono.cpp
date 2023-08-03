@@ -954,7 +954,7 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
-			printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
+//			printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
 			if (iter % 10000 == 0)
 			{
 				FILE *out_log;
@@ -1059,9 +1059,30 @@ int main(int argc, char *argv[])
 	fprintf(out2, "AllSeq #AvFoundSeq %f", (double)count_tot/nseq);
 	for (j = 0; j < 16; j++)fprintf(out2, "\t%f", (double)ditot[j]/lendtot);
 	fprintf(out2, "\n");									
-	for (i = 0; i < NBIN; i++)
 	{
-		fprintf(out1, "%f\t%f\t%f\n", val[i], fr_no[i], fr_all[i]);
+		int ista = 0, iend = NBIN - 1, dbin = NBIN/10;
+		for (i = 0; i < NBIN; i++)
+		{
+			int rest = (i + 1) % dbin;
+			if (rest == 0)ista = i;
+			if (fr_all[i] != 0)
+			{				
+				break;
+			}
+		}
+		for (i = NBIN - 1; i >=0; i--)
+		{
+			int rest = (i + 1) % dbin;
+			if (rest == 0)iend = i;
+			if (fr_all[i] != 0)
+			{				
+				break;
+			}
+		}
+		for (i = ista; i <= iend; i++)
+		{
+			fprintf(out1, "%f\t%f\t%f\n", val[i], fr_no[i], fr_all[i]);
+		}
 	}
 	fclose(out1);
 	fclose(out2);
