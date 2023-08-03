@@ -697,6 +697,17 @@ int main(int argc, char *argv[])
 		}
 	}
 	ReadSeq(filei, nseq, len, peak_real, win_gomol);
+	int heis = 0;
+	{
+		FILE* out_log;
+		if ((out_log = fopen(file_log, "wt")) == NULL)
+		{
+			fprintf(out_log, "Input file %s can't be opened!\n", file_log);
+			exit(1);
+		}
+		fprintf(out_log, "Required %d genomic sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
+		fclose(out_log);
+	}
 	int len_max, len_min;
 	seqm *sort;
 	sort = new seqm[nseq];
@@ -833,8 +844,7 @@ int main(int argc, char *argv[])
 	{
 		printf("Input file %s can't be opened!", fileo1);
 		exit(1);
-	}
-	int heis = 0;
+	}	
 	int size = 0;
 	iter = pr_tot = 0;
 	trys = nseq * back_iter;
@@ -963,7 +973,7 @@ int main(int argc, char *argv[])
 					fprintf(out_log, "Input file %s can't be opened!\n", file_log);
 					exit(1);
 				}
-				fprintf(out_log, "Calculations in progress... Required %d genomes sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
+				fprintf(out_log, "Calculations in progress... Required %d genomic sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
 				fclose(out_log);
 			}
 			if (heis >= stop)break;			
