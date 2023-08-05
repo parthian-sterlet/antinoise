@@ -988,7 +988,7 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
-		//	printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
+			//printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
 			if (iter % 10000 == 0)
 			{
 				FILE *out_log;
@@ -1071,11 +1071,29 @@ int main(int argc, char *argv[])
 	printf("\n");
 	for (i = 0; i < NBIN; i++)printf("\t%f", fr_all_for[i]);
 	printf("\n");*/
-	//if (success != nseq)				
+	int ista = 0, iend = NBIN - 1, dbin = NBIN / 10;
+	for (i = 0; i < NBIN; i++)
+	{
+		int rest = (i + 1) % dbin;
+		if (rest == 0)ista = i;
+		if (fr_all_for[i] != 0 || fr_all_back[i] != 0)
+		{
+			break;
+		}
+	}
+	for (i = NBIN - 1; i >= 0; i--)
+	{
+		int rest = (i + 1) % dbin;
+		if (rest == 0)iend = i;
+		if (fr_all_for[i] != 0 || fr_all_back[i] != 0)
+		{
+			break;
+		}
+	}
 	char dinu[16][3] = { "AA","AC","AG","AT","CA","CC","CG","CT","GA","GC","GG","GT","TA","TC","TG","TT" };
-	fprintf(outm_one, "A/T content, Selected background sequences vs. Foreground\n");
-	fprintf(outm_one, "\tA/T content\n");
-	fprintf(outd_one, "Dincucleotide frequencies, Selected background sequences vs. Foreground\n");
+	fprintf(outm_one, "A/T content (%%): selected background sequences vs. Foreground set\t%f\t%f\n",val[ista],val[iend]);
+	fprintf(outm_one, "\tA/T content (%%)\n");
+	fprintf(outd_one, "Dincucleotide frequencies (%%): selected background sequences vs. Foreground set\n");
 	for (j = 0; j < 16; j++)fprintf(outd_one, "\t%s", dinu[j]);
 	fprintf(outd_one, "\n");
 	int ditot[16];
@@ -1099,8 +1117,8 @@ int main(int argc, char *argv[])
 		{					
 			fprintf(outm_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);					
 			fprintf(outd_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);
-			for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", (double)di[j]/lend);
-			fprintf(outm_one, "\t%f", (double)(mo[0] + mo[3]) / sort[i].len);
+			for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", 100 * (double)di[j]/lend);
+			fprintf(outm_one, "\t%f", 100*(double)(mo[0] + mo[3]) / sort[i].len);
 			fprintf(outd_one, "\n");
 			fprintf(outm_one, "\n");
 		}
@@ -1108,43 +1126,24 @@ int main(int argc, char *argv[])
 	monotot /= lenmtot;
 	fprintf(outm_one, "AllSeq #AvFoundSeq %f", (double)count_tot/nseq);
 	fprintf(outd_one, "AllSeq #AvFoundSeq %f", (double)count_tot / nseq);
-	for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", (double)ditot[j]/lendtot);
+	for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", 100*(double)ditot[j]/lendtot);
 	
-	fprintf(outm_one, "\t%f\n", monotot);
+	fprintf(outm_one, "\t%f\n", 100 * monotot);
 	fprintf(outd_one, "\n");									
 	fclose(outm_one);
-	fclose(outd_one);
-	fprintf(outm, "A/T content, Foreground vs. Background\n\tForeground\tBackground\n");	
-	{
-		int ista = 0, iend = NBIN - 1, dbin = NBIN/10;
-		for (i = 0; i < NBIN; i++)
-		{
-			int rest = (i + 1) % dbin;
-			if (rest == 0)ista = i;
-			if (fr_all_for[i] != 0 || fr_all_back[i] != 0)
-			{				
-				break;
-			}
-		}
-		for (i = NBIN - 1; i >=0; i--)
-		{
-			int rest = (i + 1) % dbin;
-			if (rest == 0)iend = i;
-			if (fr_all_for[i] != 0 || fr_all_back[i] != 0)
-			{				
-				break;
-			}
-		}
+	fclose(outd_one);	
+	{		
+		fprintf(outm, "A/T content (%%): Foreground vs. Background\t%f\t%f\n\tForeground\tBackground\n", val[ista], val[iend]);
 		for (i = ista; i <= iend; i++)
 		{
-			fprintf(outm, "%f\t%f\t%f\n", val[i], fr_all_for[i], fr_all_back[i]);
+			fprintf(outm, "%f\t%f\t%f\n", 100*val[i], 100*fr_all_for[i], 100*fr_all_back[i]);
 		}
 	}
 	fclose(outm);
-	fprintf(outd, "Dincucleotide frequencies, Foreground vs. Background\n\tForeground\tBackground\n");	
+	fprintf(outd, "Dincucleotide frequencies (%%): Foreground set vs. Background set\n\tForeground\tBackground\n");	
 	for (k = 0; k < 16; k++)
 	{
-		fprintf(outd, "%s\t%f\t%f\n", dinu[k], (double)ditot[k] / lendtot, (double)ditotback[k] / ditotbak_len);
+		fprintf(outd, "%s\t%f\t%f\n", dinu[k], 100*(double)ditot[k] / lendtot, 100 * (double)ditotback[k] / ditotbak_len);
 	}
 	fclose(outd);
 	for (k = 0; k < 2; k++)
