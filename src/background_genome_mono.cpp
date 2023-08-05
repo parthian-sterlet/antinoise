@@ -1114,7 +1114,7 @@ int main(int argc, char *argv[])
 	fprintf(outd_one, "\n");									
 	fclose(outm_one);
 	fclose(outd_one);
-	fprintf(outm, "A/T content, Foreground vs. Background\n\tForeground sequences\tBackground sequences\n");	
+	fprintf(outm, "A/T content, Foreground vs. Background\n\tForeground\tBackground\n");	
 	{
 		int ista = 0, iend = NBIN - 1, dbin = NBIN/10;
 		for (i = 0; i < NBIN; i++)
@@ -1141,7 +1141,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	fclose(outm);
-	fprintf(outd, "Dincucleotide frequencies, Foreground vs. Background\n\tForeground sequences\tBackground sequences\n");	
+	fprintf(outd, "Dincucleotide frequencies, Foreground vs. Background\n\tForeground\tBackground\n");	
 	for (k = 0; k < 16; k++)
 	{
 		fprintf(outd, "%s\t%f\t%f\n", dinu[k], (double)ditot[k] / lendtot, (double)ditotback[k] / ditotbak_len);
