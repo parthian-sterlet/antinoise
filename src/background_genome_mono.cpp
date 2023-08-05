@@ -387,11 +387,12 @@ int main(int argc, char *argv[])
 {
 	int i, j, k;
 	char d[SEQLEN], d1[SEQLEN], filesta[10], fileend[10], genome[10];
-	char filei[500], fileo1[500], fileosta1[500], fileosta2[500], file_log[500], filechr[NCHR][500], path_fasta[500];
-	FILE *out, *in_seq[NCHR], *out1, *out2;
-	if (argc != 12)
+	char filei[500], fileo1[500], fileosta_mo[500], fileosta_di[500], fileosta_mo_one[500], fileosta_di_one[500], file_log[500], filechr[NCHR][500], path_fasta[500];
+	FILE *out, *in_seq[NCHR], *outm, *outd, *outm_one, *outd_one;
+	if (argc != 14)
 	{
-		puts("Sintax: 1 path_genome 2file in_fa, 3file out_fa 4int height 5double mono prec 6int back_iter 7char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61) 8double stop_fraction 9file_out success_statistics 10file_out dinucl statistics 11file_log");
+		puts("Sintax: 1 path_genome 2file in_fa, 3file out_fa 4int height 5double mono prec 6int back_iter 7char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61)");
+		puts("8double stop_fraction 9file_out mono_for_vs_back 10 file_out di_for_back 11file_out dinucl statistics 12file_out dinucl statistics 13file_log");
 		exit(1);
 	}
 	strcpy(filesta, "chr");
@@ -463,9 +464,11 @@ int main(int argc, char *argv[])
 	int back_iter = atoi(argv[6]);
 	strcpy(genome, argv[7]);
 	double stop_thr = atof(argv[8]);//0.99;// fraction of peaks 100% covered with height background sequences
-	strcpy(fileosta1, argv[9]);//out_file sta success rate
-	strcpy(fileosta2, argv[10]);//out_file sta dinucl content
-	strcpy(file_log, argv[11]);//out_file sta dinucl content	
+	strcpy(fileosta_mo, argv[9]);//out_file sta success rate
+	strcpy(fileosta_di, argv[10]);//out_file sta success rate
+	strcpy(fileosta_mo_one, argv[11]);//out_file sta dinucl content
+	strcpy(fileosta_di_one, argv[12]);//out_file sta dinucl content
+	strcpy(file_log, argv[13]);//out_file sta dinucl content	
 	if (mono_prec >= 0.5 || mono_prec <= 0)
 	{
 		printf("Mononucleotide precision %f is wrong!\n", mono_prec);
@@ -853,6 +856,13 @@ int main(int argc, char *argv[])
 	{
 		stop = (int)(stop_thr * nseq);
 	}
+	double step_fr = 1 / (double)NBIN;
+	double fr_all_for[NBIN], fr_all_back[NBIN], fr_no[NBIN], val[NBIN];
+	for (i = 0; i < NBIN; i++)fr_all_for[i] = fr_all_back[i] = fr_no[i] = 0;
+	val[0] = step_fr;
+	for (i = 1; i < NBIN; i++)val[i] = val[i - 1] + step_fr;
+	int di[16], ditotback[16], ditotbak_len = 0;
+	for (j = 0; j < 16; j++)ditotback[j] = di[j] = 0; 
 	while (iter < trys && heis < nseq)
 	{
 		int rr = rand();
@@ -941,6 +951,20 @@ int main(int argc, char *argv[])
 							if (hei[i] == height)heis++;
 							done = 1;
 							size++;
+							double donj = (double)cat / sort[i].len;
+							int jk = 0;
+							for (k = 0; k < NBIN; k++)
+							{
+								if (donj <= val[k])
+								{
+									jk = k;
+									break;
+								}
+							}
+							fr_all_back[jk]++;
+							ditotbak_len += sort[i].len - 1;
+							GetSost(d1, 2, 16, di);
+							for (j = 0; j < 16; j++)ditotback[j] += di[j];
 						}						
 					}
 					len_cur = sort[i].len;
@@ -964,7 +988,7 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
-//			printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
+			printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
 			if (iter % 10000 == 0)
 			{
 				FILE *out_log;
@@ -996,23 +1020,26 @@ int main(int argc, char *argv[])
 	delete[] hei;
 	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_num);		
 	int success = 0, no_success = 0;
-	double step_fr = 1 / (double)NBIN;
-	double fr_all[NBIN], fr_no[NBIN], val[NBIN];
-	for (i = 0; i < NBIN; i++)fr_all[i] = fr_no[i] = 0;
-	val[0] = step_fr;
-	for (i = 1; i < NBIN; i++)val[i] = val[i - 1] + step_fr;
-	if ((out1 = fopen(fileosta1, "wt")) == NULL)
+	if ((outm = fopen(fileosta_mo, "wt")) == NULL)
 	{
-		printf("Input file %s can't be opened!", fileosta1);
+		printf("Input file %s can't be opened!", fileosta_mo);
 		exit(1);
 	}
-	if ((out2 = fopen(fileosta2, "wt")) == NULL)
+	if ((outd = fopen(fileosta_di, "wt")) == NULL)
 	{
-		printf("Input file %s can't be opened!", fileosta2);
+		printf("Input file %s can't be opened!", fileosta_di);
 		exit(1);
 	}
-	//fprintf(out1, "#Sequence\tSequenceCount\tA/T-content\n");
-	fprintf(out1, "A/T content\tSequences with #FoundSeq < %d\tAll sequences\n",height);
+	if ((outm_one = fopen(fileosta_mo_one, "wt")) == NULL)
+	{
+		printf("Input file %s can't be opened!", fileosta_mo_one);
+		exit(1);
+	}
+	if ((outd_one = fopen(fileosta_di_one, "wt")) == NULL)
+	{
+		printf("Input file %s can't be opened!", fileosta_di_one);
+		exit(1);
+	}
 	for (i = 0; i < nseq; i++)
 	{
 		//fprintf(out1, "%d\t%d\t%f\n", sort[i].num + 1, sort[i].don, sort[i].fat);			
@@ -1032,27 +1059,37 @@ int main(int argc, char *argv[])
 			fr_no[jk]++;
 			no_success++;
 		}
-		fr_all[jk]++;
+		fr_all_for[jk]++;
 	}
-	for (i = 0; i < NBIN; i++)fr_all[i] /= nseq;		
+	for (i = 0; i < NBIN; i++)fr_all_for[i] /= nseq;		
+	for (i = 0; i < NBIN; i++)fr_all_back[i] /= size;
 	if (no_success > 0)
 	{
 		for (i = 0; i < NBIN; i++)fr_no[i] /= no_success;
 	}
 	/*for (i = 0; i < NBIN; i++)printf("\t%f", fr_no[i]);
 	printf("\n");
-	for (i = 0; i < NBIN; i++)printf("\t%f", fr_all[i]);
+	for (i = 0; i < NBIN; i++)printf("\t%f", fr_all_for[i]);
 	printf("\n");*/
 	//if (success != nseq)				
-	fprintf(out2, "#Seq #FoundSeq\tAA\tAC\tAG\tAT\tCA\tCC\tCG\tCT\tGA\tGC\tGG\tGT\tTA\tTC\tTG\tTT\n");
-	int di[16], ditot[16];
+	char dinu[16][3] = { "AA","AC","AG","AT","CA","CC","CG","CT","GA","GC","GG","GT","TA","TC","TG","TT" };
+	fprintf(outm_one, "A/T content, Selected background sequences vs. Foreground\n");
+	fprintf(outm_one, "\tA/T content\n");
+	fprintf(outd_one, "Dincucleotide frequencies, Selected background sequences vs. Foreground\n");
+	for (j = 0; j < 16; j++)fprintf(outd_one, "\t%s", dinu[j]);
+	fprintf(outd_one, "\n");
+	int ditot[16];
+	int mo[4], motot[4];
 	int count_tot = 0;
 	double monotot = 0, lendtot=0, lenmtot=0;
-	for (j = 0; j < 16; j++)di[j] = ditot[j] = 0;
+	for (j = 0; j < 16; j++)di[j] = ditot[j]=0;
+	for (j = 0; j < 4; j++)mo[j] = motot[j] = 0;
 	for (i = 0; i < nseq; i++)
 	{
 		GetSost(peak_real[0][sort[i].num], 2, 16, di);
+		GetSost(peak_real[0][sort[i].num], 1, 4, mo);
 		for (j = 0; j < 16; j++)ditot[j] += di[j];
+		for (j = 0; j < 4; j++)motot[j] += mo[j];
 		monotot += sort[i].len * sort[i].fat;
 		count_tot += sort[i].don;
 		int lend = sort[i].len - 1;
@@ -1060,22 +1097,31 @@ int main(int argc, char *argv[])
 		lenmtot += sort[i].len;
 		if (sort[i].don < height)
 		{					
-			fprintf(out2, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);					
-			for (j = 0; j < 16; j++)fprintf(out2, "\t%f", (double)di[j]/lend);
-			fprintf(out2, "\n");
+			fprintf(outm_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);					
+			fprintf(outd_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);
+			for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", (double)di[j]/lend);
+			fprintf(outm_one, "\t%f", (double)(mo[0] + mo[3]) / sort[i].len);
+			fprintf(outd_one, "\n");
+			fprintf(outm_one, "\n");
 		}
 	}
 	monotot /= lenmtot;
-	fprintf(out2, "AllSeq #AvFoundSeq %f", (double)count_tot/nseq);
-	for (j = 0; j < 16; j++)fprintf(out2, "\t%f", (double)ditot[j]/lendtot);
-	fprintf(out2, "\n");									
+	fprintf(outm_one, "AllSeq #AvFoundSeq %f", (double)count_tot/nseq);
+	fprintf(outd_one, "AllSeq #AvFoundSeq %f", (double)count_tot / nseq);
+	for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", (double)ditot[j]/lendtot);
+	
+	fprintf(outm_one, "\t%f\n", monotot);
+	fprintf(outd_one, "\n");									
+	fclose(outm_one);
+	fclose(outd_one);
+	fprintf(outm, "A/T content, Foreground vs. Background\n\tForeground sequences\tBackground sequences\n");	
 	{
 		int ista = 0, iend = NBIN - 1, dbin = NBIN/10;
 		for (i = 0; i < NBIN; i++)
 		{
 			int rest = (i + 1) % dbin;
 			if (rest == 0)ista = i;
-			if (fr_all[i] != 0)
+			if (fr_all_for[i] != 0 || fr_all_back[i] != 0)
 			{				
 				break;
 			}
@@ -1084,18 +1130,23 @@ int main(int argc, char *argv[])
 		{
 			int rest = (i + 1) % dbin;
 			if (rest == 0)iend = i;
-			if (fr_all[i] != 0)
+			if (fr_all_for[i] != 0 || fr_all_back[i] != 0)
 			{				
 				break;
 			}
 		}
 		for (i = ista; i <= iend; i++)
 		{
-			fprintf(out1, "%f\t%f\t%f\n", val[i], fr_no[i], fr_all[i]);
+			fprintf(outm, "%f\t%f\t%f\n", val[i], fr_all_for[i], fr_all_back[i]);
 		}
 	}
-	fclose(out1);
-	fclose(out2);
+	fclose(outm);
+	fprintf(outd, "Dincucleotide frequencies, Foreground vs. Background\n\tForeground sequences\tBackground sequences\n");	
+	for (k = 0; k < 16; k++)
+	{
+		fprintf(outd, "%s\t%f\t%f\n", dinu[k], (double)ditot[k] / lendtot, (double)ditotback[k] / ditotbak_len);
+	}
+	fclose(outd);
 	for (k = 0; k < 2; k++)
 	{
 		for (i = 0; i < nseq; i++)
