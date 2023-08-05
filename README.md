@@ -48,4 +48,4 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp)
 1. input fasta file (foreground set)
 2. output fasta file (background set)
-3. number of background sequences per one peak (default value 5)
+3. required number of found background sequences per one foreground sequence, Rbf (default value 5)
