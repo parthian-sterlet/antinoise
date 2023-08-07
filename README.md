@@ -32,7 +32,7 @@ separate compilation of all source files in VC++
 2. input fasta file (foreground set)
 3. output fasta file (background set)
 4. required number of found background sequences per one foreground sequence, Rbf (default value 5)
-5. deviation δ of mononucleitide content of a background sequence from that for a foreground sequence, (default value 0.01)
+5. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
 6. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
 7. genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
 8. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
