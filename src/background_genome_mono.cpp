@@ -997,7 +997,7 @@ int main(int argc, char *argv[])
 					fprintf(out_log, "Input file %s can't be opened!\n", file_log);
 					exit(1);
 				}
-				fprintf(out_log, "Calculations in progress... Required %d genomic sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
+				fprintf(out_log, "Required %d genomic sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
 				fclose(out_log);
 			}
 			if (heis >= stop)break;			
