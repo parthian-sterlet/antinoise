@@ -1117,7 +1117,7 @@ int main(int argc, char *argv[])
 			mo_one += mo[j];
 			motot[j] += mo[j];
 		}		
-		monotot += mo_one;
+		monotot += mo[0]+mo[3];
 		count_tot += sort[i].don;		
 		lendtot += di_one;
 		lenmtot += mo_one;
