@@ -1106,19 +1106,27 @@ int main(int argc, char *argv[])
 	{
 		GetSost(peak_real[0][sort[i].num], 2, 16, di);
 		GetSost(peak_real[0][sort[i].num], 1, 4, mo);
-		for (j = 0; j < 16; j++)ditot[j] += di[j];
-		for (j = 0; j < 4; j++)motot[j] += mo[j];
-		monotot += sort[i].len * sort[i].fat;
-		count_tot += sort[i].don;
-		int lend = sort[i].len - 1;
-		lendtot += lend;
-		lenmtot += sort[i].len;
+		int di_one = 0, mo_one = 0;
+		for (j = 0; j < 16; j++)
+		{
+			di_one += di[j];
+			ditot[j] += di[j];
+		}		
+		for (j = 0; j < 4; j++)
+		{
+			mo_one += mo[j];
+			motot[j] += mo[j];
+		}		
+		monotot += mo_one;
+		count_tot += sort[i].don;		
+		lendtot += di_one;
+		lenmtot += mo_one;
 		if (sort[i].don < height)
 		{					
 			fprintf(outm_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);					
 			fprintf(outd_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);
-			for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", 100 * (double)di[j]/lend);
-			fprintf(outm_one, "\t%f", 100*(double)(mo[0] + mo[3]) / sort[i].len);
+			for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", 100 * (double)di[j]/di_one);
+			fprintf(outm_one, "\t%f", 100*(double)(mo[0] + mo[3]) / mo_one);
 			fprintf(outd_one, "\n");
 			fprintf(outm_one, "\n");
 		}
