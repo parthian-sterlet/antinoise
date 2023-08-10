@@ -1091,9 +1091,9 @@ int main(int argc, char *argv[])
 		}
 	}
 	char dinu[16][3] = { "AA","AC","AG","AT","CA","CC","CG","CT","GA","GC","GG","GT","TA","TC","TG","TT" };
-	fprintf(outm_one, "A/T content (%%): selected background sequences vs. Foreground set\t%f\t%f\n", 100 * val[ista], 100 * val[iend]);
+	fprintf(outm_one, "A/T content (%%): selected foreground sequences vs. Foreground set\t%f\t%f\n", 100 * val[ista], 100 * val[iend]);
 	fprintf(outm_one, "\tA/T content (%%)\n");
-	fprintf(outd_one, "Dincucleotide frequencies (%%): selected background sequences vs. Foreground set\n");
+	fprintf(outd_one, "Dincucleotide frequencies (%%): selected foreground sequences vs. Foreground set\n");
 	for (j = 0; j < 16; j++)fprintf(outd_one, "\t%s", dinu[j]);
 	fprintf(outd_one, "\n");
 	int ditot[16];
