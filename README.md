@@ -23,7 +23,7 @@ cd antinoise\src\
 chmod a+x build.sh\
 ./build.sh
 
-* In Windiws system:
+* In Windows system:
 
 separate compilation of all source files in VC++
 ## Background sequences generaration: Genomic
