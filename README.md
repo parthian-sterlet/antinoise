@@ -7,7 +7,7 @@ Here we introduce the approach required in *de novo* motif search to generate th
 The source code is written in C++ language. To compile exetubables from the source code you need:
 
 * In Linux system, C++ compiler, e.g. [GCC](https://gcc.gnu.org/) compiler 
-* In Windiws system any VC++ package, e.g. [Microsoft Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
+* In Windows system any VC++ package, e.g. [Microsoft Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
 
 # Source code
 Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains files with the source codes, they respect to  genomic and synthetic background generation approaches.
