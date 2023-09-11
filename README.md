@@ -15,6 +15,9 @@ Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) co
 The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, at10). The output fasta file respects the input fasta file by the mononucleotide content. 
 ## 2. Synthetic
 The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic sequences matching the nucleotide content.
+
+The program [longext_many.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/longext_many.cpp) convert DNA sequence annotation BED format to DNA sequences in FASTA format using the reference genome sequences.
+
 # How to compile
 * In Linux system: 
 
@@ -50,3 +53,14 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 1. input fasta file (foreground set)
 2. output fasta file (background set)
 3. required number of found background sequences per one foreground sequence, Rbf (default value 5)
+
+## BED to FASTA conversion
+
+[longext_many.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/longext_many.cpp)
+1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
+2. input BED format file - tab-separated txt format, first column contains chromosome name (e.g. chr1, chr2, etc.), second/third columns contain starting/ending positions of genomic fragments, in subsequent columns symbols '+'/'-' designate DNA strand, and arbitrary identifier (e.g. peak quiality, gene names) are allowed
+3. output FASTA format file
+4. integer value, extention of all fragment sequences in 5' direction (default value 0)
+5. integer value, extention of all fragment sequences in 3' direction (default value 0)
+6. integer value, maximal length of a fragment (this option is useful for subsequent _de novo_ motif search
+7. genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
