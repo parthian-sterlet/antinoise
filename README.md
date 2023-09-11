@@ -16,7 +16,15 @@ The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/an
 ## 2. Synthetic
 The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic sequences matching the nucleotide content.
 
-The program [longext_many.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/longext_many.cpp) convert DNA sequence annotation BED format to DNA sequences in FASTA format using the reference genome sequences.
+## Additional supporting programs
+The program [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp) converts DNA sequences of a reference genome sequences from FASTA format to PLAIN format. 
+The program [bed_sort.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp) sort DNA annotation in BED according to chromosomes and positions. 
+
+Plain format is more convinient for subsequent applications, three listed below programs apply the plain format (a) the generation of genomic backgrouns sequences [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp), (b) extraction of DNA fragments as sequences in fasta format according to their annotation in BED format, and (c) genome masking.
+
+The program [longext_many.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/longext_many.cpp) converts DNA sequence annotation BED format to DNA sequences in FASTA format using the reference genome sequences. Genomes in fasta format are available in fasta format in public servers, e.g. Ensembl for [human](https://www.ensembl.org/Homo_sapiens/Info/Index), [mouse](https://www.ensembl.org/Mus_musculus/Info/Index) and [arabidopsis](https://plants.ensembl.org/Arabidopsis_thaliana/Info/Index). 
+
+The program [bed_chr_mask.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp) mask the reference genome sequences in PLAIN format accoridng certain annotation in BED format. Masking with 'N' as options performed either for all fragments listed in BED file, or for all the remaining part of the reference genome. This program can mask in a genome in plain format any 'blacklisted' genomic regions that should be excluded from consequent analysis.
 
 # How to compile
 * In Linux system: 
@@ -62,5 +70,5 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 3. output FASTA format file
 4. integer value, extention of all fragment sequences in 5' direction (default value 0)
 5. integer value, extention of all fragment sequences in 3' direction (default value 0)
-6. integer value, maximal length of a fragment (this option is useful for subsequent _de novo_ motif search
+6. integer value, maximal length of a fragment (this option is useful for subsequent _de novo_ motif search (values from 3000 to 12000 are recommended)
 7. genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
