@@ -241,14 +241,14 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	if ((in = fopen(argv[1], "rt")) == NULL)
+	if ((in = fopen(filei, "rt")) == NULL)
 	{
-		printf("Input file %s can't be opened!\n", argv[1]);
+		printf("Input file %s can't be opened!\n", filei);
 		exit(1);
 	}
-	if ((out = fopen(argv[2], "wt")) == NULL)
+	if ((out = fopen(fileo, "wt")) == NULL)
 	{
-		printf("Input file %s can't be opened!\n", argv[2]);
+		printf("Input file %s can't be opened!\n", fileo);
 		exit(1);
 	}	
 	char chr[5];	
