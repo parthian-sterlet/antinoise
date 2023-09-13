@@ -17,7 +17,7 @@ The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/an
 The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic sequences matching the nucleotide content.
 
 ## Additional supporting programs
-* The program [fasta_muliplefiles.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_muliplefiles.cpp) partitions DNA sequence file in FASTA format with muliple sequences into multiple files so that each of them contains only one sequence. In particular, this program is used to convert one file of the reference genome with sequences all chromosomes into multiple files od individual chromosomes. 
+* The program [fasta_muliplefiles.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_muliplefiles.cpp) partitions DNA sequence file in FASTA format with muliple sequences into multiple files so that all resulted output FASTA files repect individual sequences. In particular, this program is used to convert the reference genome with sequences of all chromosomes joined together in one FASTA file into multiple FASTA files of individual chromosomes. 
 * The program [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp) converts DNA sequences of a reference genome sequences from FASTA format to PLAIN format. 
 * The program [bed_sort.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp) sort DNA annotation in BED according to chromosomes and positions. Plain format is more convinient for subsequent applications than the default FASTA format of a DNA sequence. Unlike FASTA format, (a) the PLAIN format does not contain lines of sequence headers starting with '>'symbol, (b) the end of line symbols ('\n' in Linux or '\r\n' in Windows) mean only the end of a DNA sequence. Consequently, if a file in PLAIN format contains only one chromosome, then the end of a line is allowed only at the end of this file.
 * The program [bed_chr_separation.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_срк_separation.cpp) partitions a file in BED format into multiple BED files so that each of them lists annotatios for the same chromosome.
@@ -60,6 +60,11 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 2. output fasta file (background set)
 3. required number of found background sequences per one foreground sequence, Rbf (default value 5)
 
+## Partitiong of one FASTA file with multiple sequences into multiple file with individual sequences 
+  [fasta_muliplefiles.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_muliplefiles.cpp)
+1. input FASTA format file, mutiple sequences
+2. base name of output FASTA files, value ZZZ results output files ZZZ1.fa and ZZZ2.fa output file for the first and second sequences in input file, and so on next.
+
 ## Whole genome conversion from FASTA to PLAIN format
 [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp)
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
@@ -88,10 +93,8 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 2. output BED format file, sorted annotations
 3. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
 
-## partitiong of BED annotation for whole genome into chromosome-specific on separate BED 
-  [bed_sort.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp)
-1. input BED format file, unsorted annotations
-2. output BED format file, sorted annotations
+## Partitiong of BED annotation for multiple chromosomes into chromosome-specific on separate BED 
+  [bed_chr_separation.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_срк_separation.cpp) 
+1. input BED format file
+2. output BED format base name of file, value ZZZ results output files ZZZ_chr1.bed, ZZZ_chr2.bed for chr1 and chr2, respectively. 
 3. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
-
-tabnstolbik_wordget
