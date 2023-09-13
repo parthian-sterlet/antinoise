@@ -5,10 +5,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include  <time.h>
+#include "chromosome_name.h"
+#include "chromosome_len.h"
 #define Min(a,b) ((a)>(b))? (b):(a);
 #define Max(a,b) ((a)>(b))? (a):(b);
 #define SEQLEN 12000
-#define NCHR 50
+#define NCHR 100
 #define NBIN 50
 
 struct seqm {
@@ -383,8 +385,6 @@ void GetSost(char* d, int word, int size, int* sost)
 		}
 	}
 }
-#include "chromosome_data.h"
-
 int main(int argc, char *argv[])
 {
 	int i, j, k;
@@ -893,7 +893,7 @@ int main(int argc, char *argv[])
 						if (hei[i] < height)
 						{
 							hei[i]++;
-							fprintf(out, ">peak%d_%d_Mo_%f\n", sort[i].num, hei[i], mono);
+							fprintf(out, ">peak%d_%d_Mo_%f\tchr%s\t%d\t%d\n", sort[i].num, hei[i], mono, name_chr[chr_z], rb, rb + sort[i].len);
 							fprintf(out, "%s\n", d1);
 							if (hei[i] == height)heis++;
 							done = 1;

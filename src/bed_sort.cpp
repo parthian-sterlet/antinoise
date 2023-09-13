@@ -4,9 +4,10 @@
 #include  <string.h>
 #include  <math.h>
 #include  <time.h>
+#include "chromosome_name.h"
 #define Min(a,b) ((a)>(b))? (b):(a);
 #define Max(a,b) ((a)>(b))? (a):(b);
-#define NCHR 7000
+#define NCHR 100
 
 //#define COLUMN 1000
 //razbor i sortirovja annotaciy po 1mu i 2mu stolbikam
@@ -77,7 +78,6 @@ void RazborArea(char* str, areas* a)
 	loc = StrNStr(str, '\t', 2);
 	a->end = atoi(&str[loc]);
 }
-#include "chromosome_data.h"
 
 int main(int argc, char* argv[])
 {

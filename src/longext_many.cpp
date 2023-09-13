@@ -4,9 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "chromosome_name.h"
+#include "chromosome_len.h"
 #define Min(a,b) ((a)>(b))? (b):(a);
 #define Max(a,b) ((a)>(b))? (a):(b);
-#define NCHR 7000
+#define NCHR 100
 
 void ComplSym(char c, char &cc)
 {	
@@ -107,7 +109,7 @@ int Razbor(char *str, char *chr, int &b1, int &b2, char &cep, char *head)
 //example format: chr_num, e.g.[1-22.X,Y] pos1 pos2 strand[+ -] description
 {
 	int i,i0;
-	char heads[200];
+	char heads[2000];
 	if(strncmp(str,"chr",3)==0)i0=3;
 	else i0=0;
 	for(i=0;;i++)
@@ -138,7 +140,7 @@ int Razbor(char *str, char *chr, int &b1, int &b2, char &cep, char *head)
 		else cep = '\0';
 	//DelChar(str,'\n');
 	char sep = '\t';
-	memset(head,0,sizeof(head));	
+//	memset(head,0,sizeof(head));	
 	loc=StrNStr(str,'\t',4);
 	if(loc!=-1)	
 	{
@@ -150,8 +152,6 @@ int Razbor(char *str, char *chr, int &b1, int &b2, char &cep, char *head)
 	}
 	return 1;
 }
-
-#include "chromosome_data.h"
 
 int main(int argc, char *argv[])
 {
@@ -415,6 +415,7 @@ int main(int argc, char *argv[])
 		DelChar(d,'\n');
 		char chr_here[3];
 		memset(chr_here,0,sizeof(chr_here));
+		memset(head, 0, sizeof(head));
 		if(Razbor(d,chr_here,edge[0],edge[1],cep,head)==-1)
 		{
        		printf("String recognition error! %s\n",d);

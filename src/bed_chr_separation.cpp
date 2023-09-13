@@ -1,43 +1,86 @@
 #define _CRT_SECURE_NO_WARNINGS
-
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-//#include  <conio.h>
-#include "chromosome_name.h"
-#define SEQLEN 20001
+#include  <stdio.h>
+#include  <stdlib.h>
+#include  <string.h>
+#include  <math.h>
+#include  <time.h>
+#define Min(a,b) ((a)>(b))? (b):(a);
+#define Max(a,b) ((a)>(b))? (a):(b);
 #define NCHR 100
 
-void DelHole(char* str)
-{
-	char* hole;
+#include "chromosome_name.h"
 
-	hole = strstr(str, "\n");
-	if (hole != NULL) *hole = 0;
-}
-char TransSym(char c)
+int StrNStr(char* str, char c, int n)
 {
-	int cc = int(c);
-	if (cc >= 97) c = char(cc - 32);
-	return(c);
+	if (n == 0)return -1;
+	int i, len = strlen(str);
+	int k = 1;
+	for (i = 0; i < len; i++)
+	{
+		if (str[i] == c)
+		{
+			if (k == n)return i;
+			k++;
+		}
+	}
+	return -1;
+}
+int UnderStol(char* str, int nstol, char* ret, size_t size, char sep)
+{
+	memset(ret, 0, size);
+	int p1, p2, len;
+	if (nstol == 0)
+	{
+		p2 = StrNStr(str, sep, 1);
+		if (p2 == -1)p2 = strlen(str);
+		strncpy(ret, str, p2);
+		ret[p2] = '\0';
+		return 1;
+	}
+	else
+	{
+		p1 = StrNStr(str, sep, nstol);
+		p2 = StrNStr(str, sep, nstol + 1);
+		if (p2 == -1)
+		{
+			p2 = strlen(str);
+		}
+		if (p1 == -1 || p2 == -1) return -1;
+		len = p2 - p1 - 1;
+		strncpy(ret, &str[p1 + 1], len);
+		ret[len] = '\0';
+		return 1;
+	}
+}
+// delete symbol 'c' from input string
+void DelChar(char* str, char c)
+{
+	int i, lens, size;
+
+	size = 0;
+	lens = strlen(str);
+	for (i = 0; i < lens; i++)
+	{
+		if (str[i] != c)str[size++] = str[i];
+	}
+	str[size] = '\0';
 }
 
 int main(int argc, char* argv[])
 {
-	FILE* in, * out;
-	char path_fasta[500], genome[10], d[SEQLEN];
-	char filesta[500], fileoend[10], fileiend[10], filei[500], fileo[500];
-
-	if (argc != 3)
+	int i, nc, n_chr;
+	char filei[500], fileo_base[500], **fileochr, genome[10], d[500];
+	FILE* in;
+	if (argc != 4)
 	{
-		printf("Command line error: %s 1path_genome  2char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61)", argv[0]);
+		printf("Syntax %s: 1file_input 2file_output_base 3char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61)", argv[0]);
 		exit(1);
 	}
-	strcpy(path_fasta, argv[1]);
-	strcpy(genome, argv[2]);
-	
-	int nc, i, n_chr;
-	char name_chr[NCHR][10];	
+	strcpy(filei, argv[1]);
+	strcpy(fileo_base, argv[2]);
+	strcpy(genome, argv[3]);
+	char name_chr[NCHR][10], bedext[10];
+	strcpy(bedext,".bed");
 	int genome_rec = 0;
 	if (strcmp(genome, "at10") == 0)
 	{
@@ -185,97 +228,71 @@ int main(int argc, char* argv[])
 		printf("Genome %s is not recognized\n", genome);
 		exit(1);
 	}
-	strcpy(filesta, path_fasta);
-	strcat(filesta, "chr");
-	strcpy(fileiend, ".fa");
-	strcpy(fileoend, ".plain");
-
-	int len, fl, n;
-	for (nc = 0; nc < n_chr; nc++)
+	
+	fileochr = new char* [n_chr];
+	if (fileochr == NULL) { printf("Not  enough memory!"); return -1; }
+	for (i = 0; i < n_chr; i++)
 	{
-		strcpy(filei, filesta);		
-		strcat(filei, name_chr[nc]);
-		strcpy(fileo, filei);
-		strcat(filei, fileiend);
-		strcat(fileo, fileoend);
-		if ((in = fopen(filei, "rt")) == NULL)
-		{
-			printf("Input file %s can't be opened!",filei);
-			exit(1);
-		}
-		if ((out = fopen(fileo, "wt")) == NULL)
-		{
-			printf("Output file %s can't be opened!", fileo);
-			exit(1);
-		}
-		char c, symbol = '>';
-		char alfavit4[] = "atgcATGC";
-		char alfavit11[] = "wrmkysbvhdnWRMKYSBVHDN";
-		char alfavit15maska[] = "atgcwrmkysbvhdnxATGCWRMKYSBVHDNX";
-		char alfavit15maska_low[] = "atgcwrmkysbvhdnx";
-		char nka = 'N';
-		n = 0;
-		fl = 1;
-		len = 0;
-		n = 0;
-		do
-		{
-			c = getc(in);
-			if (c == EOF)fl = -1;
-			if (c == symbol || fl == -1)
-			{
-				if (n > 0)
-				{
-					fprintf(out, "\n");
-				}
-				if (c == symbol)n++;
-				if (fl == 1)
-				{
-					fgets(d, sizeof(d), in);
-					continue;
-				}
-			}
-			if (c == '\n')
-			{
-				continue;
-			}
-			if (c == '\t')continue;
-			if (c == ' ')continue;
-			if (c == '\r')continue;
-			if (fl == 1)
-			{
-				{
-					if (strchr(alfavit4, c) != NULL)
-					{
-						c = TransSym(c);//segal
-						fprintf(out, "%c", c);
-						len++;
-					}
-					else
-					{
-						if (strchr(alfavit11, c) != NULL)
-						{
-							//	fprintf(out,"%c",c);					
-							fprintf(out, "%c", nka);//segal
-							//	printf("%c",c);
-							len++;
-						}
-						else
-						{
-							{
-								printf("Wrong %c symbol found!", c);
-								exit(1);
-							}
-						}
-					}
-					if (len % 10000000 == 0)printf("\b\b\b\b\b\b\b\b\b\b%d", len);
-				}
-			}
-		} while (fl == 1);
-		printf("\b\b\b\b\b\b\b\b\b\b");
-		printf("%s %d bp completed\n", name_chr[nc], len);
-		fclose(in);
-		fclose(out);
+		fileochr[i] = new char[500];
+		if (fileochr[i] == NULL) { printf("Not  enough memory!"); return -1; }
 	}
-	return 1;
+
+	for (i = 0; i < n_chr; i++)
+	{
+		strcpy(fileochr[i], fileo_base);
+		strcat(fileochr[i], "_chr");
+		strcat(fileochr[i], name_chr[i]);
+		strcat(fileochr[i], bedext);
+	}
+
+	FILE** out;
+	out = new FILE * [n_chr];
+	if (out == NULL) { printf("Not  enough memory!"); return -1; }
+	for (i = 0; i < n_chr; i++)
+	{
+		if ((out[i] = fopen(fileochr[i], "wt")) == NULL)
+		{
+			printf("Out file %s can't be opened!\n", fileochr[i]);
+			exit(1);
+		}		
+	}
+	if ((in = fopen(filei, "rt")) == NULL)
+	{
+		printf("Input file %s can't be opened!\n", filei);
+		exit(1);
+	}
+	while (fgets(d, sizeof(d), in) != NULL)
+	{
+		DelChar(d, '\n');
+		char chr[10], tab = '\t';
+		int test;
+		test = UnderStol(d, 0, chr, sizeof(chr), tab);
+		if (test == -1) 
+		{ 
+			printf("Wrong format %s\n", d); 
+			exit(1); 
+		}		
+		int gom = -1;
+		for (nc = 0; nc < n_chr; nc++)
+		{
+			if (strcmp(&chr[3], name_chr[nc]) == 0)
+			{
+				gom = nc;
+				break;
+			}
+		}
+		if (gom == -1)
+		{
+			printf("Bed file %s line %s chromosome %s is absent in genome %s", filei, d, chr, genome);
+			exit(1);
+		}	
+		fprintf(out[gom], "%s\n", d);
+	}
+	for (i = 0; i < n_chr; i++)fclose(out[i]);
+	fclose(in);	
+	delete[] out;
+	for (i = 0; i < n_chr; i++) delete[] fileochr[i];
+	delete[] fileochr;
+	return 0;
 }
+

@@ -4,9 +4,10 @@
 #include  <string.h>
 #include  <math.h>
 #include  <time.h>
+#include "chromosome_name.h"
 #define Min(a,b) ((a)>(b))? (b):(a);
 #define Max(a,b) ((a)>(b))? (a):(b);
-#define NCHR 7000
+#define NCHR 100
 
 //masking razmetka 
 //input area
@@ -53,7 +54,6 @@ void RazborArea(char *str, areas *a)
 	loc=StrNStr(str,'\t',2);
 	a->pra=atoi(&str[loc]);
 }
-#include "chromosome_data.h"
 
 int main(int argc, char *argv[])
 {	
