@@ -1,5 +1,0 @@
-./fasta_to_plain chr1.fa chr1.plain s
-./fasta_to_plain chr2.fa chr2.plain s
-./fasta_to_plain chr3.fa chr3.plain s
-./fasta_to_plain chr4.fa chr4.plain s
-./fasta_to_plain chr5.fa chr5.plain s
