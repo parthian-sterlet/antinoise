@@ -1,0 +1,1 @@
+./no_mask.pl .../src/ .../genome/hg38/ .../genome/hs_no_mask/ Homo_sapiens.GRCh38.dna.primary_assembly.fa test2 hg38 2 0.01 10000 0.99
