@@ -80,7 +80,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 4. integer value, extention of all fragment sequences in 5' direction (default value 0)
 5. int maximal length of one fasta sequence
 6. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
-7. log file informing about abnormal termination of program due to errors in BED file (start/end positions are located beyond the chromosomes, etc.)
+7. log file informing about abnormal termination of program due to errors in BED file (start/end positions are located beyond the chromosomes, etc.), correct completion of a conversion implies that this file is empty
 
 ## Masking of whole genome sequences in PLAIN format according to genomic fragments from file in BED format
 [bed_chr_mask.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_mask.cpp)
