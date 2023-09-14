@@ -156,12 +156,12 @@ int Razbor(char *str, char *chr, int &b1, int &b2, char &cep, char *head)
 int main(int argc, char *argv[])
 {
 	int i, edge[2];
-	char d[20001], cep, head[2000], genome[10], path_fasta[500];
+	char d[20001], cep, head[2000], genome[10], path_fasta[500], file_err[500];
 	char fileip[80], fileissta[80], fileis[80], fileo[80], bufext[80];
 	FILE *out, *inp, *ins;
-	if(argc!=8)
+	if(argc!=9)
 	{
-		puts("Sintax: 1path_genome 2char input_pos_file, 3char output_seq_file 4,5 int left,right 6int len_max 7char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61)");   
+		puts("Sintax: 1path_genome 2char input_pos_file, 3char output_seq_file 4,5 int left,right 6int len_max 7char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61) 8file errors");   
 		exit(1);
 	}
 	strcpy(path_fasta, argv[1]);
@@ -174,6 +174,7 @@ int main(int argc, char *argv[])
 	int right=atoi(argv[5]);   
 	int maxlen=atoi(argv[6]);  
 	strcpy(genome, argv[7]);
+	strcpy(file_err, argv[8]);
 
 	int n_chr;
 	char name_chr[NCHR][10];
@@ -348,13 +349,12 @@ int main(int argc, char *argv[])
 		printf("Input file %s can't be opened!",fileo);
 		 exit(1);
 	}
-	char file_err[80];
-	strcpy(file_err,"longext_many_err.txt");
+//	strcpy(file_err,"longext_many_err.txt");
 	FILE *outerr;
 	if((outerr=fopen(file_err,"wt"))==NULL)
 	{
 		printf("Input file %s can't be opened!",file_err);
-			exit(1);
+		exit(1);
 	}
 	/*
 	char fileisext[80];
@@ -416,9 +416,11 @@ int main(int argc, char *argv[])
 		char chr_here[3];
 		memset(chr_here,0,sizeof(chr_here));
 		memset(head, 0, sizeof(head));
+		int lend = strlen(d);
+		if (lend == 0)continue;
 		if(Razbor(d,chr_here,edge[0],edge[1],cep,head)==-1)
 		{
-       		printf("String recognition error! %s\n",d);
+       		fprintf(outerr,"String recognition error! %s\n",d);
 			exit(1);
 		}				
 		//printf("%s",d);
@@ -456,7 +458,8 @@ int main(int argc, char *argv[])
 			if(edge[0]<0 || edge[1]>sizelo1[nchr_here])
 			{
 				fprintf(outerr,"Edges on chromosome %s\t0\t%d\t\tEdge query\t%d\t%d\n",chr_here,sizelo1[nchr_here],edge[0],edge[1]);
-				continue;
+				//continue;
+				exit(1);
 			}
 			int len1=edge[1]-edge[0];				
 			fprintf(out,">chr%s %d %d %c %s\n",chr_here,edge[0]+1,edge[1],cep,head);
@@ -507,7 +510,7 @@ int main(int argc, char *argv[])
 			printf("Sequence too long %d bp >= %d\n",diflen,maxlen);
 		}
 		n_str++;
-		if(n_str%500==0)printf("\b\b\b\b\b\b\b%7d",n_str);
+		//if(n_str%500==0)printf("\b\b\b\b\b\b\b%7d",n_str);
 	}
 	fclose(ins);
 	fclose(inp);
