@@ -959,7 +959,7 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		fprintf(out_log, "Calculations are completed. Required %d genomes sequences are found for %d input sequences out of total %d.", height, heis, nseq);		
-		if (bad_seq > 0)fprintf(out_log, "Totally %d sequences are ignored due to length or high content of polyN tracts", bad_seq);
+		if (bad_seq > 0)fprintf(out_log, " Totally %d sequences are ignored due to length or high content of polyN tracts", bad_seq);
 		fprintf(out_log, "\n");
 		fclose(out_log);
 	}
