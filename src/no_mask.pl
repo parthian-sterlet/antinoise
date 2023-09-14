@@ -3,7 +3,7 @@ use 5.8.1; use strict; use warnings;
 
 my ($cmd, $path_exe, $path_in, $path_out, $genome, $genome_fa, $bed_chipseq_file);
 my ($bedext, $chr, $backext, $faext);
-my ($gb_fold, $gb_at, $gb_limit, $gb_done, $gb_ext1, $gb_ext2, $gb_ext3, $gb_ext4, $gb_ext5);
+my ($gb_fold, $gb_at, $gb_limit, $gb_done, $gb_ext1, $gb_ext2, $gb_ext3, $gb_ext4, $gb_ext5, $bederr);
 
 if(scalar(@ARGV)==0){ die "Wrong arguments!";}
 
@@ -20,6 +20,7 @@ $gb_done=            $ARGV[9]; # the fraction of completely processed input sequ
 
 $bedext = ".bed", $faext = ".fa", $chr = "chr", $backext = "_gb";
 $gb_ext1 = ".outm", $gb_ext2 = ".outd", $gb_ext3 = ".outm_one", $gb_ext4 = ".outd_one", $gb_ext5 = ".outlog";
+$bederr = "bed_errors.txt";
 
 $cmd= "$path_exe/fasta_muliplefiles.exe ${path_in}${genome_fa} ${path_in}${chr} 0";
 print "$cmd\n";
@@ -29,7 +30,7 @@ $cmd= "$path_exe/fasta_to_plain0.exe ${path_in} ${genome}";
 print "$cmd\n";
 system $cmd;
 
-$cmd= "$path_exe/longext_many.exe ${path_in} ${bed_chipseq_file}${bedext} ${bed_chipseq_file}${faext} 0 0 3000 ${genome}";
+$cmd= "$path_exe/longext_many.exe ${path_in} ${bed_chipseq_file}${bedext} ${bed_chipseq_file}${faext} 0 0 3000 ${genome} ${path_out}${bederr}";
 print "$cmd\n";
 system $cmd;
 
