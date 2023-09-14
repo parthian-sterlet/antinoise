@@ -1,1 +1,1 @@
-./mask.pl .../src/ ../genome/hg38/ /genome/masked/ Homo_sapiens.GRCh38.dna.primary_assembly.fa GRCh38_unified_blacklist.bed test hg38 2 0.01 10000 0.99
+./mask.pl .../src/ ../genome/hg38/ .../genome/masked/ Homo_sapiens.GRCh38.dna.primary_assembly.fa GRCh38_unified_blacklist.bed test hg38 2 0.01 10000 0.99
