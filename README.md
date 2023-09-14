@@ -78,6 +78,8 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 2. input BED format file - tab-delimited txt format, first column contains chromosome name (e.g. chr1, chr2, etc.), second/third columns contain starting/ending positions of genomic fragments, in subsequent columns symbols '+'/'-' designate DNA strand, and arbitrary identifier (e.g. peak quiality, gene names) are allowed
 3. output FASTA format file
 4. integer value, extention of all fragment sequences in 5' direction (default value 0)
+5. int maximal length of one fasta sequence
+6. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
 
 ## Masking of whole genome sequences in PLAIN format according to genomic fragments from file in BED format
 [bed_chr_mask.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_mask.cpp)
