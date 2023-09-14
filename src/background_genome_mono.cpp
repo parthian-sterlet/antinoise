@@ -69,7 +69,7 @@ void DelChar(char *str, char c)
 	}
 	str[size] = '\0';
 }
-int CheckStr(char *file, char *d, int n, int print, int bad)
+int CheckStr(char *file, char *d, int n, int print, int &bad)
 {
 	int i, len, ret,di;
 	len = strlen(d);
@@ -92,7 +92,7 @@ int CheckStr(char *file, char *d, int n, int print, int bad)
 	}
 	return(ret);
 }
-void EvalSeq(char *file, int &nseq, int olen)
+void EvalSeq(char *file, int &nseq, int olen, int &bad_seq)
 {
 	char l[SEQLEN], d[SEQLEN], head[400];
 	int fl = 0;
@@ -119,6 +119,7 @@ void EvalSeq(char *file, int &nseq, int olen)
 			int check = CheckStr(file, d, n, 1,bad);
 			lenx -= bad;
 			if (lenx >= olen && check == 1)nseq++;
+			else bad_seq++;
 			n++;
 			if (fl == -1)
 			{
@@ -623,8 +624,8 @@ int main(int argc, char *argv[])
 	}
 	int tot_len = 0;
 	for (i = 0; i < n_chr; i++)tot_len += sizelo2[i];
-	int *len, nseq = 0, olen = win_gomol, *bad;
-	EvalSeq(filei, nseq, olen);
+	int *len, nseq = 0, olen = win_gomol, *bad, bad_seq=0;
+	EvalSeq(filei, nseq, olen, bad_seq);
 	len = new int[nseq];
 	if (len == NULL) { puts("Out of memory..."); exit(1); }
 	bad = new int[nseq];
@@ -957,7 +958,9 @@ int main(int argc, char *argv[])
 			fprintf(out_log, "Input file %s can't be opened!\n", file_log);
 			exit(1);
 		}
-		fprintf(out_log, "Calculations are completed. Required %d genomes sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
+		fprintf(out_log, "Calculations are completed. Required %d genomes sequences are found for %d input sequences out of total %d.", height, heis, nseq);		
+		if (bad_seq > 0)fprintf(out_log, "Totally %d sequences are ignored due to length or high content of polyN tracts", bad_seq);
+		fprintf(out_log, "\n");
 		fclose(out_log);
 	}
 	//qsort((void*)(&sele[0]), pr_tot, sizeof(sele[0]), compare_num);
