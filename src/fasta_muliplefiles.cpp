@@ -1,8 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include  <stdio.h>
+#include  <stdlib.h>
+#include  <string.h>
+#include  <math.h>
+#include  <time.h>
 
 #define SEQLEN 5000
 //#define DELTA 5000 // perekryvanie mejdu posl-tyami
@@ -19,14 +21,14 @@ int main(int argc, char *argv[])
 {
 int nseq=0;
 FILE *in, *out;
-char head[SEQLEN], basename[80], file[80], str_num[20];// , d[DELTA];
+char head[SEQLEN], basename[80], file[80], str[50];// , d[DELTA];
 int string_len=50000;
 int shift=200;
 char ext[]=".fa";
 
-if(argc!=3)
+if(argc!=4)
 {
-	printf("Command line error: %s 1 file_input_fasta 2file_out_name", argv[0]);
+	printf("Command line error: %s 1 file_input_fasta 2file_out_name 3int output filenames: 1 = 1,2,3, etc; 0 = from headers of sequences", argv[0]);
     exit(1);
 }
 if((in=fopen(argv[1],"rt"))==NULL)
@@ -36,11 +38,15 @@ if((in=fopen(argv[1],"rt"))==NULL)
 }
 int length=0;
 strcpy(basename,argv[2]);
-char c, symbol, c2;
+int mode = atoi(argv[3]);
+char c, symbol;
 symbol=getc(in);
 rewind(in);
 int part;
 out = NULL;
+char test1[10], test2[10], sep1 = ' ', sep2 = '\t';
+strcpy(test1, "chr");
+strcpy(test2, "Chr");
   while((c=getc(in))!=EOF)
   {
 	if(c==symbol)
@@ -52,10 +58,54 @@ out = NULL;
 		DelHole(head);
 		if(nseq>1)fclose(out);
 		memset(file,0,sizeof(file));
-		strcpy(file,basename);		
-		//_itoa(nseq,str_num,10);
-		sprintf(str_num, "%d", nseq);
-		strcat(file,str_num);		
+		strcpy(file,basename);				
+		memset(str, 0, sizeof(str));
+		if (mode == 1)
+		{
+			sprintf(str, "%d", nseq);
+		}
+		else
+		{			
+			int slen = 0;
+			int hlen = strlen(head);
+			int j;			
+			for (j = 0; j < hlen; j++)
+			{
+				if (head[j] == sep1 || head[j] == sep2)
+				{					
+					continue;
+				}
+				break;
+			}	
+			int j0 = j;
+			//if (hlen - j0 >= 3)
+			{
+				if (strncmp(&head[j0], test1, 3) == 0 || strncmp(&head[j0], test2, 3) == 0)j0 += 3;
+			}
+			for (j = j0;j<hlen; j++)
+			{
+				if (head[j] == sep1 || head[j] == sep2)
+				{
+					if (slen == 0)
+					{
+						printf("Error header recognition file %s header %s\n", argv[1], head);
+						exit(1);
+					}
+					break;
+				}
+				else
+				{
+					str[slen++] = head[j];
+				}
+			}
+			if (slen == 0)
+			{
+				printf("Error header recognition file %s header %s\n", argv[1], head);
+				exit(1);
+			}
+			str[slen] = '\0';
+		}
+		strcat(file, str);
 		strcat(file,ext);
 		if((out=fopen(file,"w+t"))==NULL)
 		{
