@@ -28,15 +28,15 @@ $cmd= "$path_exe/fasta_muliplefiles.exe ${path_in}${genome_fa} ${path_in}${chr} 
 print "$cmd\n";
 system $cmd;
 
+$cmd= "$path_exe/fasta_to_plain0.exe ${path_in} ${genome}";
+print "$cmd\n";
+system $cmd;
+
 $cmd= "$path_exe/bed_sort.exe ${path_out}${bed_blacklist_file} ${path_out}${bed_blacklist_file_sorted}${bedext} ${genome}";
 print "$cmd\n";
 system $cmd;
 
 $cmd= "$path_exe/bed_chr_separation.exe ${path_out}${bed_blacklist_file_sorted}${bedext} ${path_out}${bed_blacklist_file_sorted} ${genome}";
-print "$cmd\n";
-system $cmd;
-
-$cmd= "$path_exe/fasta_to_plain0.exe ${path_in} ${genome}";
 print "$cmd\n";
 system $cmd;
 
