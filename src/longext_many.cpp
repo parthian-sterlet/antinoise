@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 {
 	int i, edge[2];
 	char d[20001], cep, head[2000], genome[10], path_fasta[500], file_err[500];
-	char fileip[80], fileissta[80], fileis[80], fileo[80], bufext[80];
+	char fileip[500], fileissta[500], fileis[500], fileo[500], bufext[500];
 	FILE *out, *inp, *ins;
 	if(argc!=9)
 	{
