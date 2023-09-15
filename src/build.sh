@@ -16,4 +16,7 @@ chmod a+x fasta_muliplefiles.exe
 chmod a+x fasta_to_plain0.exe
 chmod a+x longext_many.exe
 chmod a+x mix0.exe
-
+chmod a+x mask.pl
+chmod a+x no_mask.pl
+chmod a+x mask_run
+chmod a+x no_mask_run
