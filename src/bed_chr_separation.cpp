@@ -284,7 +284,7 @@ int main(int argc, char* argv[])
 		if (gom == -1)
 		{
 			printf("Bed file %s line %s chromosome %s is absent in genome %s", filei, d, chr, genome);
-			exit(1);
+			continue;
 		}	
 		fprintf(out[gom], "%s\n", d);
 	}
