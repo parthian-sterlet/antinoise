@@ -12,7 +12,7 @@ The source code is written in C++ language. To compile exetubables from the sour
 # Source code
 Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains files with the source codes, they respect to  genomic and synthetic background generation approaches.
 ## 1. Genomic
-The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, at10). The output fasta file respects the input fasta file by the mononucleotide content. 
+The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output fasta file respects the input fasta file by the mononucleotide content. 
 ## 2. Synthetic
 The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic sequences matching the nucleotide content.
 
@@ -47,7 +47,7 @@ separate compilation of all source files in VC++
 4. required number of found background sequences per one foreground sequence, Rbf (default value 5)
 5. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
 6. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
-7. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
+7. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 8. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 9. output file, additional output table compares the A/T content in the foreground and background sequence sets
 10. output file, additional output table compares the dinucleotide frequencies in the foreground and background sequence sets
@@ -72,7 +72,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 ## Whole genome conversion from FASTA to PLAIN format
 [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp)
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
-2. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
+2. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
 ## BED to FASTA conversion
 [longext_many.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/longext_many.cpp)
@@ -81,7 +81,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 3. output FASTA format file
 4. integer value, extention of all fragment sequences in 5' direction (default value 0)
 5. int maximal length of one fasta sequence
-6. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
+6. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 7. log file informing about abnormal termination of program due to errors in BED file (start/end positions are located beyond the chromosomes, etc.), correct completion of a conversion implies that this file is empty
 
 ## Masking of whole genome sequences in PLAIN format according to genomic fragments from file in BED format
@@ -92,16 +92,16 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 4. input PLAIN format base name without default extension ".plain" (default value "chr", so that file name are chr1.plain, chr2.plain, etc.)
 5. output PLAIN format base name without default extension ".plain" (default value "chr", so that file name are chr1.plain, chr2.plain, etc., names are the same as input ones since input and output paths should be distinct)
 6. int masking option, value -1 implies masking with polyN tracks for genomic fragments from the input BED files, all genome loci are preserved the same as in input reference genome; value -1 implies masking with polyN tracks for all the genomic loci regions besides fragments from the input BED files, only genomic fragments from the input BED files are preserved the same as in input reference genome
-7. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
+7. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
 ## BED annotation sorting by chromosomes and positions
   [bed_sort.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp)
 1. input BED format file, unsorted annotations
 2. output BED format file, sorted annotations
-3. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
+3. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
 ## Partitiong of BED annotation for multiple chromosomes into chromosome-specific on separate BED 
   [bed_chr_separation.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_срк_separation.cpp) 
 1. input BED format file
 2. output BED format base name of file, value ZZZ results output files ZZZ_chr1.bed, ZZZ_chr2.bed for chr1 and chr2, respectively. 
-3. species and genome release (hg38, mm10, rn6, zf11, dm6, ce235, at10, gm21, zm73, mp61, sc64 and sch294 for *Homo sapiens, Mus musculus, Rattus norvegicus, Danio rerio, Drosophila melanogaster, Caenorhabditis elegans, Arabidopsis thaliana, Glycine max, Zea mays, Marchantia polymorpha, Saccharomyces cerevisiae* and *Schizosaccharomyces pombe* genomes, respectively)
+3. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
