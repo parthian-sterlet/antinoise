@@ -31,6 +31,7 @@ Perl scripts [no_mask_pl](https://github.com/parthian-sterlet/antinoise/blob/mai
 * In Linux system: 
 
 git clone https://github.com/parthian-sterlet/antinoise
+
 cd antinoise\src\
 chmod a+x build.sh\
 ./build.sh
