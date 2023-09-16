@@ -894,7 +894,7 @@ int main(int argc, char *argv[])
 						if (hei[i] < height)
 						{
 							hei[i]++;
-							fprintf(out, ">peak%d_%d_Mo_%f\tchr%s\t%d\t%d\n", sort[i].num, hei[i], mono, name_chr[chr_z], rb, rb + sort[i].len);
+							fprintf(out, ">chr%s\t%d\t%d\tpeak%d_%d_Mo_%f\n", name_chr[chr_z], rb, rb + sort[i].len, sort[i].num, hei[i], mono);
 							fprintf(out, "%s\n", d1);
 							if (hei[i] == height)heis++;
 							done = 1;
@@ -958,8 +958,8 @@ int main(int argc, char *argv[])
 			fprintf(out_log, "Input file %s can't be opened!\n", file_log);
 			exit(1);
 		}
-		fprintf(out_log, "Calculations are completed. Required %d genomes sequences are found for %d input sequences out of total %d.", height, heis, nseq);		
-		if (bad_seq > 0)fprintf(out_log, " Totally %d sequences are ignored due to length or high content of polyN tracts", bad_seq);
+		fprintf(out_log, "Calculations are completed. Required %d genomes sequences are found for %d input sequences out of total %d. ", height, heis, nseq);		
+		if (bad_seq > 0)fprintf(out_log, "Totally %d sequences are ignored due to length or high content of polyN tracts", bad_seq);
 		fprintf(out_log, "\n");
 		fclose(out_log);
 	}
