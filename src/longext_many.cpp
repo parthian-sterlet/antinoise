@@ -420,9 +420,23 @@ int main(int argc, char *argv[])
 		if (lend == 0)continue;
 		if(Razbor(d,chr_here,edge[0],edge[1],cep,head)==-1)
 		{
-       		fprintf(outerr,"String recognition error! %s\n",d);
-			exit(1);
-		}				
+       		printf("BED format warning! Line ignored %s\n",d);
+			continue;
+		}	
+		int nchr_here = -1;
+		for (i = 0; i < n_chr; i++)
+		{
+			if (strcmp(chr_here, name_chr[i]) == 0)
+			{
+				nchr_here = i;
+				break;
+			}
+		}
+		if (nchr_here == -1)
+		{
+			printf("BED format warning! Reference genome is not recognized: %s\n", d);
+			continue;
+		}
 		//printf("%s",d);
 		int diflen=edge[1]-edge[0];
 		if(diflen<maxlen)
@@ -441,15 +455,6 @@ int main(int argc, char *argv[])
 				}
 				strcpy(fileis_prev,fileis);
 				op='+';
-			}
-			int nchr_here=0;
-			for(i=0;i<n_chr;i++)
-			{
-				if(strcmp(chr_here,name_chr[i])==0)
-				{
-					nchr_here=i;
-					break;
-				}
 			}
 			edge[0]-=left;
 			//if(edge[0]<0)edge[0]=1;
