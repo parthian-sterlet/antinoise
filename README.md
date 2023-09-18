@@ -12,7 +12,7 @@ The source code is written in C++ language. To compile exetubables from the sour
 # Source code
 Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains files with the source codes, they respect to  genomic and synthetic background generation approaches.
 ## 1. Genomic
-The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output fasta file respects the input fasta file by the mononucleotide content. 
+The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output FASTA file respects the input FASTA file by the mononucleotide content. 
 ## 2. Synthetic
 The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic sequences matching the nucleotide content.
 
@@ -25,7 +25,7 @@ The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/sr
 * The program [bed_chr_mask.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_mask.cpp) masks the reference genome sequences in PLAIN format accoridng a given input annotation in BED format. Masking with 'N' as options is performed either (a) for all fragments listed in BED file, or (b) for all the remaining parts of the reference genome. This program uses any file in BED format with any 'blacklisted' genomic regions to mask the reference genome in PLAIN format. Hence, 'blacklisted' genomic regions will be excluded from a consequent analysis completely.
 
 ## Scripts to run AntiNoise with the support of the blacklists filtering
-Perl scripts [no_mask_pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/no_mask.pl) and [mask_pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) show example application of the genomic approach for the background generation for a tested annotation of peaks in BED format without and with application of additional annotation of blacklisted regions of a genome in BED format, e.g. [this example](https://github.com/parthian-sterlet/antinoise/blob/main/src/GRCh38_unified_blacklist.bed) for human from [(Amemiya et al., 2019)](https://doi.org/10.1038/s41598-019-45839-z), [ENCODE](https://www.encodeproject.org/annotations/ENCSR636HFF/) Note that each of these scripts starts from one fasta file containing all chromosomes of certain reference genome. This file should taken in the public database, e.g. [this one for human](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz)
+Perl scripts [no_mask_pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/no_mask.pl) and [mask_pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) show example application of the genomic approach for the background generation for a tested annotation of peaks in BED format without and with application of additional annotation of blacklisted regions of a genome in BED format, e.g. [this example](https://github.com/parthian-sterlet/antinoise/blob/main/src/GRCh38_unified_blacklist.bed) for human from [(Amemiya et al., 2019)](https://doi.org/10.1038/s41598-019-45839-z), [ENCODE](https://www.encodeproject.org/annotations/ENCSR636HFF/) Note that each of these scripts starts from one FASTA file containing all chromosomes of certain reference genome. This file should taken in the public database, e.g. [this one for human](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz)
 
 # How to compile
 * In Linux system: 
@@ -43,8 +43,8 @@ separate compilation of all source files in VC++
 
 [background_genome_mono.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/background_genome_mono.cpp)
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
-2. input fasta file (foreground set)
-3. output fasta file (background set)
+2. input FASTA file (foreground set)
+3. output FASTA file name without extension (background set), two extensions ".fa" and ".bed" define output files in FASTA and BED formats
 4. required number of found background sequences per one foreground sequence, Rbf (default value 5)
 5. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
 6. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
@@ -56,19 +56,19 @@ separate compilation of all source files in VC++
 12. output file, additional output table compares (a) the dinucleotide frequencies in all input sequences that did not achieve the required number of found background sequences per one foreground sequence Rbf and (b) the average dinucleotide frequencies for the foreground sequnce set.
 13. output file, current progress in calculation, the fraction of completely processed foreground sequences, i.e. for each such foreground sequence exactly Rbf background sequences were found 
 
-Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in fasta format. These plain files should contain only nucleotides A, T, G, C, N, all other degenerate nucleotides for simplicity are replaced by 'N'. The symbols like ' ', '\t' etc. are deleted, e.g. for *A. thaliana* genome five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Additional scripts described above [no_mask_pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/no_mask.pl) and [mask_pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) are applied to consruct functional pipelines including generation of these files in PLAIN format
+Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in FASTA format. These plain files should contain only nucleotides A, T, G, C, N, all other degenerate nucleotides for simplicity are replaced by 'N'. The symbols like ' ', '\t' etc. are deleted, e.g. for *A. thaliana* genome five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Additional scripts described above [no_mask_pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/no_mask.pl) and [mask_pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) are applied to consruct functional pipelines including generation of these files in PLAIN format
 
 ## Background sequences generation: Synthetic
 [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp)
-1. input fasta file (foreground set)
-2. output fasta file (background set)
+1. input FASTA file (foreground set)
+2. output FASTA file (background set)
 3. required number of found background sequences per one foreground sequence, Rbf (default value 5)
 
 ## Partitiong of one FASTA file with multiple sequences into multiple file with individual sequences 
   [fasta_muliplefiles.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_muliplefiles.cpp)
 1. input FASTA format file, mutiple sequences
 2. base name of output FASTA files, value ZZZ results output files ZZZ1.fa and ZZZ2.fa output file for the first and second sequences in input file, and so on next
-3. int mode for output filenames: values 1 means the order 1,2,3, etc., i.e. filenames do not depend on the information in sequence headers after '>' in input fasta file; 0 = filenames are defined by the information in sequence headers after '>' in input fasta file. For example, for human genome with headers of chromosomes { >chr1, >chr2, ... , >chr22, >chrX and >chrY } and value 0 provides exactly {chr1.fa, chr2.fa, ... , chr22.fa, chrX.fa and chrY.fa }, while value 1 does not
+3. int mode for output filenames: values 1 means the order 1,2,3, etc., i.e. filenames do not depend on the information in sequence headers after '>' in input FASTA file; 0 = filenames are defined by the information in sequence headers after '>' in input FASTA file. For example, for human genome with headers of chromosomes { >chr1, >chr2, ... , >chr22, >chrX and >chrY } and value 0 provides exactly {chr1.fa, chr2.fa, ... , chr22.fa, chrX.fa and chrY.fa }, while value 1 does not
 
 ## Whole genome conversion from FASTA to PLAIN format
 [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp)
@@ -81,7 +81,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 2. input BED format file - tab-delimited txt format, first column contains chromosome name (e.g. chr1, chr2, etc.), second/third columns contain starting/ending positions of genomic fragments, in subsequent columns symbols '+'/'-' designate DNA strand, and arbitrary identifier (e.g. peak quiality, gene names) are allowed
 3. output FASTA format file
 4. integer value, extention of all fragment sequences in 5' direction (default value 0)
-5. int maximal length of one fasta sequence
+5. int maximal length of one FASTA sequence
 6. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 7. log file informing about abnormal termination of program due to errors in BED file (start/end positions are located beyond the chromosomes, etc.), correct completion of a conversion implies that this file is empty
 
