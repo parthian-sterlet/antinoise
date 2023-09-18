@@ -389,9 +389,9 @@ void GetSost(char* d, int word, int size, int* sost)
 int main(int argc, char *argv[])
 {
 	int i, j, k;
-	char d[SEQLEN], d1[SEQLEN], filesta[10], fileend[10], genome[10];
-	char filei[500], fileo1[500], fileosta_mo[500], fileosta_di[500], fileosta_mo_one[500], fileosta_di_one[500], file_log[500], filechr[NCHR][500], path_fasta[500];
-	FILE *out, *in_seq[NCHR], *outm, *outd, *outm_one, *outd_one;
+	char d[SEQLEN], d1[SEQLEN], filesta[10], fileend[10], genome[10], filefasext[10], filebedext[10];
+	char filei[500], fileofas[500], fileobed[500], fileosta_mo[500], fileosta_di[500], fileosta_mo_one[500], fileosta_di_one[500], file_log[500], filechr[NCHR][500], path_fasta[500];
+	FILE *out_fas, *out_bed, *in_seq[NCHR], *outm, *outd, *outm_one, *outd_one;
 	if (argc != 14)
 	{
 		puts("Sintax: 1 path_genome 2file in_fa, 3file out_fa 4int height 5double mono prec 6int back_iter 7char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61)");
@@ -400,13 +400,19 @@ int main(int argc, char *argv[])
 	}
 	strcpy(filesta, "chr");
 	strcpy(fileend, ".plain");
+	strcpy(filebedext, ".bed");
+	strcpy(filefasext, ".fa");
 	char name_chr[NCHR][10];
 
 	int sizelo1[NCHR], sizelo2[NCHR];//lengths in bp, Mb
 	int n_chr=0;
 	strcpy(path_fasta, argv[1]);
 	strcpy(filei, argv[2]);//in_file
-	strcpy(fileo1, argv[3]);//out_file seq
+	strcpy(fileofas, argv[3]);//out_file seq	
+	strcat(fileofas, filefasext);//out_file bed
+	strcpy(fileobed, argv[3]);//out_file seq
+	strcat(fileobed, filebedext);//out_file bed
+
 	int height = atoi(argv[4]);
 	double mono_prec = atof(argv[5]);
 	int back_iter = atoi(argv[6]);
@@ -417,6 +423,7 @@ int main(int argc, char *argv[])
 	strcpy(fileosta_mo_one, argv[11]);//out_file sta dinucl content
 	strcpy(fileosta_di_one, argv[12]);//out_file sta dinucl content
 	strcpy(file_log, argv[13]);//out_file sta dinucl content	
+
 	if (mono_prec >= 0.5 || mono_prec <= 0)
 	{
 		printf("Mononucleotide precision %f is wrong!\n", mono_prec);
@@ -791,11 +798,16 @@ int main(int argc, char *argv[])
 			if (rat > stop_thr)break;
 		}		
 	}*/
-	if ((out = fopen(fileo1, "wt")) == NULL)
+	if ((out_fas = fopen(fileofas, "wt")) == NULL)
 	{
-		printf("Input file %s can't be opened!", fileo1);
+		printf("Input file %s can't be opened!", fileofas);
 		exit(1);
 	}	
+	if ((out_bed = fopen(fileobed, "wt")) == NULL)
+	{
+		printf("Input file %s can't be opened!", fileobed);
+		exit(1);
+	}
 	int size = 0;
 	iter = pr_tot = 0;
 	trys = nseq * back_iter;
@@ -894,8 +906,9 @@ int main(int argc, char *argv[])
 						if (hei[i] < height)
 						{
 							hei[i]++;
-							fprintf(out, ">chr%s\t%d\t%d\tpeak%d_%d_Mo_%f\n", name_chr[chr_z], rb, rb + sort[i].len, sort[i].num, hei[i], mono);
-							fprintf(out, "%s\n", d1);
+							fprintf(out_fas, ">chr%s\t%d\t%d\tpeak%d_%d_Mo_%f\n", name_chr[chr_z], rb, rb + sort[i].len, sort[i].num, hei[i], mono);
+							fprintf(out_fas, "%s\n", d1);
+							fprintf(out_bed, "chr%s\t%d\t%d\n", name_chr[chr_z], rb, rb + sort[i].len);
 							if (hei[i] == height)heis++;
 							done = 1;
 							size++;
@@ -965,7 +978,8 @@ int main(int argc, char *argv[])
 	}
 	//qsort((void*)(&sele[0]), pr_tot, sizeof(sele[0]), compare_num);
 	for (i = 0; i < n_chr; i++)fclose(in_seq[i]);
-	fclose(out);
+	fclose(out_fas);
+	fclose(out_bed);
 	for (i = 0; i < nseq; i++)sort[i].don = hei[i];
 	delete[] hei;
 	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_num);		
