@@ -271,13 +271,13 @@ int main(int argc, char* argv[])
 		{
 			printf("Wrong format %s\n", d);
 			exit(1);
-		}
+		}		
+		int nclen = strlen(chr);
 		int gom = -1;
 		for (nc = 0; nc < n_chr; nc++)
 		{
 			strcpy(chr_here, "chr");
-			strcat(chr_here, name_chr[nc]);
-			int nclen = strlen(chr_here);
+			strcat(chr_here, name_chr[nc]);			
 			int sc = strncmp(chr, chr_here, nclen);
 			if (sc == 0)
 			{
