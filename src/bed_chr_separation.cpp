@@ -275,7 +275,8 @@ int main(int argc, char* argv[])
 		int gom = -1;
 		for (nc = 0; nc < n_chr; nc++)
 		{
-			if (strcmp(&chr[3], name_chr[nc]) == 0)
+			int nclen = strlen(name_chr[nc]);
+			if (strncmp(&chr[3], name_chr[nc],nclen) == 0)
 			{
 				gom = nc;
 				break;
