@@ -264,19 +264,22 @@ int main(int argc, char* argv[])
 	while (fgets(d, sizeof(d), in) != NULL)
 	{
 		DelChar(d, '\n');
-		char chr[10], tab = '\t';
+		char chr[50], chr_here[50], tab = '\t';
 		int test;
 		test = UnderStol(d, 0, chr, sizeof(chr), tab);
-		if (test == -1) 
-		{ 
-			printf("Wrong format %s\n", d); 
-			exit(1); 
-		}		
+		if (test == -1)
+		{
+			printf("Wrong format %s\n", d);
+			exit(1);
+		}
 		int gom = -1;
 		for (nc = 0; nc < n_chr; nc++)
 		{
-			int nclen = strlen(name_chr[nc]);
-			if (strncmp(&chr[3], name_chr[nc],nclen) == 0)
+			strcpy(chr_here, "chr");
+			strcat(chr_here, name_chr[nc]);
+			int nclen = strlen(chr_here);
+			int sc = strncmp(chr, chr_here, nclen);
+			if (sc == 0)
 			{
 				gom = nc;
 				break;
