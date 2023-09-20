@@ -77,7 +77,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 2. output BED format file, overlapping of fragments is absent
 3. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
-## Partitiong of BED annotation for multiple chromosomes into chromosome-specific on separate BED 
+## Partitiong of BED annotation for multiple chromosomes into multiples chromosome-specific BED annotations
   [bed_chr_separation.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_срк_separation.cpp) 
 1. input BED format file
 2. output BED format base name of file, value ZZZ results output files ZZZ_chr1.bed, ZZZ_chr2.bed for chr1 and chr2, respectively. 
