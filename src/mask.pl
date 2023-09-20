@@ -28,10 +28,6 @@ $cmd= "$path_exe/fasta_muliplefiles.exe ${path_in}${genome_fa} ${path_in}${chr} 
 print "$cmd\n";
 system $cmd;
 
-$cmd= "$path_exe/fasta_to_plain0.exe ${path_in} ${genome}";
-print "$cmd\n";
-system $cmd;
-
 $cmd= "$path_exe/bed_sort.exe ${path_out}${bed_blacklist_file} ${path_out}${bed_blacklist_file_sorted}${bedext} ${genome}";
 print "$cmd\n";
 system $cmd;
@@ -40,15 +36,19 @@ $cmd= "$path_exe/bed_chr_separation.exe ${path_out}${bed_blacklist_file_sorted}$
 print "$cmd\n";
 system $cmd;
 
+$cmd= "$path_exe/fasta_to_plain0.exe ${path_in} ${genome}";
+print "$cmd\n";
+system $cmd;
+
 $cmd= "$path_exe/bed_chr_mask.exe ${path_in} ${path_out} ${bed_blacklist_file_sorted} ${chr} ${chr} -1 ${genome}";
 print "$cmd\n";
 system $cmd;
 
-$cmd= "$path_exe/longext_many.exe ${path_out} ${bed_chipseq_file}${bedext} ${bed_chipseq_file}${faext} 0 0 3000 ${genome} ${path_out}${bederr}";
+$cmd= "$path_exe/longext_many.exe ${path_in} ${bed_chipseq_file}${bedext} ${bed_chipseq_file}${faext} 0 0 3000 ${genome} ${path_out}${bederr}";
 print "$cmd\n";
 system $cmd;
 
-$cmd= "$path_exe/background_genome_mono.exe ${path_out} ${path_out}${bed_chipseq_file}${faext} ${path_out}${bed_chipseq_file}${backext}${faext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${gb_done} ${path_out}${bed_chipseq_file}${gb_ext1} ${path_out}${bed_chipseq_file}${gb_ext2} ${path_out}${bed_chipseq_file}${gb_ext3} ${path_out}${bed_chipseq_file}${gb_ext4} ${path_out}${bed_chipseq_file}${gb_ext5}";
+$cmd= "$path_exe/background_genome_mono.exe ${path_out} ${path_out}${bed_chipseq_file}${faext} ${path_out}${bed_chipseq_file}${backext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${gb_done} ${path_out}${bed_chipseq_file}${gb_ext1} ${path_out}${bed_chipseq_file}${gb_ext2} ${path_out}${bed_chipseq_file}${gb_ext3} ${path_out}${bed_chipseq_file}${gb_ext4} ${path_out}${bed_chipseq_file}${gb_ext5}";
 print "$cmd\n";
 system $cmd;
 
