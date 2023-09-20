@@ -9,7 +9,7 @@ if(scalar(@ARGV)==0){ die "Wrong arguments!";}
 
 $path_exe=           $ARGV[0]; # path to executable: fasta_muliplefiles.exe, bed_chr_separation.exe, background_genome_mono.exe, fasta_to_plain0.exe, longext_many.exe, bed_chr_mask.exe, bed_sort.exe
 $path_in=            $ARGV[1]; # reference genome in FASTA format, respective genome in PLAIN format also will be there
-$path_out=           $ARGV[2]; # output path, place balacklist file there
+$path_out=           $ARGV[2]; # output path, place balacklist file there, masked genome also will be there
 $genome_fa=          $ARGV[3]; # reference genome in FASTA format, should be placed in the folder $path_in (see below), e.g. Homo_sapiens.GRCh38.dna.primary_assembly.fa from https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 $bed_chipseq_file=   $ARGV[4]; # BED file tested, without extention ".bed"
 $genome=             $ARGV[5]; # genome, hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61
@@ -34,7 +34,7 @@ $cmd= "$path_exe/longext_many.exe ${path_in} ${bed_chipseq_file}${bedext} ${bed_
 print "$cmd\n";
 system $cmd;
 
-$cmd= "$path_exe/background_genome_mono.exe ${path_in} ${path_out}${bed_chipseq_file}${faext} ${path_out}${bed_chipseq_file}${backext}${faext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${gb_done} ${path_out}${bed_chipseq_file}${gb_ext1} ${path_out}${bed_chipseq_file}${gb_ext2} ${path_out}${bed_chipseq_file}${gb_ext3} ${path_out}${bed_chipseq_file}${gb_ext4} ${path_out}${bed_chipseq_file}${gb_ext5}";
+$cmd= "$path_exe/background_genome_mono.exe ${path_in} ${path_out}${bed_chipseq_file}${faext} ${path_out}${bed_chipseq_file}${backext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${gb_done} ${path_out}${bed_chipseq_file}${gb_ext1} ${path_out}${bed_chipseq_file}${gb_ext2} ${path_out}${bed_chipseq_file}${gb_ext3} ${path_out}${bed_chipseq_file}${gb_ext4} ${path_out}${bed_chipseq_file}${gb_ext5}";
 print "$cmd\n";
 system $cmd;
 
