@@ -45,8 +45,8 @@ All three scripts presumed input sequences in BED format, if you have already FA
 
 git clone https://github.com/parthian-sterlet/antinoise
 
-cd antinoise\src\
-chmod a+x build.sh\
+cd antinoise/src/
+chmod a+x build.sh
 ./build.sh
 
 * In Windows system:
