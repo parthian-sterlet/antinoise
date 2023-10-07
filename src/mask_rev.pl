@@ -50,7 +50,7 @@ $cmd= "$path_exe/bed_chr_mask.exe ${path_in} ${path_out} ${bed_whitelist_file_so
 print "$cmd\n";
 system $cmd;
 
-$cmd= "$path_exe/longext_many.exe ${path_in} ${bed_chipseq_file}${bedext} ${bed_chipseq_file}${faext} 0 0 3000 ${genome} ${path_out}${bederr}";
+$cmd= "$path_exe/longext_many.exe ${path_in} ${path_out}${bed_chipseq_file}${bedext} ${path_out}${bed_chipseq_file}${faext} 0 0 3000 ${genome} ${path_out}${bederr}";
 print "$cmd\n";
 system $cmd;
 
