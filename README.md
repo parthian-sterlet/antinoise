@@ -126,7 +126,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 6. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 7. log file informing about abnormal termination of program due to errors in BED file (start/end positions are located beyond the chromosomes, etc.), correct completion of a conversion implies that this file is empty
 
-## Script to extract background sequences the entire reference genome
+## Perl script to extract background sequences the entire reference genome
 [No_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
@@ -139,9 +139,9 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 9. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
 10. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
-## Scripts to extract background sequences from the specifically masked entire reference genome
-A. [Mask_blacklisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) implies extraction of background sequences only from certain specific, whitelisted regions e.g. promoter regions of genes
-B. [Mask_whitelisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl) implies extraction of background sequences from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
+## Perl scripts to extract background sequences from the specifically masked entire reference genome
+* [Mask_blacklisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) implies extraction of background sequences only from certain specific, whitelisted regions e.g. promoter regions of genes
+* [Mask_whitelisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl) implies extraction of background sequences from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
 Both options mean the respective lists of parameters
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
