@@ -125,3 +125,30 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 5. int maximal length of one FASTA sequence
 6. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 7. log file informing about abnormal termination of program due to errors in BED file (start/end positions are located beyond the chromosomes, etc.), correct completion of a conversion implies that this file is empty
+
+## Script to extract background sequences the entire reference genome
+[No_mask](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl), [whitelist](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl),
+1 path to executables for all desribed above c++ files from this github repository
+2 path to the reference genome in FASTA format, this file must contain all chromosomes
+3 path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
+4 reference genome in FASTA format, e.g. Homo_sapiens.GRCh38.dna.primary_assembly.fa from https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+5 BED filename without extention ".bed", peaks (foreground sequences)
+6 species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
+7 required number of found background sequences per one foreground sequence, Rbf (default value 5)
+8 deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+9 total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+10 threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+
+## Scripts to extract background sequences (a) only from the whitelisted regions (e.g. promoter regions of genes) or (b) from the entire reference genome excluding certain blacklisted regions (e.g. specific genome regions to be avoided in output background sequences)
+(a) [Mask_blacklisted](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl), (b) [Maskwhitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl),
+1 path to executables for all desribed above c++ files from this github repository
+2 path to the reference genome in FASTA format, this file must contain all chromosomes
+3 path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
+4 reference genome in FASTA format, e.g. Homo_sapiens.GRCh38.dna.primary_assembly.fa from https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+5 BED file, whitelisted/blacklisted regions
+6 BED filename without extention ".bed", peaks (foreground sequences)
+7 species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
+8 required number of found background sequences per one foreground sequence, Rbf (default value 5)
+9 deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+10 total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+11 threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
