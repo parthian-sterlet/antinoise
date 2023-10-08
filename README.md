@@ -127,7 +127,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 7. log file informing about abnormal termination of program due to errors in BED file (start/end positions are located beyond the chromosomes, etc.), correct completion of a conversion implies that this file is empty
 
 ## Script to extract background sequences the entire reference genome
-[No_mask](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl), [whitelist](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl),
+[No_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
@@ -140,7 +140,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 10. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 ## Scripts to extract background sequences (a) only from the whitelisted regions (e.g. promoter regions of genes) or (b) from the entire reference genome excluding certain blacklisted regions (e.g. specific genome regions to be avoided in output background sequences)
-(a) [Mask_blacklisted](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl), (b) [Maskwhitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl),
+(a) [Mask_blacklisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl), (b) [Mask_whitelisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl)
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
