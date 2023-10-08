@@ -139,9 +139,10 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 9. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
 10. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
-## Scripts to extract background sequences from masked genomed 
-(a) [Mask_blacklisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) implies extraction of background sequences only from certain specific, whitelisted regions e.g. promoter regions of genes
-(b) [Mask_whitelisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl) implies extraction of background sequences from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
+## Scripts to extract background sequences from the specifically masked entire reference genome
+A. [Mask_blacklisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) implies extraction of background sequences only from certain specific, whitelisted regions e.g. promoter regions of genes
+B. [Mask_whitelisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_rev.pl) implies extraction of background sequences from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
+Both options mean the respective lists of parameters
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
