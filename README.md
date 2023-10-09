@@ -12,7 +12,7 @@ The source code is written in C++ language. To compile exetubables from the sour
 # Source code
 Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains files with the source codes, they respect to  genomic and synthetic background generation approaches.
 ## 1. Genomic
-The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output FASTA file respects the input FASTA file by the mononucleotide content. 
+The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output FASTA file respects the input FASTA file by the A/T content. File 
 ## 2. Synthetic
 The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic sequences matching the nucleotide content.
 
@@ -68,6 +68,8 @@ separate compilation of all source files in VC++
 11. output file, additional output table compares (a) the A/T content for all input sequences that did not achieve the required number of found background sequences per one foreground sequence Rbf and (b) the average A/T content for the foreground sequnce set.
 12. output file, additional output table compares (a) the dinucleotide frequencies in all input sequences that did not achieve the required number of found background sequences per one foreground sequence Rbf and (b) the average dinucleotide frequencies for the foreground sequnce set.
 13. output file, current progress in calculation, the fraction of completely processed foreground sequences, i.e. for each such foreground sequence exactly Rbf background sequences were found 
+
+Example run [command_line_main](https://github.com/parthian-sterlet/antinoise/blob/main/src/command_line_main)
 
 Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in FASTA format. These plain files should contain only nucleotides A, T, G, C, N, all other degenerate nucleotides for simplicity are replaced by 'N'. The symbols like ' ', '\t' etc. are deleted, e.g. for *A. thaliana* genome five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Three additional scripts are applied to consruct functional pipelines including generation of these files in PLAIN format: [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/no_mask.pl), [mask_whitelisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_whitelisted.pl) and [mask_blacklisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_blacklisted.pl). The first one mean the extraction of background sequences from the entire reference genome, the second one mean this the extraction restricted to the entire reference genome lacking specific blacklisted regions, and the third denotes that background sequences are extracted only from specifc whitelisted regions of the entire genomes. Files *m5kb_p100_pc.bed in the src folder of this github repository (e.g. file mm10 whitelisted regions [mm10_m5kb_p100_pc.bed](https://github.com/parthian-sterlet/antinoise/blob/main/whitelisted/mm10_m5kb_p100_pc.bed) provide the examples of such whitelisted regions for all 12 genomes, here (-5000 +100) regions relative to transcription start sites of al protein-coding genes are compilied.
 
@@ -139,6 +141,8 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 9. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
 10. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
+Сommand line example [command_line_no_mask](https://github.com/parthian-sterlet/antinoise/blob/main/src/command_line_no_mask)
+
 ## Perl scripts to extract background sequences from the specifically masked entire reference genome
 * [mask_blacklisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_blacklisted.pl) implies extraction of background sequences only from certain specific, whitelisted regions e.g. promoter regions of genes
 * [mask_whitelisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_whitelisted.pl) implies extraction of background sequences from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
@@ -155,3 +159,5 @@ Both options mean the respective lists of parameters
 9. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
 10. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
 11. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+
+Сommand line examples [command_line_blacklisted](https://github.com/parthian-sterlet/antinoise/blob/main/src/command_line_blacklisted), [command_line_whitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/src/command_line_whitelisted)
