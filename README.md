@@ -6,7 +6,7 @@ Here we introduce the approach required in *de novo* motif search to generate th
 + (b) whole genome sequences of the reference genome in FASTA format (this file is conventionally extracted from any public database) and, optionally, 
 + (c1) the background sequences are generated through the application of the entire reference genome, or 
 + (c2) blacklisted masking, an annotation BED file of 'blacklisted' genomic loci excludes from the entire reference genome suspicious sequences, the extraction procedure is applied to the remaining gemomic loci, or 
-+ (c3) whitelisted masking, an annotation BED file of 'whitelisted' genomic loci restricts background sequences to only these particular regions, all remaining loci are exluded from analysis. 
++ (c3) whitelisted masking, an annotation BED file of 'whitelisted' genomic loci restricts background sequences to only these particular regions, all remaining loci are excluded from analysis. 
 
 The options (c2) and (c3) provide more rigorous selection of genomic background sequences.
 
