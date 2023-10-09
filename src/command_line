@@ -1,5 +1,5 @@
 ./background_genome_mono.exe	/.../genome/at10/ PEAKS042553_AGL8_Q38876_MACS2.fa PEAKS042553_AGL8_Q38876_MACS2_gb 5 0.01 10000 at10 0.99 PEAKS042553_AGL8_Q38876_MACS2.outm PEAKS042553_AGL8_Q38876_MACS2.outd PEAKS042553_AGL8_Q38876_MACS2.outm_one PEAKS042553_AGL8_Q38876_MACS2.outd_one PEAKS042553_AGL8_Q38876_MACS2.outlog
-./mask_whitelisted.pl /.../src/ /.../genome/mm10/ /.../genome/mm10/whitelisted/ Mus_musculus.GRCm38.dna.primary_assembly.fa mm10_m5kb_p100_pc.bed PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
-./mask_blacklisted.pl /.../src/ /.../genome/mm10/ /.../genome/mm10/blacklisted/ Mus_musculus.GRCm38.dna.primary_assembly.fa ENCODE_ENCFF547MET_mm10.bed PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
-./no_mask.pl /.../src/ /.../genome/mm10/ /.../genome/mm10/out/ Mus_musculus.GRCm38.dna.primary_assembly.fa PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
+./mask_whitelisted.pl /.../src/ /.../genome/mm10/ /.../whitelisted/ Mus_musculus.GRCm38.dna.primary_assembly.fa mm10_m5kb_p100_pc.bed PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
+./mask_blacklisted.pl /.../src/ /.../genome/mm10/ /.../blacklisted/ Mus_musculus.GRCm38.dna.primary_assembly.fa ENCODE_ENCFF547MET_mm10.bed PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
+./no_mask.pl /.../src/ /.../genome/mm10/ /.../out/ Mus_musculus.GRCm38.dna.primary_assembly.fa PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
 
