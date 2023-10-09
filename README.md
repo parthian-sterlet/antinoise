@@ -110,8 +110,8 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 ## Partitiong of one FASTA file with multiple sequences into multiple file with individual sequences 
   [fasta_muliplefiles.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_muliplefiles.cpp)
 1. input FASTA format file, mutiple sequences
-2. base name of output FASTA files, value ZZZ results output files ZZZ1.fa and ZZZ2.fa output file for the first and second sequences in input file, and so on next
-3. int mode for output filenames: values 1 means the order 1,2,3, etc., i.e. filenames do not depend on the information in sequence headers after '>' in input FASTA file; 0 = filenames are defined by the information in sequence headers after '>' in input FASTA file. For example, for human genome with headers of chromosomes { >chr1, >chr2, ... , >chr22, >chrX and >chrY } and value 0 provides exactly {chr1.fa, chr2.fa, ... , chr22.fa, chrX.fa and chrY.fa }, while value 1 does not
+2. base name of output FASTA files, value ZZZ results the output files ZZZ1.fa and ZZZ2.fa output file for the first and second sequences in input file, and so on next
+3. int mode, output filenames: (a) the value 1 means that the names of output files do not depend on the information in the sequence headers of the input FASTA file, in the lines after the first symbols '>', output filenames {ZZZ1.fa, ZZZ2.fa, ZZZ3.fa, etc.} respect the serial numbers {1, 2, 3, etc.} ; (b) the value 0 means filenames are defined by the information in sequence headers after '>' in input FASTA file. For example, for human genome with headers of chromosomes { >chr1, >chr2, ... , >chr22, >chrX and >chrY } and value 0 provides exactly {chr1.fa, chr2.fa, ... , chr22.fa, chrX.fa and chrY.fa }
 
 ## Whole genome conversion from FASTA to PLAIN format
 [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp)
@@ -147,7 +147,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 * [mask_blacklisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_blacklisted.pl) implies extraction of background sequences only from certain specific, whitelisted regions e.g. promoter regions of genes
 * [mask_whitelisted.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask_whitelisted.pl) implies extraction of background sequences from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
 
-Both options mean the respective lists of parameters
+Both options mean the same lists of parameters
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
