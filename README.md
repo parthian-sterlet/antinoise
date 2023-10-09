@@ -52,8 +52,10 @@ All three scripts presume input foreground sequences in BED format, if you have 
 
 git clone https://github.com/parthian-sterlet/antinoise
 
-cd antinoise/src/
+cd antinoise/src
+
 chmod a+x build.sh
+
 ./build.sh
 
 * In Windows system:
