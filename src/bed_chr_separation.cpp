@@ -261,9 +261,11 @@ int main(int argc, char* argv[])
 		printf("Input file %s can't be opened!\n", filei);
 		exit(1);
 	}
+	char chr0[] = "chr";
 	while (fgets(d, sizeof(d), in) != NULL)
 	{
 		DelChar(d, '\n');
+		if (strncmp(d, chr0, 3) != 0)continue;
 		char chr[50], chr_here[50], tab = '\t';
 		int test;
 		test = UnderStol(d, 0, chr, sizeof(chr), tab);
@@ -276,7 +278,7 @@ int main(int argc, char* argv[])
 		int gom = -1;
 		for (nc = 0; nc < n_chr; nc++)
 		{
-			strcpy(chr_here, "chr");
+			strcpy(chr_here, chr0);
 			strcat(chr_here, name_chr[nc]);			
 			int sc = strncmp(chr, chr_here, nclen);
 			if (sc == 0)
