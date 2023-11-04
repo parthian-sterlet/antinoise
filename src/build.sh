@@ -1,4 +1,5 @@
 #!/bin/sh
+#!/bin/sh
 g++ -o area_self_overlap.exe area_self_overlap.cpp
 g++ -o background_genome_mono.exe background_genome_mono.cpp
 g++ -o bed_chr_mask.exe bed_chr_mask.cpp
@@ -7,7 +8,7 @@ g++ -o bed_sort.exe bed_sort.cpp
 g++ -o fasta_muliplefiles.exe fasta_muliplefiles.cpp
 g++ -o fasta_to_plain0.exe fasta_to_plain0.cpp
 g++ -o longext_many.exe longext_many.cpp
-g++ -o mix0.cpp mix0.exe
+g++ -o mix0.exe mix0.cpp
 
 chmod a+x area_self_overlap.exe
 chmod a+x background_genome_mono.exe
@@ -20,5 +21,6 @@ chmod a+x longext_many.exe
 chmod a+x mix0.exe
 chmod a+x mask_blacklisted.pl
 chmod a+x mask_whitelisted.pl
-chmod a+x no_mask
-chmod a+x command_line
+chmod a+x command_line_main
+chmod a+x command_line_no_mask
+chmod a+x command_line_whitelisted
