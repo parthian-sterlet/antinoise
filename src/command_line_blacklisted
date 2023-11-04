@@ -1,1 +1,3 @@
 ./mask_blacklisted.pl /.../src/ /.../genome/mm10/ /.../blacklisted/ Mus_musculus.GRCm38.dna.primary_assembly.fa ENCODE_ENCFF547MET_mm10.bed PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
+# replace the first, second and third arguments to respective paths
+# see https://github.com/parthian-sterlet/antinoise#perl-scripts-to-extract-background-sequences-from-the-specifically-masked-entire-reference-genome
