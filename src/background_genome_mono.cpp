@@ -73,7 +73,9 @@ int CheckStr(char *file, char *d, int n, int print, int &bad)
 {
 	int i, len, ret,di;
 	len = strlen(d);
-	ret = 1;	
+	ret = 1;
+	char alfavit11a[] = "wrmkysbvhd";
+	char alfavit11b[] = "WRMKYSBVHD";
 	for (i = 0; i < len; i++)
 	{
 		di = (int)(d[i]);
@@ -81,6 +83,18 @@ int CheckStr(char *file, char *d, int n, int print, int &bad)
 		if (strchr("nN", di) != NULL) bad++;
 		else
 		{
+			if (strchr(alfavit11a, di) != NULL)
+			{
+				bad++;
+				d[i] = 'n';
+				continue;
+			}
+			if(strchr(alfavit11b, di) != NULL)
+			{
+				bad++;
+				d[i] = 'N';
+				continue;
+			}
 			printf("File %s; sequence %d position %d (%c) bad. Sequence too bad!\n", file, n, i + 1, d[i]);
 			exit(1);
 		}
