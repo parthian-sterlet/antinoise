@@ -16,8 +16,8 @@ The source code is written in C++ language. To compile exetubables from the sour
 * In Linux system, C++ compiler, e.g. [GCC](https://gcc.gnu.org/) compiler 
 * In Windows system any VC++ package, e.g. [Microsoft Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
 
-# Source code
-Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains files with the source codes, they respect to  genomic and synthetic background generation approaches.
+# Source code and executable files
+Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains files with the source codes, they respect to  genomic and synthetic background generation approaches. Folders [linux](https://github.com/parthian-sterlet/antinoise/tree/main/bin/linux) and [win](https://github.com/parthian-sterlet/antinoise/tree/main/bin/win) contains binary files compiled for linux/windows platforms.
 ## 1. Genomic
 The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output FASTA file respects the input FASTA file by the A/T content. File 
 ## 2. Synthetic
