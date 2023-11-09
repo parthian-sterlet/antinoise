@@ -1,3 +1,2 @@
-./mask.pl .../src/ /.../genomes/sachser64/ /.../out/blacklisted/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa ENCODE_ENCFF547MET_mm10.bed PEAKS043150_GCN4_P03069_MACS2 mm10 2 0.01 10000 0.99 0 0
-# replace the first, second and third arguments to respective paths
-# see https://github.com/parthian-sterlet/antinoise#perl-scripts-to-extract-background-sequences-from-the-specifically-masked-entire-reference-genome
+./mask.pl ../src/ ../genomes/sachser64/ ../out/blacklisted/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa simpleRepeats.bed PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99 0 1
+
