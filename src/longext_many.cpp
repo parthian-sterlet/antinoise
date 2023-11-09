@@ -413,7 +413,7 @@ int main(int argc, char *argv[])
 	while(fgets(d,sizeof(d),inp)!=NULL)
 	{
 		DelChar(d,'\n');
-		char chr_here[3];
+		char chr_here[50];
 		memset(chr_here,0,sizeof(chr_here));
 		memset(head, 0, sizeof(head));
 		int lend = strlen(d);
