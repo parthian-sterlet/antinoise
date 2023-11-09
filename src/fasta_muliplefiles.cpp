@@ -33,7 +33,7 @@ if(argc!=4)
 }
 if((in=fopen(argv[1],"rt"))==NULL)
 {
-	puts("Input file can't be opened");
+	printf("Input file %s can't be opened", argv[1]);
 	exit(1);
 }
 int length=0;
