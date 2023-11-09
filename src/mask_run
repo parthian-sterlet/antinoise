@@ -1,1 +1,0 @@
-./mask.pl /.../src/ /.../genome/mm10/ /.../genome/mm10_mask/ Mus_musculus.GRCm38.dna.primary_assembly.fa ENCFF547MET_mm10.bed PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
