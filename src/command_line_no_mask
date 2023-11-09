@@ -1,3 +1,1 @@
-./no_mask.pl /.../src/ /.../genome/mm10/ /.../out/ Mus_musculus.GRCm38.dna.primary_assembly.fa PEAKS057475_MEF2C_Q8CFN5_MACS2 mm10 2 0.01 10000 0.99
-# replace the first and second arguments to respective paths
-# see https://github.com/parthian-sterlet/antinoise#perl-script-to-extract-background-sequences-the-entire-reference-genome
+./no_mask.pl ../src/ ../genomes/sachser64/ ../out/no_mask/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99
