@@ -1,0 +1,4 @@
+mkdir ../no_mask1
+cp PEAKS043150_GCN4_P03069_MACS2.bed  ../no_mask1/PEAKS043150_GCN4_P03069_MACS2.bed 
+./no_mask.pl ../src/ ../sc64/ ../no_mask1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99
+
