@@ -147,17 +147,18 @@ void Mix(int *a, int *b)
 int main(int argc, char *argv[])
 {	
 	int i, j, k, nc;
-	char str[200], filei[500], fileo[500], genome[10], filei_base[500], fileo_base[500], bedext[10], chrext[10];
-	if(argc!=4)
+	char str[200], filei[500], fileo[500], filesta[500], genome[10], filei_base[500], fileo_base[500], bedext[10], chrext[10];
+	if(argc!=5)
 	{
-		printf ("%s 1file_profile_area1_base 2file_profile_area_self_overlapped_base 3char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61)",argv[0]);
+		printf ("%s 1file_profile_area1_base 2file_profile_area_self_overlapped_base 3char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61) 4file_statistics",argv[0]);
         exit (1);
 	}	
 	FILE *in, *out;	
 	strcpy(filei_base,argv[1]);	
 	strcpy(fileo_base,argv[2]);
-
 	strcpy(genome, argv[3]);
+	strcpy(filesta, argv[4]);
+
 	char name_chr[NCHR][10];
 	int n_chr, genome_rec = 0;
 	if (strcmp(genome, "at10") == 0)
@@ -310,7 +311,7 @@ int main(int argc, char *argv[])
 	strcpy(chrext, "_chr");
 	char chr[10];
 	strcpy(chr, "chr");
-	char filesta[] = "area_self_overlap.txt";
+	//char filesta[] = "area_self_overlap.txt";
 
 	int string_area_tot = 0, length_tot = 0, overlap_tot = 0;
 	for (nc = 0; nc < n_chr; nc++)

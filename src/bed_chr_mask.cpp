@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 	}
 	
 	strcpy(fileaend, ".bed"); 
-	strcpy(chrbed, "chr");
+	strcpy(chrbed, "_chr");
 	strcpy(fileiend, ".plain");
 	strcpy(fileoend, ".plain");
 
@@ -293,7 +293,7 @@ int main(int argc, char *argv[])
 				c = fgetc(inf);
 				if (c == EOF)
 				{
-					printf("Unexpected end of file!!\n");
+					printf("Unexpected end of file, BeforeReg\t%s\t%d\t%d\t%d\n", name_chr[nc], sta,area[j].lev, i);
 					exit(1);
 				}
 				if (alive == 1)fputc(n, out);
@@ -304,13 +304,17 @@ int main(int argc, char *argv[])
 				c = fgetc(inf);
 				if (c == EOF)
 				{
-					printf("Unexpected end of file!!\n");
+					printf("Unexpected end of file, InReg\t%s\t%d\t%d\t%d\n",name_chr[nc], area[j].lev, area[j].pra, i);
 					exit(1);
 				}
 				if (alive == 1)fputc(c, out);
 				else fputc(n, out);
 			}
 			sta = area[j].pra + 1;
+		/*	if (j % 100 == 0)
+			{
+				printf("\b\b\b\b\b\b\b\b\b%s\t%d", name_chr[nc], j + 1);
+			}*/
 		}
 		do
 		{
