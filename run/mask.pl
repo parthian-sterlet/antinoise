@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use 5.8.1; use strict; use warnings;
 
-my ($cmd, $path_exe, $path_in, $path_out, $bed_list_file, $black_or_white, $check_overlap, $genome, $genome_fa, $bed_chipseq_file);
+my ($cmd, $path_exe, $path_in, $path_out, $bed_list_file, $black_or_white, $check_overlap, $genome, $genome_fa, $bed_chipseq_file, $file_overlap_sta);
 my ($bed_list_file_sorted, $bed_list_file_sorted_no_over, $bedext, $chr, $backext, $faext,$bederr, $noovext);
 my ($gb_fold, $gb_at, $gb_limit, $gb_done, $gb_ext1, $gb_ext2, $gb_ext3, $gb_ext4, $gb_ext5);
 
@@ -29,6 +29,7 @@ $bed_list_file_sorted = "blacklist_sorted";
 }
 
 $bedext = ".bed", $faext = ".fa", $chr = "chr", $backext = "_gb", $noovext = "_no_over_", $bederr = "bed_errors.txt", $gb_ext1 = ".outm", $gb_ext2 = ".outd", $gb_ext3 = ".outm_one", $gb_ext4 = ".outd_one", $gb_ext5 = ".outlog";
+$file_overlap_sta = "area_self_overlap.txt";
 
 $cmd= "$path_exe/fasta_muliplefiles.exe ${path_in}${genome_fa} ${path_in}${chr} 0";
 print "$cmd\n";
@@ -48,7 +49,7 @@ system $cmd;
 
 if($check_overlap == 1){
 $bed_list_file_sorted_no_over = $bed_list_file_sorted . $noovext;
-$cmd= "$path_exe/area_self_overlap.exe ${path_out}${bed_list_file_sorted} ${path_out}${bed_list_file_sorted_no_over} ${genome}";
+$cmd= "$path_exe/area_self_overlap.exe ${path_out}${bed_list_file_sorted} ${path_out}${bed_list_file_sorted_no_over} ${genome}" ${path_out}${$file_overlap_sta};
 print "$cmd\n";
 system $cmd;
 }
