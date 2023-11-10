@@ -1,2 +1,4 @@
-./mask.pl ../src/ ../genomes/sachser64/ ../out/blacklisted/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa simpleRepeats.bed PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99 0 1
-
+mkdir ../black1/
+cp PEAKS043150_GCN4_P03069_MACS2.bed  ../black1/PEAKS043150_GCN4_P03069_MACS2.bed 
+cp simpleRepeats.bed ../black1/simpleRepeats.bed
+./mask.pl ../src/ ../sc64/ ../black1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa simpleRepeats.bed 0 1 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99
