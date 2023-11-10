@@ -3,7 +3,7 @@
 
 chmod a+x mask.pl
 chmod a+x no_mask.pl
-chmod a+x command_line_main
+chmod a+x command_line_simple
 chmod a+x command_line_no_mask
 chmod a+x command_line_blacklisted
 chmod a+x command_line_whitelisted
