@@ -54,9 +54,9 @@ git clone https://github.com/parthian-sterlet/antinoise
 
 cd antinoise/run
 
-chmod a+x build.sh
+chmod a+x build_linux.sh
 
-./build.sh
+./build_linux.sh
 
 * In Windows system:
 
@@ -80,7 +80,7 @@ separate compilation of all source files in VC++
 
 Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_simple)
 
-Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in FASTA format. These plain files should contain only nucleotides A, T, G, C, N, all other degenerate nucleotides for simplicity are replaced by 'N'. The symbols like ' ', '\t' etc. are deleted, e.g. for *A. thaliana* genome five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Three additional scripts are applied to consruct functional pipelines including generation of these files in PLAIN format: [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl), [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl) The first one mean the extraction of background sequences from the entire reference genome, the second one mean this the extraction restricted to either the entire reference genome lacking specific blacklisted regions, or it denotes that background sequences are extracted only from specifc whitelisted regions of the entire genomes. Files *m5kb_p100_pc.bed in the folder [whitelisted](https://github.com/parthian-sterlet/antinoise/tree/main/examples/whitelisted) of this github repository (e.g. file of mouse whitelisted regions [mm10_m5kb_p100_pc.bed](https://github.com/parthian-sterlet/antinoise/blob/main/whitelisted/mm10_m5kb_p100_pc.bed) provides the example of such whitelisted regions, the same folder contains the respective file for genome releases of all 12 species, each file represents (-5000 +100) regions relative to transcription start sites of al protein-coding genes.
+Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in FASTA format. These plain files should contain only nucleotides A, T, G, C, N, all other degenerate nucleotides for simplicity are replaced by 'N'. The symbols like ' ', '\t' etc. are deleted, e.g. for *A. thaliana* genome five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Three additional scripts are applied to consruct functional pipelines including generation of these files in PLAIN format: [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl), [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl) The first one mean the extraction of background sequences from the entire reference genome, the second one mean this the extraction restricted to either the entire reference genome lacking specific blacklisted regions, or it denotes that background sequences are extracted only from specifc whitelisted regions of the entire genomes. Files *m5kb_p100_pc.bed in the folder [whitelisted](https://github.com/parthian-sterlet/antinoise/tree/main/examples/whitelisted) of this github repository (e.g. file of mouse whitelisted regions [mm10_m5kb_p100_pc.bed](https://github.com/parthian-sterlet/antinoise/blob/main/examples/whitelisted/mm10_m5kb_p100_pc.bed) provides the example of such whitelisted regions, the same folder contains the respective file for genome releases of all 12 species, each file represents (-5000 +100) regions relative to transcription start sites of al protein-coding genes.
 
 ## Background sequences generation: Synthetic
 [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp)
