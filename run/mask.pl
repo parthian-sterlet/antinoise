@@ -49,7 +49,7 @@ system $cmd;
 
 if($check_overlap == 1){
 $bed_list_file_sorted_no_over = $bed_list_file_sorted . $noovext;
-$cmd= "$path_exe/area_self_overlap.exe ${path_out}${bed_list_file_sorted} ${path_out}${bed_list_file_sorted_no_over} ${genome}" ${path_out}${$file_overlap_sta};
+$cmd= "$path_exe/area_self_overlap.exe ${path_out}${bed_list_file_sorted} ${path_out}${bed_list_file_sorted_no_over} ${genome}" ${path_out}${file_overlap_sta};
 print "$cmd\n";
 system $cmd;
 }
