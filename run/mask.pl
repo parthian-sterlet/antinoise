@@ -28,7 +28,7 @@ else{
 $bed_list_file_sorted = "blacklist_sorted";
 }
 
-$bedext = ".bed", $faext = ".fa", $chr = "chr", $backext = "_gb", $noovext = "_no_over", $bederr = "bed_errors.txt", $gb_ext1 = ".outm", $gb_ext2 = ".outd", $gb_ext3 = ".outm_one", $gb_ext4 = ".outd_one", $gb_ext5 = ".outlog";
+$bedext = ".bed", $faext = ".fa", $chr = "chr", $backext = "_gb", $noovext = "_no_over_", $bederr = "bed_errors.txt", $gb_ext1 = ".outm", $gb_ext2 = ".outd", $gb_ext3 = ".outm_one", $gb_ext4 = ".outd_one", $gb_ext5 = ".outlog";
 
 $cmd= "$path_exe/fasta_muliplefiles.exe ${path_in}${genome_fa} ${path_in}${chr} 0";
 print "$cmd\n";
