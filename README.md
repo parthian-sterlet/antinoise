@@ -45,11 +45,11 @@ The alternative program [mix0.cpp](https://github.com/parthian-sterlet/sitega/bl
   
 Command line file [command_line_no_mask](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_no_mask) and Perl script [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl) show the example application of the genomic approach for the background generation for a tested dataset in BED format from the *S. cerevisiae* genome. Background sequences are searhed in the full-length sequences of the reference genome. The script starts from one FASTA file containing all chromosomes of certain reference genome, e.g. [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa)  This file should taken in the public database, e.g. for [human](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz) and [mouse](https://ftp.ensembl.org/pub/release-102/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz). 
 
-* Blacklisted regions masking, application to the entire genome lacking certain specific blacklisted regions
+* Masking of blacklisted regions, application to the entire genome lacking certain specific blacklisted regions
 
 Command line file [command_line_blacklisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_blacklisted) and Perl script [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl) show the example application of the genomic approach for the background generation for a tested dataset in BED format from the *S. cerevisiae* genome, applying an additional BED file of 'blacklisted' regions. E.g.. those ones for [human](https://github.com/parthian-sterlet/antinoise/blob/main/examples/blacklisted/GRCh38_unified_blacklist.bed) from [ENCODE](https://www.encodeproject.org/files/ENCFF356LFX/) and for [mouse](https://github.com/parthian-sterlet/antinoise/blob/main/examples/blacklisted/ENCODE_ENCFF547MET_mm10.bed) from [ENCODE](https://www.encodeproject.org/files/ENCFF547MET/), see [(Amemiya et al., 2019)](https://doi.org/10.1038/s41598-019-45839-z). This analysis implies masking of genomic fragments of a given annotation in BED format (blacklisted regions), i.e. these regions are excluded from the analysis and they will be omitted in output background genomic sequences
 
-* Whitelisted regions masking, application is limited to only specific whitelisted regions, all remaining genomic loci are excluded
+* Retention of whitelisted regions, application is limited to only specific whitelisted regions, all remaining genomic loci are excluded
 
 Command line file [command_line_whitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_blacklisted) and Perl script [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl) show the example application of the genomic approach for the background generation for a tested dataset in BED format from the *S. cerevisiae* genome, applying an additional BED file of 'whitelisted' regions. Only these regions may proceed to output data, all the rest genomic regions will be masked and are subsequently excluded. E.g., the example file of whitelisted regions contains promoter regions (5 kb upstream and 100 bp downstream) of mouse protein coding genes [mm10_m5kb_p100_pc.bed](https://github.com/parthian-sterlet/antinoise/blob/main/examples/whitelisted/mm10_m5kb_p100_pc.bed) based on annotation from Genecode [version M25](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/).
 
@@ -112,7 +112,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 3. input BED format file - tab-delimited txt format, first column contains chromosome name (e.g. chr1, chr2, etc.), second/third columns contain starting/ending positions of genomic fragments
 4. input PLAIN format base name without default extension ".plain" (default value "chr", so that file name are chr1.plain, chr2.plain, etc.)
 5. output PLAIN format base name without default extension ".plain" (default value "chr", so that file name are chr1.plain, chr2.plain, etc., names are the same as input ones since input and output paths should be distinct)
-6. int masking option, value -1 implies masking with polyN tracks for genomic fragments from the input BED files, all genome loci are preserved the same as in input reference genome; value -1 implies masking with polyN tracks for all the genomic loci regions besides fragments from the input BED files, only genomic fragments from the input BED files are preserved the same as in input reference genome
+6. int masking option, value -1 implies masking with polyN tracks for genomic fragments from the input BED files, all genome loci are preserved the same as in input reference genome; value 1 implies masking with polyN tracks for all the genomic loci regions besides fragments from an input BED file, only genomic fragments from this input BED file are preserved the same as in input reference genome
 7. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
 * BED annotation sorting by chromosomes and positions, [bed_sort.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp)
@@ -139,7 +139,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 7. log file reporing abnormal program termination due to errors in BED file (start/end positions are located outside the chromosome borders, etc.), correct program termination assumes that this file is empty
 
 ## Scripts to run AntiNoise starting from the reference genome
-* Perl script to extract background sequences from the unmasked reference genome, [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
+* No masking, application to the entire genome as is, without any masking, [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
@@ -151,9 +151,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 9. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
 10. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
-Сommand line example [command_line_no_mask](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_no_mask)
-
-* Perl script to extract background sequences from the masked reference genome, either blacklisted or whitelisted options, [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
+* Masking options of blacklisted regions and retention of whitelisted regions, [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
 
  This file implies extraction of background sequences either only from certain specific, whitelisted regions (e.g. promoter regions of genes) or it from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
 1. path to executables for all desribed above c++ files from this github repository
