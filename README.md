@@ -25,10 +25,10 @@ Folder [**genomes/sc64**](https://github.com/parthian-sterlet/antinoise/tree/mai
 
 Folder [**bin**](https://github.com/parthian-sterlet/antinoise/tree/main/bin) includes subfolders [**linux**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/linux) and [**windows**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/windows). They contain binary files compiled for linux/windows platforms from all C++ source files.
 
-## 1. Genomic
-The [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) propgram of this tool finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output FASTA file respects the input FASTA file by the A/T content.
-## 2. Synthetic
-The alternative program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic sequences that exactly match the nucleotide content of the foregrouns sequences.
+## 1. Genomic background sequence generation approach
+The [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) propgram of this tool finds the genomic background sequences for a particular genome (hg38, mm10, tair10, etc.). The background sequences almost perfectly match A/T content and exactly match the lengths of DNA sequences from the foreground set.
+## 2. Synthetic background sequence generation approach
+The alternative program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic background sequences that exactly match the nucleotide content of the foreground sequences.
 
 ## Supporting C++ programs
 * The program [area_self_overlap.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/area_self_overlap.cpp) converts a genomic annotation file in BED format with possible overlapping of genomic fragments to a file in the same BED format with not overlapped genomic fragments.
