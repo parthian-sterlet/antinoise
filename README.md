@@ -15,13 +15,15 @@ The source code is written in C++ language. To compile exetubables from the sour
 * In Windows system any VC++ package, e.g. [Microsoft Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
 
 # Repository structure
-Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains the [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) and eight supporting source code C++ files.  
+Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains the [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) and eight supporting C++ source code files.  
 
 Folder [**run**](https://github.com/parthian-sterlet/antinoise/tree/main/run) contains two perl script files and four examples of command line scripts, implementing the genomic background sequence generation approach.
 
 Folders [**examples**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/examples) contains files required as the functional examples of the genomic background sequence generation approach.
 
-Folders [**linux**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/linux) and [**windows**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/windows) contain binary files compiled for linux/windows platforms. It is recommended to compile C++ files conventionally on your system too and replaces those from a [bin](https://github.com/parthian-sterlet/antinoise/tree/main/bin) subfolder.
+Folder [**genomes/sc64**](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) contains [whole genome sequences of baker's yeasts *S. cerevisiae*](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) required for mentioned above functional examples. It is recommended that the reference genomes of other species be placed in the [genomes](https://github.com/parthian-sterlet/antinoise/tree/main/genomes) folder for subsequent analysis.
+
+Folder [**bin**](https://github.com/parthian-sterlet/antinoise/tree/main/bin) includes subfolders [**linux**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/linux) and [**windows**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/windows). They contain binary files compiled for linux/windows platforms from all C++ source files.
 
 ## 1. Genomic
 The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output FASTA file respects the input FASTA file by the A/T content.
