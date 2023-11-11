@@ -155,6 +155,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 Сommand line example [command_line_no_mask](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_no_mask)
 
 * Perl script to extract background sequences from the masked reference genome, either blacklisted or whitelisted options, [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
+
  This file implies extraction of background sequences either only from certain specific, whitelisted regions (e.g. promoter regions of genes) or it from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
