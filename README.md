@@ -30,7 +30,7 @@ The [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/backgrou
 ## 2. Synthetic background sequence generation approach
 The alternative program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic background sequences that exactly match the nucleotide content of the foreground sequences.
 
-## Supporting C++ programs
+## Supporting C++ programs for the genomic approach
 * The program [area_self_overlap.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/area_self_overlap.cpp) converts a genomic annotation file in BED format with possible overlapping of genomic fragments to a file in the same BED format with not overlapped genomic fragments.
 * The program [bed_chr_mask.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_mask.cpp) masks the reference genome sequences in PLAIN format accoridng a given input annotation in BED format. Masking with 'N' as options is performed either (a) for all fragments listed in BED file, or (b) for all the remaining parts of the reference genome. This program uses any file in BED format with any 'blacklisted' genomic regions to mask the reference genome in PLAIN format. Hence, 'blacklisted' genomic regions will be excluded from a consequent analysis completely.
 * The program [bed_chr_separation.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_separation.cpp) partitions a file in BED format into multiple BED files so that each of them lists annotatios for the same chromosome.
@@ -39,7 +39,7 @@ The alternative program [mix0.cpp](https://github.com/parthian-sterlet/sitega/bl
 * The program [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp) converts DNA sequences of a reference genome sequences from FASTA format to PLAIN format. This program make the reference more convinient for consequent analysis and treatement. Plain format is more convinient for subsequent applications than the default FASTA format of a DNA sequence. Unlike FASTA format, (a) the PLAIN format does not contain lines of sequence headers starting with '>'symbol, (b) the end of line symbols ('\n' in Linux or '\r\n' in Windows) mean only the end of a DNA sequence. Consequently, if a file in PLAIN format contains only one chromosome, then the end of a line is allowed only at the end of this file.
 * The program [longext_many.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/longext_many.cpp) converts a file in BED format to DNA sequences in FASTA format using the reference genome sequences in PLAIN format. 
 
-## Scripts to run AntiNoise with the support of the reference genome masking
+## Scripts to run AntiNoise starting from the reference genome
 
 * No masking, application to the entire genome as is, without any masking
   
@@ -68,7 +68,7 @@ chmod a+x build_linux.sh
 * In Windows system:
 
 separate compilation of all source files in VC++
-## Background sequences generaration: Genomic
+## 1. Background sequences generaration: Genomic
 
 [background_genome_mono.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/background_genome_mono.cpp)
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively), see the example of these files in PLAIN format for [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa) in [this folder](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64)
@@ -89,27 +89,25 @@ Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/
 
 Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in FASTA format. These plain files should contain only nucleotides A, T, G, C, N, all other degenerate nucleotides for simplicity are replaced by 'N'. The symbols like ' ', '\t' etc. are deleted, e.g. for *A. thaliana* genome five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Two additional scripts are applied to consruct functional pipelines including generation of these files in PLAIN format: [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl), [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl) The first one means the extraction of background sequences from the entire reference genome, the second one means this the extraction restricted to either the entire reference genome lacking specific blacklisted regions, or it denotes that background sequences are extracted only from specifc whitelisted regions of the entire genomes. Files *m5kb_p100_pc.bed in the folder [whitelisted](https://github.com/parthian-sterlet/antinoise/tree/main/examples/whitelisted) of this github repository (e.g. file of mouse whitelisted regions [mm10_m5kb_p100_pc.bed](https://github.com/parthian-sterlet/antinoise/blob/main/examples/whitelisted/mm10_m5kb_p100_pc.bed) provide the examples of such whitelisted regions for genome releases of all species, each file represents (-5000; +100) regions relative to transcription start sites of all protein-coding genes.
 
-## Background sequences generation: Synthetic
+## 2. Background sequences generation: Synthetic
 [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp)
 1. input FASTA file (foreground set)
 2. output FASTA file (background set)
 3. required number of found background sequences per one foreground sequence, Rbf (default value 5)
 
-## BED format conversion removing overlaps of genomic fragments
-  [area_self_overlap.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/area_self_overlap.cpp)
+## Supporting C++ programs for the genomic approach
+* BED format conversion removing overlaps of genomic fragments, [area_self_overlap.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/area_self_overlap.cpp)
 1. input BED format file, overlapping of fragments is allowed
 2. output BED format file, overlapping of fragments is absent
 3. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
-## Partitiong of BED annotation for multiple chromosomes into multiples chromosome-specific BED annotations
-  [bed_chr_separation.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_separation.cpp) 
+* Partitiong of BED annotation for multiple chromosomes into multiples chromosome-specific BED annotations, [bed_chr_separation.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_separation.cpp) 
 1. input BED format file
 2. output BED format base name of file, value ZZZ results output files ZZZ_chr1.bed, ZZZ_chr2.bed for chr1 and chr2, respectively. 
 3. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 4. output file with total statistics on overlapping regions
 
-## Masking of whole genome sequences in PLAIN format according to genomic fragments from file in BED format
-[bed_chr_mask.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_mask.cpp)
+* Masking of whole genome sequences in PLAIN format according to genomic fragments from file in BED format, [bed_chr_mask.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_mask.cpp)
 1. path to input whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively), see the example of files in PLAIN format for [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa) in [this folder](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64)
 2. path to output whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
 3. input BED format file - tab-delimited txt format, first column contains chromosome name (e.g. chr1, chr2, etc.), second/third columns contain starting/ending positions of genomic fragments
@@ -118,25 +116,21 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 6. int masking option, value -1 implies masking with polyN tracks for genomic fragments from the input BED files, all genome loci are preserved the same as in input reference genome; value -1 implies masking with polyN tracks for all the genomic loci regions besides fragments from the input BED files, only genomic fragments from the input BED files are preserved the same as in input reference genome
 7. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
-## BED annotation sorting by chromosomes and positions
-  [bed_sort.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp)
+* BED annotation sorting by chromosomes and positions, [bed_sort.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp)
 1. input BED format file, unsorted annotations
 2. output BED format file, sorted annotations
 3. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
-## Partitiong of one FASTA file with multiple sequences into multiple file with individual sequences 
-  [fasta_muliplefiles.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_muliplefiles.cpp)
+* Partitiong of one FASTA file with multiple sequences into multiple file with individual sequences, [fasta_muliplefiles.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_muliplefiles.cpp)
 1. input FASTA format file, mutiple sequences, see [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa) as an example
 2. base name of output FASTA files, value ZZZ results the output files ZZZ1.fa and ZZZ2.fa output file for the first and second sequences in input file, and so on next
 3. int mode, output filenames: (a) the value 1 means that the names of output files do not depend on the information in the sequence headers of the input FASTA file, in the lines after the first symbols '>', output filenames {ZZZ1.fa, ZZZ2.fa, ZZZ3.fa, etc.} respect the serial numbers {1, 2, 3, etc.} ; (b) the value 0 means filenames are defined by the information in sequence headers after '>' in input FASTA file. For example, for human genome with headers of chromosomes { >chr1, >chr2, ... , >chr22, >chrX and >chrY } and value 0 provides exactly {chr1.fa, chr2.fa, ... , chr22.fa, chrX.fa and chrY.fa }
 
-## Whole genome conversion from FASTA to PLAIN format
-[fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp)
+* Whole genome conversion from FASTA to PLAIN format, [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp)
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
 2. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
-## BED to FASTA conversion
-[longext_many.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/longext_many.cpp)
+* BED to FASTA conversion, [longext_many.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/longext_many.cpp)
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
 2. input BED format file - tab-delimited txt format, first column contains chromosome name (e.g. chr1, chr2, etc.), second/third columns contain starting/ending positions of genomic fragments, in subsequent columns symbols '+'/'-' designate DNA strand, and arbitrary identifier (e.g. peak quiality, gene names) are allowed
 3. output FASTA format file
@@ -145,8 +139,8 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 6. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 7. log file reporing abnormal program termination due to errors in BED file (start/end positions are located outside the chromosome borders, etc.), correct program termination assumes that this file is empty
 
-## Perl script to extract background sequences from the unmasked reference genome
-[no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
+## Scripts to run AntiNoise starting from the reference genome
+* Perl script to extract background sequences from the unmasked reference genome, [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
@@ -160,8 +154,8 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 
 Сommand line example [command_line_no_mask](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_no_mask)
 
-## Perl script to extract background sequences from the masked reference genome, either blacklisted or whitelisted options
-* [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl) This file implies extraction of background sequences either only from certain specific, whitelisted regions (e.g. promoter regions of genes) or it from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
+* Perl script to extract background sequences from the masked reference genome, either blacklisted or whitelisted options, [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/src/mask.pl)
+ This file implies extraction of background sequences either only from certain specific, whitelisted regions (e.g. promoter regions of genes) or it from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
