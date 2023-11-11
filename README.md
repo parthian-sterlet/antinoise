@@ -14,14 +14,18 @@ The source code is written in C++ language. To compile exetubables from the sour
 * In Linux system, C++ compiler, e.g. [GCC](https://gcc.gnu.org/) compiler 
 * In Windows system any VC++ package, e.g. [Microsoft Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
 
-# Source code and executable files
-Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains source code C++ and perl files, and several examples of command line scripts, they respect to  genomic and synthetic background generation approaches. Folders [linux](https://github.com/parthian-sterlet/antinoise/tree/main/bin/linux) and [windows](https://github.com/parthian-sterlet/antinoise/tree/main/bin/windows) contains binary files compiled for linux/windows platforms. It is recommended to compile C++ files conventionally on your system too and replaces those from a [bin](https://github.com/parthian-sterlet/antinoise/tree/main/bin) subfolder.
+# Repository structure
+Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains the [major]([background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) and eight supporting source code C++ files.  
+Folder [**run**](https://github.com/parthian-sterlet/antinoise/tree/main/run) contains two perl script files and four examples of command line scripts, implementing the genomic background sequence generation approach.
+Folders [**examples**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/examples) contains files required as the functional examples of the genomic background sequence generation approach.
+Folders [**linux**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/linux) and [**windows**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/windows) contain binary files compiled for linux/windows platforms. It is recommended to compile C++ files conventionally on your system too and replaces those from a [bin](https://github.com/parthian-sterlet/antinoise/tree/main/bin) subfolder.
+
 ## 1. Genomic
 The propgram [background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) finds the specific background sequences for the certain genome (hg38, mm10, tair10, etc.). The output FASTA file respects the input FASTA file by the A/T content.
 ## 2. Synthetic
 The program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic sequences that exactly match the nucleotide content.
 
-## Additional supporting programs
+## Supporting C++ programs
 * The program [area_self_overlap.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/area_self_overlap.cpp) converts a genomic annotation file in BED format with possible overlapping of genomic fragments to a file in the same BED format with not overlapped genomic fragments.
 * The program [bed_chr_mask.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_mask.cpp) masks the reference genome sequences in PLAIN format accoridng a given input annotation in BED format. Masking with 'N' as options is performed either (a) for all fragments listed in BED file, or (b) for all the remaining parts of the reference genome. This program uses any file in BED format with any 'blacklisted' genomic regions to mask the reference genome in PLAIN format. Hence, 'blacklisted' genomic regions will be excluded from a consequent analysis completely.
 * The program [bed_chr_separation.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_chr_separation.cpp) partitions a file in BED format into multiple BED files so that each of them lists annotatios for the same chromosome.
