@@ -19,7 +19,7 @@ Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) co
 
 Folder [**run**](https://github.com/parthian-sterlet/antinoise/tree/main/run) contains two perl script files and four examples of command line scripts, implementing the genomic background sequence generation approach.
 
-Folders [**examples**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/examples) contains files required as the functional examples of the genomic background sequence generation approach.
+Folder [**examples**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/examples) contains files required as the functional examples of the genomic background sequence generation approach.
 
 Folder [**genomes/sc64**](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) contains [whole genome sequences of baker's yeasts *S. cerevisiae*](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) required for mentioned above functional examples. It is recommended that the reference genomes of other species be placed in the [genomes](https://github.com/parthian-sterlet/antinoise/tree/main/genomes) folder for subsequent analysis.
 
