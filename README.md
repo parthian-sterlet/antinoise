@@ -18,9 +18,9 @@ The source code is written in C++ language. To compile exetubables from the sour
 # Repository structure
 Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains the [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) and eight supporting C++ source code files.  
 
-Folder [**run**](https://github.com/parthian-sterlet/antinoise/tree/main/run) contains two perl script files and four examples of command line scripts, implementing the genomic background sequence generation approach.
+Folder [**run**](https://github.com/parthian-sterlet/antinoise/tree/main/run) contains the two perl script files and four command line scripts, implementing the genomic background sequence extraction approach.
 
-Folder [**examples**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/examples) contains files required as the functional examples of the genomic background sequence generation approach.
+Folder [**examples**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/examples) contains files required as the functional examples of the genomic background sequence extraction approach.
 
 Folder [**genomes/sc64**](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) contains [whole genome sequences of baker's yeasts *S. cerevisiae*](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) required for mentioned above functional examples. It is recommended that the reference genomes of other species be placed in the respective subfolders of the [genomes](https://github.com/parthian-sterlet/antinoise/tree/main/genomes) folder for subsequent analysis.
 
@@ -52,7 +52,7 @@ Command line file [command_line_blacklisted](https://github.com/parthian-sterlet
 
 * Retention of whitelisted regions, application is limited to only specific whitelisted regions, all remaining genomic loci are excluded
 
-Command line file [command_line_whitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_blacklisted) and Perl script [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl) show the example application of the genomic approach for the background generation for a tested dataset in BED format from the *S. cerevisiae* genome, applying an additional BED file of 'whitelisted' regions. Only these regions may proceed to output data, all the rest genomic regions will be masked and are subsequently excluded. E.g., the example file of whitelisted regions contains promoter regions (5 kb upstream and 100 bp downstream) of mouse protein coding genes [mm10_m5kb_p100_pc.bed](https://github.com/parthian-sterlet/antinoise/blob/main/examples/whitelisted/mm10_m5kb_p100_pc.bed) based on annotation from Genecode [version M25](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/).
+Command line file [command_line_whitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_blacklisted) and Perl script [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl) show the example application of the genomic approach for the background generation for a tested dataset in BED format from the *S. cerevisiae* genome, applying an additional BED file of 'whitelisted' regions. Only these regions may proceed to output data, all the rest genomic regions will be masked and are subsequently excluded. E.g., the example file of whitelisted regions contains the promoter regions (5 kb upstream and 100 bp downstream) of mouse protein coding genes [mm10_m5kb_p100_pc.bed](https://github.com/parthian-sterlet/antinoise/blob/main/examples/whitelisted/mm10_m5kb_p100_pc.bed) based on annotation from Genecode [version M25](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/).
 
 # How to compile
 * In Linux system: 
@@ -71,7 +71,7 @@ separate compilation of all source files in VC++
 ## 1. Background sequences generaration: Genomic
 
 [background_genome_mono.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/background_genome_mono.cpp)
-1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively), see the example of these files in PLAIN format for [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa) in [this folder](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64)
+1. path to whole genome sequences of chromosomes in plain format (the last symbol of path must be '/' and '\\' for Linux and Windows platforms, respectively), see the example of these files in PLAIN format for [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa) in [this folder](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64)
 2. input FASTA file (foreground set)
 3. output FASTA file name without extension (background set), two extensions ".fa" and ".bed" define output files in FASTA and BED formats
 4. required number of found background sequences per one foreground sequence, Rbf (default value 5)
