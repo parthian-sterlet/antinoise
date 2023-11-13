@@ -144,7 +144,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
-4. reference genome in FASTA format, e.g. Homo_sapiens.GRCh38.dna.primary_assembly.fa from https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+4. reference genome in FASTA format, e.g. [Homo_sapiens.GRCh38.dna.primary_assembly.fa](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz)
 5. BED filename without extention ".bed", peaks (foreground sequences)
 6. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
 7. required number of found background sequences per one foreground sequence, Rbf (default value 5)
@@ -158,7 +158,7 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
-4. reference genome in FASTA format, e.g. Homo_sapiens.GRCh38.dna.primary_assembly.fa from https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+4. reference genome in FASTA format, e.g. [Homo_sapiens.GRCh38.dna.primary_assembly.fa](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz)
 5. integer value designating either blacklisted (-1) or whitelisted (1) masking option
 6. integer value designating (1) the check of self-overlapping for the BED file applied for masking, e.g. promoters of genes are overlapped but subsequent masking program requires the absence of any overlaps within the same BED track
 7. BED file, whitelisted/blacklisted regions
