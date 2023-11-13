@@ -1,4 +1,20 @@
-mkdir ../black1
-cp ../examples/sc64/PEAKS043150_GCN4_P03069_MACS2.bed  ../black1/PEAKS043150_GCN4_P03069_MACS2.bed 
-cp ../examples/sc64/simpleRepeats.bed ../black1/simpleRepeats.bed
-./mask.pl ../run/ ../genomes/sc64/ ../black1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa simpleRepeats.bed -1 1 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99
+#!/bin/bash
+
+#SBATCH --mem 100M
+#SBATCH -p common
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -t 500:00:00
+
+
+# prepare genome from FASTA, check overlap of regions
+#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../black1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 1 simpleRepeats.bed -1 1 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99
+
+# do not prepare genome from FASTA, check overlap of regions
+#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../black1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 0 simpleRepeats.bed -1 1 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99
+
+# prepare genome from FASTA, do not check overlap of regions
+./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../black2/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 1 microsat.bed -1 0 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99
+
+# do not prepare genome from FASTA, do not check overlap of regions
+#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../black2/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 0 microsat.bed -1 0 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 10000 0.99
