@@ -143,31 +143,35 @@ Whole chromosome sequences in plain format are required to run the program, i.e.
 * No masking, application to the entire genome as is, without any masking, [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl)
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
-3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
-4. reference genome in FASTA format, e.g. [Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz)
-5. BED filename without extention ".bed", peaks (foreground sequences)
-6. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
-7. required number of found background sequences per one foreground sequence, Rbf (default value 5)
-8. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
-9. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
-10. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+3. path to input BED file of peaks (foreground sequences)
+4. path to output data, all results will in this folder
+5. reference genome in FASTA format, e.g. [Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz)
+6. integer value indicating the necessity (1) or lack thereof (0) of FASTA -> PLAIN transformation of the reference genome (if such transformation has already been performed, it is omitted in subsequent runs)
+7. BED filename without extention ".bed", peaks (foreground sequences)
+8. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
+9. required number of found background sequences per one foreground sequence, Rbf (default value 5)
+10. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+11. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+12. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 * Options for genome masking: exlusion of blacklisted regions and retention of whitelisted regions, [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl)
 
  This file implies extraction of background sequences either only from certain specific, whitelisted regions (e.g. promoter regions of genes) or it from the entire reference genome excluding certain blacklisted regions of the genome, such as specific regions of the genome that should be avoided in the output background sequences
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
-3. path to the rest input data and all output data, these input data includes (a) peaks (foreground sequences) BED file and the whitelist/blacklist BED file, the masked genome all results will in this folder
-4. reference genome in FASTA format, e.g. [Homo_sapiens.GRCh38.dna.primary_assembly.fa](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz)
-5. integer value designating either blacklisted (-1) or whitelisted (1) masking option
-6. integer value designating (1) the check of self-overlapping for the BED file applied for masking, e.g. promoters of genes are overlapped but subsequent masking program requires the absence of any overlaps within the same BED track
-7. BED file, whitelisted/blacklisted regions
-8. BED filename without extention ".bed", peaks (foreground sequences)
-9. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
-10. required number of found background sequences per one foreground sequence, Rbf (default value 5)
-11. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
-12. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
-13. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+3. path to input BED files: peaks (foreground sequences) and whitelist/blacklist annotations
+4. path to output data, the masked genome all results will in this folder
+5. reference genome in FASTA format, e.g. [Homo_sapiens.GRCh38.dna.primary_assembly.fa](https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz)
+6. integer value indicating the necessity (1) or lack thereof (0) of FASTA -> PLAIN transformation of the reference genome (if such transformation has already been performed, it is omitted in subsequent runs)
+7. BED file name, whitelisted/blacklisted regions
+8. integer value indicating the blacklisted (-1) or whitelisted (1) masking option
+9. integer value indicating the necessity (1) or lack thereof (0) to check self-overlapping for the BED file applied for masking, e.g. promoters of genes are overlapped but subsequent masking program requires the absence of  overlaps within a BED file. 
+10. BED file name without extention ".bed", peaks (foreground sequences)
+11. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
+12. required number of found background sequences per one foreground sequence, Rbf (default value 5)
+13. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+14. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+15. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 Сommand line examples [command_line_no_mask](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_no_mask), [command_line_blacklisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_blacklisted), and [command_line_whitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_whitelisted).
 Tracks of repeats [simple sequence repeats](https://hgdownload.soe.ucsc.edu/goldenPath/sacCer3/database/simpleRepeat.txt.gz) and 	
