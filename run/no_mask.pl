@@ -17,7 +17,7 @@ $bed_chipseq_file=   $ARGV[6]; # BED file tested, without extention ".bed"
 $genome=             $ARGV[7]; # genome, hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61
 $gb_fold=            $ARGV[8]; # number of found background sequences per one foreground sequence, (default value 5)
 $gb_at=              $ARGV[9]; # deviation of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
-$gb_limit=           $ARGV[10]; # total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+$gb_limit=           $ARGV[10]; # if a given number of attempts Na to find any background sequence is unsuccessful, then the algorithm is exited (default value 50000)
 $gb_done=            $ARGV[11]; # the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 $bedext = ".bed", $faext = ".fa", $chr = "chr", $backext = "_gb";
