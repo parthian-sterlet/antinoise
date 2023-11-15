@@ -1,6 +1,7 @@
 #!/bin/sh
 #!/bin/sh
 
+chmod a+x simple.pl
 chmod a+x mask.pl
 chmod a+x no_mask.pl
 chmod a+x command_line_simple
