@@ -16,7 +16,7 @@ $bed_or_fasta=       $ARGV[5]; # chipseq file extention: ".bed" = BED file, othe
 $genome=             $ARGV[6]; # genome, hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61
 $gb_fold=            $ARGV[7]; # number of found background sequences per one foreground sequence, (default value 5)
 $gb_at=              $ARGV[8]; # deviation of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
-$gb_limit=           $ARGV[9]; # total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+$gb_limit=           $ARGV[9]; # if a given number of attempts Na to find any background sequence is unsuccessful, then the algorithm is exited (default value 50000)
 $gb_done=            $ARGV[10]; # the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 $bedext = ".bed", $faext = ".fa", $backext = "_gb";
