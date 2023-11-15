@@ -439,10 +439,10 @@ int main(int argc, char *argv[])
 	strcpy(fileosta_di_one, argv[12]);//out_file sta dinucl content
 	strcpy(file_log, argv[13]);//out_file sta dinucl content	
 
-	int empty_iter_min = 10000, empty_iter_max = 100000, empty_iter_max2 = empty_iter_max*10;
-	if (empty_iter < 0 || empty_iter > empty_iter_max2)
+	int empty_iter_min = 10000, empty_iter_max = 100000;
+	if (empty_iter < 0 || empty_iter > empty_iter_max)
 	{
-		printf("No. of iterations without success is allowed from %d to %d!\n", empty_iter_min, empty_iter_max2);
+		printf("No. of iterations without success is allowed from %d to %d!\n", empty_iter_min, empty_iter_max);
 		exit(1);
 	}
 	if (empty_iter < empty_iter_min)
@@ -464,12 +464,7 @@ int main(int argc, char *argv[])
 	{
 		printf("Fraction of peaks %f is wrong!\n", stop_thr);
 		exit(1);
-	}
-	if (back_iter > 1000000 || back_iter <= 0)
-	{
-		printf("Number of iterations %d is wrong or too large!\n", back_iter);
-		exit(1);
-	}
+	}	
 	if (height > 1000 || height <= 0)
 	{
 		printf("Maximal number of background sequences per one foreground sequence: %d is wrong or too large!\n", height);
