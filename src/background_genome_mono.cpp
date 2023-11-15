@@ -429,7 +429,8 @@ int main(int argc, char *argv[])
 
 	int height = atoi(argv[4]);
 	double mono_prec = atof(argv[5]);
-	int back_iter = atoi(argv[6]);
+	int back_iter = 10000;
+	int empty_iter = atoi(argv[6]);
 	strcpy(genome, argv[7]);
 	double stop_thr = atof(argv[8]);//0.99;// fraction of peaks 100% covered with height background sequences
 	strcpy(fileosta_mo, argv[9]);//out_file sta success rate
@@ -438,6 +439,22 @@ int main(int argc, char *argv[])
 	strcpy(fileosta_di_one, argv[12]);//out_file sta dinucl content
 	strcpy(file_log, argv[13]);//out_file sta dinucl content	
 
+	int empty_iter_min = 10000, empty_iter_max = 100000, empty_iter_max2 = empty_iter_max*10;
+	if (empty_iter < 0 || empty_iter > empty_iter_max2)
+	{
+		printf("No. of iterations without success is allowed from %d to %d!\n", empty_iter_min, empty_iter_max2);
+		exit(1);
+	}
+	if (empty_iter < empty_iter_min)
+	{
+		empty_iter = empty_iter_min;
+		printf("Minimal threshold of the parameter 'No. of iterations without success' %d is used!\n", empty_iter);
+	}
+	if (empty_iter > empty_iter_max)
+	{
+		empty_iter = empty_iter_max;
+		printf("Maximal threshold of the parameter 'No. of iterations without success' %d is used!\n", empty_iter);		
+	}
 	if (mono_prec >= 0.5 || mono_prec <= 0)
 	{
 		printf("Mononucleotide precision %f is wrong!\n", mono_prec);
@@ -705,7 +722,7 @@ int main(int argc, char *argv[])
 	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_len);
 	len_max = sort[nseq - 1].len+1;
 	len_min = sort[0].len;
-	int pr_tot = 0;
+	int pr_tot = 0, dpr_tot=0;
 	int fl = 0;
 	int trys = nseq * back_iter / 5;
 	int iter = 0;
@@ -946,6 +963,7 @@ int main(int argc, char *argv[])
 					if (done == 1)
 					{
 						pr_tot++;
+						dpr_tot++;
 						break;
 					}
 				}
@@ -963,7 +981,7 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
-			//printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, gomol);
+			//printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, dpr_tot,gomol);
 			if (iter % 10000 == 0)
 			{
 				FILE *out_log;
@@ -974,6 +992,11 @@ int main(int argc, char *argv[])
 				}
 				fprintf(out_log, "Required %d genomic sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
 				fclose(out_log);
+			}
+			if (iter % empty_iter == 0)
+			{
+				if (dpr_tot == 0)break;
+				dpr_tot = 0;
 			}
 			if (heis >= stop)break;			
 		}
