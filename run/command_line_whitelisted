@@ -1,11 +1,11 @@
 # prepare genome from FASTA, check overlap of regions
-./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../white1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 1 transRegCodeProbe.bed 1 1 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 50000 0.99
+./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../white1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 1 transRegCodeProbe.bed 1 1 PEAKS043150_GCN4_P03069_MACS2 sc64 5 0.01 50000 0.99
 
 # do not prepare genome from FASTA (it is ready in PLAIN), check overlap of regions
-#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../white1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 0 transRegCodeProbe.bed 1 1 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 50000 0.99
+#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../white1/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 0 transRegCodeProbe.bed 1 1 PEAKS043150_GCN4_P03069_MACS2 sc64 5 0.01 50000 0.99
 
 # prepare genome from FASTA, do not check overlap of regions
-#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../white2/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 1 phastCons7way.bed 1 0 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 50000 0.99
+#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../white2/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 1 phastCons7way.bed 1 0 PEAKS043150_GCN4_P03069_MACS2 sc64 5 0.01 50000 0.99
 
 # do not prepare genome from FASTA (it is ready in PLAIN), do not check overlap of regions
-#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../white2/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 0 phastCons7way.bed 1 0 PEAKS043150_GCN4_P03069_MACS2 sc64 2 0.01 50000 0.99
+#./mask.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../white2/ Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 0 phastCons7way.bed 1 0 PEAKS043150_GCN4_P03069_MACS2 sc64 5 0.01 50000 0.99
