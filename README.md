@@ -23,7 +23,7 @@ The source code is written in C++ language. To compile exetubables from the sour
 # Repository structure
 Folder [**src**](https://github.com/parthian-sterlet/antinoise/tree/main/src) contains the [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) and eight supporting C++ source code files.  
 
-Folder [**run**](https://github.com/parthian-sterlet/antinoise/tree/main/run) contains the two perl script files and four command line scripts, implementing the genomic background sequence extraction approach.
+Folder [**run**](https://github.com/parthian-sterlet/antinoise/tree/main/run) contains the three perl scripts and four command line examples, implementing the genomic background sequence extraction approach.
 
 Folder [**examples**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/examples) contains files required as the functional examples of the genomic background sequence extraction approach.
 
@@ -91,6 +91,20 @@ separate compilation of all source files in VC++
 13. output file, current progress in calculation, the fraction of completely processed foreground sequences, i.e. for each such foreground sequence exactly Rbf background sequences were found 
 
 Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_simple) uses a Perl script [simple.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/simple.pl). Top 1000 peaks from [GTRD](https://gtrd20-06.biouml.org/) for [ChIP-seq data](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM1470164) for TF GCN4 [(Spivak and Stormo, 2016)](https://doi.org/10.1534/g3.115.024331), [*S. cerevisiae* genome](https://ftp.ensemblgenomes.ebi.ac.uk/pub/fungi/release-57/fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz) here and below provide examples of the tool.
+
+## Script to run AntiNoise starting from FASTA or BED foregrand sequences and the reference genome in PLAIN format
+* [simple.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/simple.pl)
+1. path to executables for all desribed above c++ files from this github repository
+2. path to the reference genome in FASTA format, this file must contain all chromosomes
+3. path to input BED file of peaks (foreground sequences)
+4. path to output data, all results will in this folder
+5. BED or FASTA filename without extention ".bed" or ".fa", peaks (foreground sequences)
+6. file extention, values ".bed" and ".fa" indicate whether it BED or FASTA 
+7. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
+8. required number of found background sequences per one foreground sequence, Rbf (default value 5)
+9. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+10. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+11. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 Whole chromosome sequences in plain format are required to run the program, i.e. headers lines >... should be deleted from the whole chromosome files in FASTA format. These plain files should contain only nucleotides A, T, G, C, N, all other degenerate nucleotides for simplicity are replaced by 'N'. The symbols like ' ', '\t' etc. are deleted, e.g. for *A. thaliana* genome five files are required: chr1.plain, chr2.plain, chr3.plain, chr4.plain, chr5.plain, for human/mouse respective files refer to whole chromosomes 1-22,X,Y / 1-19,X,Y. Two additional scripts are applied to consruct functional pipelines including generation of these files in PLAIN format: [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl), [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl) The first one means the extraction of background sequences from the entire reference genome, the second one means this the extraction restricted to either the entire reference genome lacking specific blacklisted regions, or it denotes that background sequences are extracted only from specifc whitelisted regions of the entire genomes. Files *m5kb_p100_pc.bed in the folder [whitelisted](https://github.com/parthian-sterlet/antinoise/tree/main/examples/whitelisted) of this github repository (e.g. file of mouse whitelisted regions [mm10_m5kb_p100_pc.bed](https://github.com/parthian-sterlet/antinoise/blob/main/examples/whitelisted/mm10_m5kb_p100_pc.bed) provide the examples of such whitelisted regions for genome releases of all species, each file represents (-5000; +100) regions relative to transcription start sites of all protein-coding genes.
 
