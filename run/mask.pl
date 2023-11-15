@@ -15,7 +15,7 @@ $path_out=           $ARGV[3]; # output path, masked genome also will be there
 $genome_fa=          $ARGV[4]; # reference genome in FASTA format, should be placed in the folder $path_in (see below), e.g. Homo_sapiens.GRCh38.dna.primary_assembly.fa from https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 $prepare_genome=     $ARGV[5]; # 1 = start from the reference genome in FASTA, 0 = genome is already done in PLAIN format
 $bed_list_file=      $ARGV[6]; # BED file, blacklisted or whitellisted regions
-$black_or_white=     $ARGV[7]; # 0 = blacklist, 1 = whitelist
+$black_or_white=     $ARGV[7]; # -1 = blacklist, 1 = whitelist
 $check_overlap=      $ARGV[8]; # check self-overlaps in blacklist or whitelist files
 $bed_chipseq_file=   $ARGV[9]; # BED file tested, without extention ".bed"
 $genome=             $ARGV[10]; # genome, hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61
