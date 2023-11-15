@@ -128,9 +128,8 @@ Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/
 6. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
 7. log file reporing abnormal program termination due to errors in BED file (start/end positions are located outside the chromosome borders, etc.), correct program termination assumes that this file is empty
 
-## Script to run AntiNoise 
-* The genome in PLAIN format is ready, it is not important for the program whetner it masked or unmasked
-  Command line file [command_line_simple](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_simple) and perl script [simple.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/simple.pl) allow either BED or FASTA format of foreground sequences.
+## Scripts to run AntiNoise 
+* Genome in PLAIN format is ready, it is not important for the program whetner it masked or unmasked
 1. path to executables for all desribed above c++ files from this github repository
 2. path to the reference genome in FASTA format, this file must contain all chromosomes
 3. path to input BED file of peaks (foreground sequences)
@@ -142,6 +141,9 @@ Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/
 9. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
 10. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
 11. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+
+* Genome in PLAIN format is ready, it is not important for the program whetner it masked or unmasked
+Command line file [command_line_simple](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_simple) and perl script [simple.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/simple.pl) allow either BED or FASTA format of foreground sequences.
 
 * No masking, application to the entire genome as is, without any masking
   
