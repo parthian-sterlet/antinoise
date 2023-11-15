@@ -1,5 +1,5 @@
 # from FASTA
-./simple.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../simple1/ PEAKS043150_GCN4_P03069_MACS2 .fa sc64 2 0.01 10000 0.99
+./simple.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../simple1/ PEAKS043150_GCN4_P03069_MACS2 .fa sc64 2 0.01 50000 0.99
 
 # from BED
-./simple.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../simple2/ PEAKS043150_GCN4_P03069_MACS2 .bed sc64 2 0.01 10000 0.99
+./simple.pl ../run/ ../genomes/sc64/ ../examples/sc64/ ../simple2/ PEAKS043150_GCN4_P03069_MACS2 .bed sc64 2 0.01 50000 0.99
