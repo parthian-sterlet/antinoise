@@ -65,11 +65,11 @@ separate compilation of all source files in VC++
 1. path to whole genome sequences of chromosomes in plain format (the last symbol of path must be '/' and '\\' for Linux and Windows platforms, respectively), see the example of these files in PLAIN format for [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa) in [this folder](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64)
 2. input FASTA file (foreground set)
 3. output FASTA file name without extension (background set), two extensions ".fa" and ".bed" define output files in FASTA and BED formats
-4. required number of found background sequences per one foreground sequence, Rbf (default value 5)
-5. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
-6. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+4. integer value, required number of found background sequences per one foreground sequence, Rbf (default value 5)
+5. double value, deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+6. integer value, if a given number of attempts Na to find any background sequence is unsuccessful, then the algorithm is exited (default value 50000)
 7. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
-8. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+8. double value, threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 9. output file, additional output table compares the A/T content in the foreground and background sequence sets
 10. output file, additional output table compares the dinucleotide frequencies in the foreground and background sequence sets
 11. output file, additional output table compares (a) the A/T content for all input sequences that did not achieve the required number of found background sequences per one foreground sequence Rbf and (b) the average A/T content for the foreground sequnce set.
@@ -102,7 +102,7 @@ Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/
 3. input BED format file - tab-delimited txt format, first column contains chromosome name (e.g. chr1, chr2, etc.), second/third columns contain starting/ending positions of genomic fragments
 4. input PLAIN format base name without default extension ".plain" (default value "chr", so that file name are chr1.plain, chr2.plain, etc.)
 5. output PLAIN format base name without default extension ".plain" (default value "chr", so that file name are chr1.plain, chr2.plain, etc., names are the same as input ones since input and output paths should be distinct)
-6. int masking option, value -1 implies masking with polyN tracks for genomic fragments from the input BED files, all genome loci are preserved the same as in input reference genome; value 1 implies masking with polyN tracks for all the genomic loci regions besides fragments from an input BED file, only genomic fragments from this input BED file are preserved the same as in input reference genome
+6. integer value masking option, value -1 implies masking with polyN tracks for genomic fragments from the input BED files, all genome loci are preserved the same as in input reference genome; value 1 implies masking with polyN tracks for all the genomic loci regions besides fragments from an input BED file, only genomic fragments from this input BED file are preserved the same as in input reference genome
 7. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294 stand for animals: human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; plants: arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; fungi: baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2, respectively)
 
 * BED annotation sorting by chromosomes and positions, [bed_sort.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/bed_sort.cpp)
@@ -113,7 +113,7 @@ Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/
 * Partitiong of one FASTA file with multiple sequences into multiple file with individual sequences, [fasta_muliplefiles.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_muliplefiles.cpp)
 1. input FASTA format file, mutiple sequences, see [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa) as an example
 2. base name of output FASTA files, value ZZZ results the output files ZZZ1.fa and ZZZ2.fa output file for the first and second sequences in input file, and so on next
-3. int mode, output filenames: (a) the value 1 means that the names of output files do not depend on the information in the sequence headers of the input FASTA file, in the lines after the first symbols '>', output filenames {ZZZ1.fa, ZZZ2.fa, ZZZ3.fa, etc.} respect the serial numbers {1, 2, 3, etc.} ; (b) the value 0 means filenames are defined by the information in sequence headers after '>' in input FASTA file. For example, for human genome with headers of chromosomes { >chr1, >chr2, ... , >chr22, >chrX and >chrY } and value 0 provides exactly {chr1.fa, chr2.fa, ... , chr22.fa, chrX.fa and chrY.fa }
+3. integer value mode, output filenames: (a) the value 1 means that the names of output files do not depend on the information in the sequence headers of the input FASTA file, in the lines after the first symbols '>', output filenames {ZZZ1.fa, ZZZ2.fa, ZZZ3.fa, etc.} respect the serial numbers {1, 2, 3, etc.} ; (b) the value 0 means filenames are defined by the information in sequence headers after '>' in input FASTA file. For example, for human genome with headers of chromosomes { >chr1, >chr2, ... , >chr22, >chrX and >chrY } and value 0 provides exactly {chr1.fa, chr2.fa, ... , chr22.fa, chrX.fa and chrY.fa }
 
 * Whole genome conversion from FASTA to PLAIN format, [fasta_to_plain0.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/fasta_to_plain0.cpp)
 1. path to whole genome sequences of chromosomes in plain format (see the paragraph below, the last symbol of path must be '/' and '\\' for Linux and Windows OS, respectively)
@@ -137,10 +137,10 @@ Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/
 5. BED or FASTA filename without extention ".bed" or ".fa", peaks (foreground sequences)
 6. file extention, values ".bed" and ".fa" indicate whether it BED or FASTA 
 7. species and genome release (values hg38, mm10, rn6, zf11, dm6, and ce235; at10, gm21, zm73, and mp61; sc64 and sch294). The animals inludes human *Homo sapiens* hg38, mouse *Mus musculus* mm10, rat *Rattus norvegicus* Rnor_6.0, zebrafish *Danio rerio* GRCz11, fly *Drosophila melanogaster* dm6, and roundworm *Caenorhabditis elegans* WBcel235; the plants are arabidopsis *Arabidopsis thaliana* TAIR10, soybean *Glycine max* v2.1, maize *Zea mays* B73, and liverwort *Marchantia polymorpha* MpTak v6.1; the fungi are baker's yeast *Saccharomyces cerevisiae* R64-1-1 and fission yeast *Schizosaccharomyces pombe* ASM294v2.
-8. required number of found background sequences per one foreground sequence, Rbf (default value 5)
-9. deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
-10. total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
-11. threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+8. integer value, required number of found background sequences per one foreground sequence, Rbf (default value 5)
+9. double value, deviation δ of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+10. integer value, if a given number of attempts Na to find any background sequence is unsuccessful, then the algorithm is exited (default value 50000)
+11. double value, threshold for the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 * Genome in PLAIN format is ready, it is not important for the program whetner it masked or unmasked
 Command line file [command_line_simple](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_simple) and perl script [simple.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/simple.pl) allow either BED or FASTA format of foreground sequences.
