@@ -10,7 +10,7 @@ if(scalar(@ARGV)==0){ die "Wrong arguments!";}
 $path_exe=           $ARGV[0]; # path to executable: fasta_muliplefiles.exe, bed_chr_separation.exe, background_genome_mono.exe, fasta_to_plain0.exe, longext_many.exe, bed_chr_mask.exe, bed_sort.exe
 $path_in=            $ARGV[1]; # reference genome in FASTA format, respective genome in PLAIN format also will be there
 $path_bed=           $ARGV[2]; # path for whitelisted/blacklisted BED, ChIP-seq BED
-$path_out=           $ARGV[3]; # output path, masked genome also will be there
+$path_out=           $ARGV[3]; # output path
 $genome_fa=          $ARGV[4]; # reference genome in FASTA format, should be placed in the folder $path_in (see below), e.g. Homo_sapiens.GRCh38.dna.primary_assembly.fa from https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 $prepare_genome=     $ARGV[5]; # 1 = start from the reference genome in FASTA, 0 = genome is already done in PLAIN format
 $bed_chipseq_file=   $ARGV[6]; # BED file tested, without extention ".bed"
