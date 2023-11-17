@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-use 5.8.1; use strict; use warnings; use File::Copy;
+use 5.8.1; use strict; use warnings; 
 
 my ($cmd, $path_exe, $path_in, $path_bed, $path_out, $black_or_white, $check_overlap, $prepare_genome, $genome, $genome_fa);
 my ($bed_list_file_old, $bed_list_file_new, $bed_list_file, $bed_chipseq_file_old, $bed_chipseq_file_new, $bed_chipseq_file, $file_overlap_sta);
