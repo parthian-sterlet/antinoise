@@ -1,5 +1,4 @@
 #!/bin/sh
-#!/bin/sh
 
 chmod a+x simple.pl
 chmod a+x mask.pl
