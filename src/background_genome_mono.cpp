@@ -74,8 +74,8 @@ int CheckStr(char *file, char *d, int n, int print, int &bad)
 	int i, len, ret,di;
 	len = strlen(d);
 	ret = 1;
-	char alfavit11a[] = "wrmkysbvhd";
-	char alfavit11b[] = "WRMKYSBVHD";
+	char alfavit11a[] = "wsrmkybvhd";
+	char alfavit11b[] = "WSRMKYBVHD";
 	for (i = 0; i < len; i++)
 	{
 		di = (int)(d[i]);
@@ -693,6 +693,7 @@ int main(int argc, char *argv[])
 		fclose(out_log);
 	}
 	int len_max, len_min;
+	char wat[] = "WATwat", scg[] = "SCGscg", at[]="ATat",cg[]="CGcg";
 	seqm *sort;
 	sort = new seqm[nseq];
 	if (sort == NULL) { puts("Out of memory..."); exit(1); }
@@ -701,10 +702,13 @@ int main(int argc, char *argv[])
 		int mono_at = 0, mono_cg = 0;
 		for (j = 0; j < len[i]; j++)
 		{
-			if ((peak_real[0][i][j] == 'A' || peak_real[0][i][j] == 'T') || (peak_real[0][i][j] == 'a' || peak_real[0][i][j] == 't'))mono_at++;
+			int prij = (int)peak_real[0][i][j];
+			//if ((peak_real[0][i][j] == 'A' || peak_real[0][i][j] == 'T') || (peak_real[0][i][j] == 'a' || peak_real[0][i][j] == 't'))mono_at++;
+			if(strchr(wat,prij)!=NULL)mono_at++;
 			else
 			{
-				if ((peak_real[0][i][j] == 'C' || peak_real[0][i][j] == 'G') || (peak_real[0][i][j] == 'c' || peak_real[0][i][j] == 'g'))mono_cg++;
+				if (strchr(scg, prij) != NULL)mono_cg++;
+				//if ((peak_real[0][i][j] == 'C' || peak_real[0][i][j] == 'G') || (peak_real[0][i][j] == 'c' || peak_real[0][i][j] == 'g'))mono_cg++;
 			}
 		}
 		sort[i].num = i;
@@ -729,9 +733,39 @@ int main(int argc, char *argv[])
 	int nseqb1 = nseqb - 1;
 	int good = 0;
 	int gomol = 0;
-	/*
-	while (iter < trys)
+	if ((out_fas = fopen(fileofas, "wt")) == NULL)
 	{
+		printf("Input file %s can't be opened!", fileofas);
+		exit(1);
+	}	
+	if ((out_bed = fopen(fileobed, "wt")) == NULL)
+	{
+		printf("Input file %s can't be opened!", fileobed);
+		exit(1);
+	}
+	int size = 0;
+	iter = pr_tot = 0;
+	trys = nseq * back_iter;
+	gomol = 0;
+	int stop;
+	{
+		stop = (int)(stop_thr * nseq);
+	}
+	double step_fr = 1 / (double)NBIN;
+	double fr_all_for[NBIN], fr_all_back[NBIN], fr_no[NBIN], val[NBIN];
+	for (i = 0; i < NBIN; i++)fr_all_for[i] = fr_all_back[i] = fr_no[i] = 0;
+	val[0] = step_fr;
+	for (i = 1; i < NBIN; i++)val[i] = val[i - 1] + step_fr;
+	int di[16], ditotback[16], ditotbak_len = 0;
+	for (j = 0; j < 16; j++)ditotback[j] = di[j] = 0; 
+	int iter_attempts = 0;
+	while (iter < trys && heis < nseq)
+	{
+		iter_attempts++;
+		if (iter_attempts % 10000 == 0)
+		{
+			printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, dpr_tot, gomol);
+		}
 		int rr = rand();
 		int chr_z = 1, sum = 0, ra = rr % tot_len;
 		for (i = 0; i < n_chr; i++)
@@ -755,16 +789,40 @@ int main(int argc, char *argv[])
 		int rb2 = rr % 1000;
 		rb += rb2;
 		fseek(in_seq[chr_z], (long)(rb), SEEK_SET);
-		int check = -1;
-		iter++;
+		int check = 1;		
+		char alfavit4[] = "ATGCatgc";
+		int len_max1 = len_max - 1;
+		int good;
 		while (fgets(d, len_max, in_seq[chr_z]) != NULL)
+		{			
+			int lend = strlen(d);			
+			if (lend != len_max1)check = 0;
+			else
+			{
+				good = 0;
+				for (i = 0; i < len_max; i++)
+				{
+					int di = (int)d[i];
+					if (strchr(alfavit4, di) == NULL)
+					{
+						check = 0;
+						break;
+					}
+					else good++;
+				}
+			}				
+			break;			
+			//check = CheckStr(filechr[chr_z], d, 0, 0,len_max);
+			//if (check == 1)break;
+		}	
+		if (check == 0)
 		{
-			check = CheckStr(filechr[chr_z], d, 0, 0);
-			if (check == 1)break;
+			continue;
 		}
-		TransStrBack(d);
 		if (check == 1)
 		{
+			iter++;
+			TransStrBack(d);
 			int gom = 0;
 			for (i = 0; i < nseq; i++)
 			{
@@ -791,130 +849,10 @@ int main(int argc, char *argv[])
 				int cat = 0;
 				for (i = 0; i < len_min; i++)
 				{
-					if ((d[i] == 'A' || d[i] == 'T') || (d[i] == 'a' || d[i] == 't')) cat++;
+					int di = (int)d[i];
+					if (strchr(at, di) != NULL)cat++;
+					//if ((d[i] == 'A' || d[i] == 'T') || (d[i] == 'a' || d[i] == 't')) cat++;
 				}
-				int len_cur = len_min;
-				int done = 0;
-				for (i = 0; i < nseq; i++)
-				{
-					if (sort[i].don >= height0)continue;
-					for (j = len_cur; j < sort[i].len; j++)
-					{
-						if ((d[j] == 'A' || d[j] == 'T') || (d[j] == 'a' || d[j] == 't'))cat++;
-					}
-					double mono = fabs((double)(cat - sort[i].nat)) / sort[i].lena;
-					if (mono < mono_prec)
-					{
-						strncpy(d1, d, sort[i].len);
-						d1[sort[i].len] = '\0';
-						sort[i].don++;
-						if (sort[i].don == height0)good++;
-						pr_tot++;
-						done = 1;
-						break;
-					}
-					len_cur = sort[i].len;
-				}
-			}
-		}
-		if (iter % 10000 == 0)
-		{
-			double rat = double(good) / nseq;
-			printf("Iterations %5d\t Nseq_Background %5d\tFraction_Done %5f\tHomol %d\n", iter, pr_tot, rat, gomol);
-			if (rat > stop_thr)break;
-		}		
-	}*/
-	if ((out_fas = fopen(fileofas, "wt")) == NULL)
-	{
-		printf("Input file %s can't be opened!", fileofas);
-		exit(1);
-	}	
-	if ((out_bed = fopen(fileobed, "wt")) == NULL)
-	{
-		printf("Input file %s can't be opened!", fileobed);
-		exit(1);
-	}
-	int size = 0;
-	iter = pr_tot = 0;
-	trys = nseq * back_iter;
-	gomol = 0;
-	int stop;
-	{
-		stop = (int)(stop_thr * nseq);
-	}
-	double step_fr = 1 / (double)NBIN;
-	double fr_all_for[NBIN], fr_all_back[NBIN], fr_no[NBIN], val[NBIN];
-	for (i = 0; i < NBIN; i++)fr_all_for[i] = fr_all_back[i] = fr_no[i] = 0;
-	val[0] = step_fr;
-	for (i = 1; i < NBIN; i++)val[i] = val[i - 1] + step_fr;
-	int di[16], ditotback[16], ditotbak_len = 0;
-	for (j = 0; j < 16; j++)ditotback[j] = di[j] = 0; 
-	while (iter < trys && heis < nseq)
-	{
-		int rr = rand();
-		int chr_z = 1, sum = 0, ra = rr % tot_len;
-		for (i = 0; i < n_chr; i++)
-		{
-			sum += sizelo2[i];
-			if (ra < sum)
-			{
-				chr_z = i;
-				break;
-			}
-		}
-		int z_len = sizelo2[chr_z];
-		rr = rand();
-		int rb = rr % z_len;
-		rb *= 1000000;
-		rr = rand();
-		int rb1 = rr % 1000;
-		rb1 *= 1000;
-		rb += rb1;
-		rr = rand();
-		int rb2 = rr % 1000;
-		rb += rb2;
-		fseek(in_seq[chr_z], (long)(rb), SEEK_SET);
-		int check = -1;
-		iter++;
-		while (fgets(d, len_max, in_seq[chr_z]) != NULL)
-		{
-			if (strstr(d, "N") != NULL || strstr(d, "n") != NULL)continue;
-			else
-			{
-				check = 1;
-				break;
-			}
-			//check = CheckStr(filechr[chr_z], d, 0, 0,len_max);
-			//if (check == 1)break;
-		}		
-		if (check == 1)
-		{
-			TransStrBack(d);
-			int gom = 0;
-			for (i = 0; i < nseq; i++)
-			{
-				for (k = 0; k < 2; k++)
-				{
-					for (j = 0; j < len[i] - win_gomol + 1; j++)
-					{
-						if (strncmp(d, &peak_real[k][i][j], win_gomol) == 0)
-						{
-							gom = 1;
-							break;
-						}
-					}
-					if (gom == 1)break;
-				}
-				if (gom == 1)break;
-			}
-			if (gom == 1)
-			{
-				gomol++;
-			}
-			else
-			{
-				int cat = 0;
-				for (i = 0; i < len_min; i++)if ((d[i] == 'A' || d[i] == 'T') || (d[i] == 'a' || d[i] == 't')) cat++;
 				int len_cur = len_min;
 				int done = 0;
 				for (i = 0; i < nseq; i++)
@@ -922,7 +860,9 @@ int main(int argc, char *argv[])
 					if (hei[i] >= height)continue;
 					for (j = len_cur; j < sort[i].len; j++)
 					{
-						if ((d[j] == 'A' || d[j] == 'T') || (d[j] == 'a' || d[j] == 't'))cat++;
+						int dj = (int)d[j];
+						if (strchr(at, dj) != NULL)cat++;
+						//if ((d[j] == 'A' || d[j] == 'T') || (d[j] == 'a' || d[j] == 't'))cat++;
 					}
 					double mono = fabs(sort[i].fat - (double)(cat) / sort[i].len);
 					if (mono < mono_prec)
@@ -975,8 +915,7 @@ int main(int argc, char *argv[])
 					inx = i;
 					break;
 				}
-			}
-			//printf("Iterations %5d\t Nseq_Background %5d\tLenMax %d Inx %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter, pr_tot, len_max, inx, (double)heis / nseq, dpr_tot,gomol);
+			}			
 			if (iter % 10000 == 0)
 			{
 				FILE *out_log;
@@ -1057,8 +996,8 @@ int main(int argc, char *argv[])
 		}
 		fr_all_for[jk]++;
 	}
-	for (i = 0; i < NBIN; i++)fr_all_for[i] /= nseq;		
-	for (i = 0; i < NBIN; i++)fr_all_back[i] /= size;
+	if (nseq != 0)for (i = 0; i < NBIN; i++)fr_all_for[i] /= nseq;
+	if(size!=0)for (i = 0; i < NBIN; i++)fr_all_back[i] /= size;
 	if (no_success > 0)
 	{
 		for (i = 0; i < NBIN; i++)fr_no[i] /= no_success;
