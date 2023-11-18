@@ -52,9 +52,9 @@ git clone https://github.com/parthian-sterlet/antinoise
 
 cd antinoise/run
 
-chmod a+x build_linux.sh
+chmod a+x build.sh
 
-./build_linux.sh
+./build.sh
 
 * In Windows system:
 
