@@ -762,10 +762,7 @@ int main(int argc, char *argv[])
 	while (iter < trys && heis < nseq)
 	{
 		iter_attempts++;
-		if (iter_attempts % 10000 == 0)
-		{
-			printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, dpr_tot, gomol);
-		}
+		//if (iter_attempts % 10000 == 0)printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, dpr_tot, gomol);
 		int rr = rand();
 		int chr_z = 1, sum = 0, ra = rr % tot_len;
 		for (i = 0; i < n_chr; i++)
