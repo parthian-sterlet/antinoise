@@ -18,14 +18,27 @@ struct seqm {
 	int len;//length
 	double fat;//length atgc
 //	int nat;// % at	
-	int don;// ready	
+//	int don;// ready
+	int hei;
 };
-int compare_len(const void *X1, const void *X2)
+int compare_len1(const void *X1, const void *X2)
 {
 	struct seqm *S1 = (struct seqm *)X1;
 	struct seqm *S2 = (struct seqm *)X2;
 	if (S1->len - S2->len > 0)return 1;
 	if (S1->len - S2->len < 0)return -1;
+	if (S1->fat - S2->fat > 0)return 1;
+	if (S1->fat - S2->fat < 0)return -1;
+	return 0;
+}
+int compare_len2(const void* X1, const void* X2)
+{
+	struct seqm* S1 = (struct seqm*)X1;
+	struct seqm* S2 = (struct seqm*)X2;
+	if (S1->len - S2->len > 0)return 1;
+	if (S1->len - S2->len < 0)return -1;
+	if (S1->fat - S2->fat > 0)return -1;
+	if (S1->fat - S2->fat < 0)return 1;
 	return 0;
 }
 int compare_fat(const void* X1, const void* X2)
@@ -406,10 +419,10 @@ int main(int argc, char *argv[])
 	char d[SEQLEN], d1[SEQLEN], filesta[10], fileend[10], genome[10], filefasext[10], filebedext[10];
 	char filei[500], fileofas[500], fileobed[500], fileosta_mo[500], fileosta_di[500], fileosta_mo_one[500], fileosta_di_one[500], file_log[500], filechr[NCHR][500], path_fasta[500];
 	FILE *out_fas, *out_bed, *in_seq[NCHR], *outm, *outd, *outm_one, *outd_one;
-	if (argc != 14)
+	if (argc != 15)
 	{
 		puts("Sintax: 1 path_genome 2file in_fa, 3file out_fa 4int height 5double mono prec 6int back_iter 7char genome (hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61)");
-		puts("8double stop_fraction 9file_out mono_for_vs_back 10 file_out di_for_back 11file_out mononucl statistics 12file_out dinucl statistics 13file_log");
+		puts("8double stop_fraction 9int sequence_length (the same OR (>0 && <3000) 10,11,12,13file_out (mono-, di-) x (forground_vs_background, statistics) 14file_out log");
 		exit(1);
 	}
 	strcpy(filesta, "chr");
@@ -426,20 +439,19 @@ int main(int argc, char *argv[])
 	strcat(fileofas, filefasext);//out_file bed
 	strcpy(fileobed, argv[3]);//out_file seq
 	strcat(fileobed, filebedext);//out_file bed
-
 	int height = atoi(argv[4]);
-	double mono_prec = atof(argv[5]);
-	int back_iter = 10000;
+	double mono_prec = atof(argv[5]);	
 	int empty_iter = atoi(argv[6]);
 	strcpy(genome, argv[7]);
 	double stop_thr = atof(argv[8]);//0.99;// fraction of peaks 100% covered with height background sequences
-	strcpy(fileosta_mo, argv[9]);//out_file sta success rate
-	strcpy(fileosta_di, argv[10]);//out_file sta success rate
-	strcpy(fileosta_mo_one, argv[11]);//out_file sta dinucl content
-	strcpy(fileosta_di_one, argv[12]);//out_file sta dinucl content
-	strcpy(file_log, argv[13]);//out_file sta dinucl content	
+	int len_back = atoi(argv[9]);
+	strcpy(fileosta_mo, argv[10]);//out_file sta success rate
+	strcpy(fileosta_di, argv[11]);//out_file sta success rate
+	strcpy(fileosta_mo_one, argv[12]);//out_file sta dinucl content
+	strcpy(fileosta_di_one, argv[13]);//out_file sta dinucl content
+	strcpy(file_log, argv[14]);//out_file sta dinucl content	
 
-	int empty_iter_min = 10000, empty_iter_max = 100000;
+	int back_iter = 10000, empty_iter_min = 10000, empty_iter_max = 100000;
 	if (empty_iter < 0 || empty_iter > empty_iter_max)
 	{
 		printf("No. of iterations without success is allowed from %d to %d!\n", empty_iter_min, empty_iter_max);
@@ -665,9 +677,9 @@ int main(int argc, char *argv[])
 	if (bad == NULL){ puts("Out of memory..."); exit(1); }
 	int dnseq = 0;	
 	EvalLen(filei, len, bad, olen);
-	int *hei;
-	hei = new int[nseq];
-	if (hei == NULL) { puts("Out of memory..."); exit(1); }
+//	int *hei;
+//	hei = new int[nseq];
+//	if (hei == NULL) { puts("Out of memory..."); exit(1); }
 	char ***peak_real;
 	peak_real = new char**[2];
 	if (peak_real == NULL) { puts("Out of memory..."); exit(1); }
@@ -712,16 +724,23 @@ int main(int argc, char *argv[])
 			}
 		}
 		sort[i].num = i;
-		sort[i].don = 0;
+	//	sort[i].don = 0;
+		sort[i].hei = 0;
 		sort[i].len = len[i];
 	//	sort[i].nat = mono_at;				
 		sort[i].fat = (double)mono_at/(mono_at + mono_cg);
-	}
-	for (i = 0; i < nseq; i++)hei[i] = 0;
-	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_len);
+	}	
+	if (len_back > 0)for (i = 0; i < nseq; i++)sort[i].len = len_back;
+	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_len1);
+	int mode_lf = 1; // 1 length increase, fat increase, -1  length increase, fat decrease
 	len_max = sort[nseq - 1].len+1;
 	len_min = sort[0].len;
-	int pr_tot = 0, dpr_tot=0;
+	if (len_back > 0 && len_min > len_back)
+	{
+		printf("Background sequences cannot be found since their required length %d exceeds the minimal length %d of foreground sequences!\n", len_back, len_min);
+		exit(1);
+	}
+	int pr_tot = 0, dpr_tot = 0;
 	int fl = 0;
 	int trys = nseq * back_iter / 5;
 	int iter = 0;
@@ -762,7 +781,7 @@ int main(int argc, char *argv[])
 	while (iter < trys && heis < nseq)
 	{
 		iter_attempts++;
-		//if (iter_attempts % 10000 == 0)printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, dpr_tot, gomol);
+		if (iter_attempts % 10000 == 0)printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, dpr_tot, gomol);
 		int rr = rand();
 		int chr_z = 1, sum = 0, ra = rr % tot_len;
 		for (i = 0; i < n_chr; i++)
@@ -854,25 +873,31 @@ int main(int argc, char *argv[])
 				int done = 0;
 				for (i = 0; i < nseq; i++)
 				{
-					if (hei[i] >= height)continue;
+					if (sort[i].hei >= height)continue;
 					for (j = len_cur; j < sort[i].len; j++)
 					{
 						int dj = (int)d[j];
 						if (strchr(at, dj) != NULL)cat++;
 						//if ((d[j] == 'A' || d[j] == 'T') || (d[j] == 'a' || d[j] == 't'))cat++;
 					}
-					double mono = fabs(sort[i].fat - (double)(cat) / sort[i].len);
+					double fatc = (double)(cat) / sort[i].len;
+					if ((mode_lf == 1 && sort[i].fat > fatc + mono_prec) || (mode_lf == -1 && sort[i].fat < fatc - mono_prec))
+					{
+						if (len_back > 0)break;
+						else continue;
+					}
+					double mono = fabs(sort[i].fat - fatc);					
 					if (mono < mono_prec)
 					{
 						strncpy(d1, d, sort[i].len);
 						d1[sort[i].len] = '\0';
-						if (hei[i] < height)
+						if (sort[i].hei < height)
 						{
-							hei[i]++;
-							fprintf(out_fas, ">chr%s\t%d\t%d\tpeak%d_%d_Mo_%f\n", name_chr[chr_z], rb, rb + sort[i].len, sort[i].num, hei[i], mono);
+							sort[i].hei++;
+							fprintf(out_fas, ">chr%s\t%d\t%d\tpeak%d_%d_Mo_%f\n", name_chr[chr_z], rb, rb + sort[i].len, sort[i].num, sort[i].hei, mono);
 							fprintf(out_fas, "%s\n", d1);
 							fprintf(out_bed, "chr%s\t%d\t%d\n", name_chr[chr_z], rb, rb + sort[i].len);
-							if (hei[i] == height)heis++;
+							if (sort[i].hei == height)heis++;
 							done = 1;
 							size++;
 							double donj = (double)cat / sort[i].len;
@@ -901,35 +926,48 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-		if (iter % 1000 == 0)
+		if (iter % 100 == 0)
 		{
-			int inx = nseq - 1;
-			for (i = nseq - 1; i >= 0; i--)
+			if (mode_lf == 1)
 			{
-				if (hei[i] < height)
-				{
-					len_max = sort[i].len+1;
-					inx = i;
-					break;
-				}
-			}			
-			if (iter % 10000 == 0)
-			{
-				FILE *out_log;
-				if ((out_log = fopen(file_log, "wt")) == NULL)
-				{
-					fprintf(out_log, "Input file %s can't be opened!\n", file_log);
-					exit(1);
-				}
-				fprintf(out_log, "Required %d genomic sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
-				fclose(out_log);
+				qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_len2);
+				mode_lf = -1;
 			}
-			if (iter % empty_iter == 0)
+			else
 			{
-				if (dpr_tot == 0)break;
-				dpr_tot = 0;
+				qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_len1);
+				mode_lf = 1;
 			}
-			if (heis >= stop)break;			
+			if (iter % 1000 == 0)
+			{
+				int inx = nseq - 1;
+				for (i = nseq - 1; i >= 0; i--)
+				{
+					if (sort[i].hei < height)
+					{
+						len_max = sort[i].len + 1;
+						inx = i;
+						break;
+					}
+				}
+				if (iter % 10000 == 0)
+				{
+					FILE* out_log;
+					if ((out_log = fopen(file_log, "wt")) == NULL)
+					{
+						fprintf(out_log, "Input file %s can't be opened!\n", file_log);
+						exit(1);
+					}
+					fprintf(out_log, "Required %d genomic sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
+					fclose(out_log);
+				}
+				if (iter % empty_iter == 0)
+				{
+					if (dpr_tot == 0)break;
+					dpr_tot = 0;
+				}
+				if (heis >= stop)break;
+			}
 		}
 	}
 	{
@@ -947,9 +985,7 @@ int main(int argc, char *argv[])
 	//qsort((void*)(&sele[0]), pr_tot, sizeof(sele[0]), compare_num);
 	for (i = 0; i < n_chr; i++)fclose(in_seq[i]);
 	fclose(out_fas);
-	fclose(out_bed);
-	for (i = 0; i < nseq; i++)sort[i].don = hei[i];
-	delete[] hei;
+	fclose(out_bed);	
 	qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_num);		
 	int success = 0, no_success = 0;
 	if ((outm = fopen(fileosta_mo, "wt")) == NULL)
@@ -985,7 +1021,7 @@ int main(int argc, char *argv[])
 				break;
 			}
 		}
-		if (sort[i].don >= height)success++;
+		if (sort[i].hei >= height)success++;
 		else
 		{
 			fr_no[jk]++;
@@ -1050,13 +1086,13 @@ int main(int argc, char *argv[])
 			motot[j] += mo[j];
 		}		
 		monotot += mo[0]+mo[3];
-		count_tot += sort[i].don;		
+		count_tot += sort[i].hei;		
 		lendtot += di_one;
 		lenmtot += mo_one;
-		if (sort[i].don < height)
+		if (sort[i].hei < height)
 		{					
-			fprintf(outm_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);					
-			fprintf(outd_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].don);
+			fprintf(outm_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].hei);					
+			fprintf(outd_one, "#Seq %4d #FoundSeq %d", sort[i].num + 1, sort[i].hei);
 			for (j = 0; j < 16; j++)fprintf(outd_one, "\t%f", 100 * (double)di[j]/di_one);
 			fprintf(outm_one, "\t%f", 100*(double)(mo[0] + mo[3]) / mo_one);
 			fprintf(outd_one, "\n");
