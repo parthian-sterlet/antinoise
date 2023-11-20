@@ -3,7 +3,7 @@ use 5.8.1; use strict; use warnings;
 
 my ($cmd, $path_exe, $path_in, $path_bed, $path_out, $black_or_white, $check_overlap, $prepare_genome, $genome, $genome_fa);
 my ($bed_list_file_old, $bed_list_file_new, $bed_list_file, $bed_chipseq_file_old, $bed_chipseq_file_new, $bed_chipseq_file, $file_overlap_sta);
-my ($bed_list_file_sorted, $bed_list_file_sorted_no_over, $bedext, $chr, $backext, $faext,$bederr, $noovext);
+my ($bed_list_file_sorted, $bed_list_file_sorted_no_over, $bedext, $chr, $backext, $faext,$bederr, $noovext, $len_back);
 my ($gb_fold, $gb_at, $gb_limit, $gb_done, $gb_ext1, $gb_ext2, $gb_ext3, $gb_ext4, $gb_ext5);
 
 if(scalar(@ARGV)==0){ die "Wrong arguments!";}
@@ -18,11 +18,12 @@ $bed_list_file=      $ARGV[6]; # BED file, blacklisted or whitellisted regions
 $black_or_white=     $ARGV[7]; # -1 = blacklist, 1 = whitelist
 $check_overlap=      $ARGV[8]; # check self-overlaps in blacklist or whitelist files
 $bed_chipseq_file=   $ARGV[9]; # BED file tested, without extention ".bed"
-$genome=             $ARGV[10]; # genome, hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61
-$gb_fold=            $ARGV[11]; # number of found background sequences per one foreground sequence, (default value 5)
-$gb_at=              $ARGV[12]; # deviation of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
-$gb_limit=           $ARGV[13]; # if a given number of attempts Na to find any background sequence is unsuccessful, then the algorithm is exited (default value 50000)
-$gb_done=            $ARGV[14]; # the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+$len_back=           $ARGV[10]; # 0 means exact correspondence between forground and background, ny other value greater than zero will set the length of sequences in the background set 
+$genome=             $ARGV[11]; # genome, hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61
+$gb_fold=            $ARGV[12]; # number of found background sequences per one foreground sequence, (default value 5)
+$gb_at=              $ARGV[13]; # deviation of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+$gb_limit=           $ARGV[14]; # if a given number of attempts Na to find any background sequence is unsuccessful, then the algorithm is exited (default value 50000)
+$gb_done=            $ARGV[15]; # the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 $bedext = ".bed", $faext = ".fa", $chr = "chr", $backext = "_gb", $noovext = "_no_over_", $bederr = "bed_errors.txt", $gb_ext1 = ".outm", $gb_ext2 = ".outd", $gb_ext3 = ".outm_one", $gb_ext4 = ".outd_one", $gb_ext5 = ".outlog";
 $file_overlap_sta = "area_self_overlap.txt";
@@ -101,7 +102,7 @@ $cmd= "$path_exe/longext_many.exe ${path_in} ${path_out}${bed_chipseq_file}${bed
 print "$cmd\n";
 system $cmd;
 
-$cmd= "$path_exe/background_genome_mono.exe ${path_out} ${path_out}${bed_chipseq_file}${faext} ${path_out}${bed_chipseq_file}${backext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${gb_done} ${path_out}${bed_chipseq_file}${gb_ext1} ${path_out}${bed_chipseq_file}${gb_ext2} ${path_out}${bed_chipseq_file}${gb_ext3} ${path_out}${bed_chipseq_file}${gb_ext4} ${path_out}${bed_chipseq_file}${gb_ext5}";
+$cmd= "$path_exe/background_genome_mono.exe ${path_out} ${path_out}${bed_chipseq_file}${faext} ${path_out}${bed_chipseq_file}${backext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${gb_done} ${len_back} ${path_out}${bed_chipseq_file}${gb_ext1} ${path_out}${bed_chipseq_file}${gb_ext2} ${path_out}${bed_chipseq_file}${gb_ext3} ${path_out}${bed_chipseq_file}${gb_ext4} ${path_out}${bed_chipseq_file}${gb_ext5}";
 print "$cmd\n";
 system $cmd;
 
