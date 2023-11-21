@@ -798,7 +798,7 @@ int main(int argc, char *argv[])
 		rb *= rand_max_win_linux;
 		int rest_space = sizelo1[chr_z] - rb;
 		rr = rand();
-		rb += rr % rest_space;
+		rb += rr % rand_max_win_linux;
 		fseek(in_seq[chr_z], (long)(rb), SEEK_SET);
 		int check = 1;		
 		char alfavit4[] = "ATGCatgc";
