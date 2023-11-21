@@ -10,15 +10,16 @@ if(scalar(@ARGV)==0){ die "Wrong arguments!";}
 $path_exe=           $ARGV[0]; # path to executable: fasta_muliplefiles.exe, bed_chr_separation.exe, background_genome_mono.exe, fasta_to_plain0.exe, longext_many.exe, bed_chr_mask.exe, bed_sort.exe
 $path_in=            $ARGV[1]; # reference genome in FASTA format, respective genome in PLAIN format also will be there
 $path_bed=           $ARGV[2]; # path for whitelisted/blacklisted BED, ChIP-seq BED
-$path_out=           $ARGV[3]; # output path
+$path_out=           $ARGV[3]; # output path, place balacklist file there, masked genome also will be there
 $genome_fa=          $ARGV[4]; # reference genome in FASTA format, should be placed in the folder $path_in (see below), e.g. Homo_sapiens.GRCh38.dna.primary_assembly.fa from https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 $prepare_genome=     $ARGV[5]; # 1 = start from the reference genome in FASTA, 0 = genome is already done in PLAIN format
 $bed_chipseq_file=   $ARGV[6]; # BED file tested, without extention ".bed"
-$genome=             $ARGV[7]; # genome, hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61
-$gb_fold=            $ARGV[8]; # number of found background sequences per one foreground sequence, (default value 5)
-$gb_at=              $ARGV[9]; # deviation of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
-$gb_limit=           $ARGV[10]; # if a given number of attempts Na to find any background sequence is unsuccessful, then the algorithm is exited (default value 50000)
-$gb_done=            $ARGV[11]; # the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
+$len_back=           $ARGV[7]; # 0 means exact correspondence between forground and background, any other value greater than zero will set the length of sequences in the background set
+$genome=             $ARGV[8]; # genome, hg38 mm10 rn6 zf11 dm6 ce235 sc64 sch294 at10 gm21 zm73 mp61
+$gb_fold=            $ARGV[9]; # number of found background sequences per one foreground sequence, (default value 5)
+$gb_at=              $ARGV[10]; # deviation of the A/T nucleotide content of a background sequence from that for a foreground sequence, (default value 0.01)
+$gb_limit=           $ARGV[11]; # total average number of attempts Na to get background sequences from genome per one foreground sequence (default value 10000)
+$gb_done=            $ARGV[12]; # the fraction of completely processed input sequences allowing to stop calculations (default value 0.99)
 
 $bedext = ".bed", $faext = ".fa", $chr = "chr", $backext = "_gb";
 $gb_ext1 = ".outm", $gb_ext2 = ".outd", $gb_ext3 = ".outm_one", $gb_ext4 = ".outd_one", $gb_ext5 = ".outlog";
