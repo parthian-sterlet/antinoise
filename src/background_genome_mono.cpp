@@ -640,11 +640,9 @@ int main(int argc, char *argv[])
 	{
 		printf("Genome %s is not recognized\n",genome);
 		exit(1);
-	}
-	int mil = 1000000;
-	if (strcmp(genome, "sc64") == 0 || strcmp(genome, "sch294") == 0)mil = 100000;
-	for (i = 0; i < n_chr; i++)sizelo2[i] = sizelo1[i] / mil;
-	int win_gomol = 50;//to compare homology and min paek length	
+	}	
+	for (i = 0; i < n_chr; i++)sizelo2[i] = sizelo1[i] / RAND_MAX;
+	int win_gomol = 50;//to compare homology and min peak length	
 	srand((unsigned)time(NULL));	
 	{
 		FILE* out_log;
@@ -781,7 +779,7 @@ int main(int argc, char *argv[])
 	while (iter < trys && heis < nseq)
 	{
 		iter_attempts++;
-		if (iter_attempts % 10000 == 0)printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, dpr_tot, gomol);
+	//	if (iter_attempts % 10000 == 0)printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, dpr_tot, gomol);
 		int rr = rand();
 		int chr_z = 1, sum = 0, ra = rr % tot_len;
 		for (i = 0; i < n_chr; i++)
@@ -796,14 +794,10 @@ int main(int argc, char *argv[])
 		int z_len = sizelo2[chr_z];
 		rr = rand();
 		int rb = rr % z_len;
-		rb *= mil;
+		rb *= RAND_MAX;
+		int rest_space = sizelo1[chr_z] - rb;
 		rr = rand();
-		int rb1 = rr % 1000;
-		rb1 *= 1000;
-		rb += rb1;
-		rr = rand();
-		int rb2 = rr % 1000;
-		rb += rb2;
+		rb += rr % rest_space;
 		fseek(in_seq[chr_z], (long)(rb), SEEK_SET);
 		int check = 1;		
 		char alfavit4[] = "ATGCatgc";
