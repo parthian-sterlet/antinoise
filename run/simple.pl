@@ -51,7 +51,7 @@ else{
 $faext = $bed_or_fasta;
 }
 
-$cmd= "$path_exe/background_genome_mono.exe ${path_in} ${path_out}${chipseq_file}${faext} ${path_out}${chipseq_file}${backext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${$len_back} ${gb_done} ${path_out}${chipseq_file}${gb_ext1} ${path_out}${chipseq_file}${gb_ext2} ${path_out}${chipseq_file}${gb_ext3} ${path_out}${chipseq_file}${gb_ext4} ${path_out}${chipseq_file}${gb_ext5}";
+$cmd= "$path_exe/background_genome_mono.exe ${path_in} ${path_out}${chipseq_file}${faext} ${path_out}${chipseq_file}${backext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${len_back} ${gb_done} ${path_out}${chipseq_file}${gb_ext1} ${path_out}${chipseq_file}${gb_ext2} ${path_out}${chipseq_file}${gb_ext3} ${path_out}${chipseq_file}${gb_ext4} ${path_out}${chipseq_file}${gb_ext5}";
 print "$cmd\n";
 system $cmd;
 
