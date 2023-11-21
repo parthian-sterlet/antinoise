@@ -641,7 +641,8 @@ int main(int argc, char *argv[])
 		printf("Genome %s is not recognized\n",genome);
 		exit(1);
 	}	
-	for (i = 0; i < n_chr; i++)sizelo2[i] = sizelo1[i] / RAND_MAX;
+	int rand_max_win_linux = 32767;
+	for (i = 0; i < n_chr; i++)sizelo2[i] = sizelo1[i] / rand_max_win_linux;
 	int win_gomol = 50;//to compare homology and min peak length	
 	srand((unsigned)time(NULL));	
 	{
@@ -775,7 +776,7 @@ int main(int argc, char *argv[])
 	for (i = 1; i < NBIN; i++)val[i] = val[i - 1] + step_fr;
 	int di[16], ditotback[16], ditotbak_len = 0;
 	for (j = 0; j < 16; j++)ditotback[j] = di[j] = 0; 
-	int iter_attempts = 0;
+	int iter_attempts = 0;	
 	while (iter < trys && heis < nseq)
 	{
 		iter_attempts++;
@@ -794,7 +795,7 @@ int main(int argc, char *argv[])
 		int z_len = sizelo2[chr_z];
 		rr = rand();
 		int rb = rr % z_len;
-		rb *= RAND_MAX;
+		rb *= rand_max_win_linux;
 		int rest_space = sizelo1[chr_z] - rb;
 		rr = rand();
 		rb += rr % rest_space;
