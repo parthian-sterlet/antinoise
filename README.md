@@ -27,7 +27,7 @@ Folder [**run**](https://github.com/parthian-sterlet/antinoise/tree/main/run) co
 
 Folder [**examples**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/examples) contains files required as the functional examples of the genomic background sequence extraction approach.
 
-Folder [**genomes/sc64**](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) contains [whole genome sequences of baker's yeasts *S. cerevisiae*](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) required for mentioned above functional examples. It is recommended that the reference genomes of other species be placed in the respective subfolders of the [genomes](https://github.com/parthian-sterlet/antinoise/tree/main/genomes) folder for subsequent analysis.
+Folder [**genomes/sc64**](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) contains [whole genome sequences of the baker's yeast *S. cerevisiae*](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64) required for mentioned above functional examples. It is recommended that the reference genomes of other species be placed in the respective subfolders of the [genomes](https://github.com/parthian-sterlet/antinoise/tree/main/genomes) folder for subsequent analysis.
 
 Folder [**bin**](https://github.com/parthian-sterlet/antinoise/tree/main/bin) includes subfolders [**linux**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/linux) and [**windows**](https://github.com/parthian-sterlet/antinoise/tree/main/bin/windows). They contain binary files compiled for linux/windows platforms from all C++ source files.
 
