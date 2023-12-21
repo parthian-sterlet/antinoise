@@ -2,7 +2,7 @@
 use 5.8.1; use strict; use warnings;
 
 my ($cmd, $path_exe, $path_in, $path_bed, $path_out, $genome, $genome_fa, $prepare_genome, $bed_chipseq_file_old, $bed_chipseq_file_new, $bed_chipseq_file);
-my ($bedext, $chr, $backext, $faext);
+my ($bedext, $chr, $backext, $faext, $len_back);
 my ($gb_fold, $gb_at, $gb_limit, $gb_done, $gb_ext1, $gb_ext2, $gb_ext3, $gb_ext4, $gb_ext5, $bederr);
 
 if(scalar(@ARGV)==0){ die "Wrong arguments!";}
@@ -58,6 +58,6 @@ $cmd= "$path_exe/longext_many.exe ${path_in} ${path_out}${bed_chipseq_file}${bed
 print "$cmd\n";
 system $cmd;
 
-$cmd= "$path_exe/background_genome_mono.exe ${path_in} ${path_out}${bed_chipseq_file}${faext} ${path_out}${bed_chipseq_file}${backext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${gb_done} ${path_out}${bed_chipseq_file}${gb_ext1} ${path_out}${bed_chipseq_file}${gb_ext2} ${path_out}${bed_chipseq_file}${gb_ext3} ${path_out}${bed_chipseq_file}${gb_ext4} ${path_out}${bed_chipseq_file}${gb_ext5}";
+$cmd= "$path_exe/background_genome_mono.exe ${path_in} ${path_out}${bed_chipseq_file}${faext} ${path_out}${bed_chipseq_file}${backext} ${gb_fold} ${gb_at} ${gb_limit} ${genome} ${gb_done} ${len_back} ${path_out}${bed_chipseq_file}${gb_ext1} ${path_out}${bed_chipseq_file}${gb_ext2} ${path_out}${bed_chipseq_file}${gb_ext3} ${path_out}${bed_chipseq_file}${gb_ext4} ${path_out}${bed_chipseq_file}${gb_ext5}";
 print "$cmd\n";
 system $cmd;
