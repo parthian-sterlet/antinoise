@@ -34,7 +34,7 @@ Folder [**bin**](https://github.com/parthian-sterlet/antinoise/tree/main/bin) in
 ## 1. Genomic background sequence generation approach
 The [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) propgram of this tool finds the genomic background sequences for a particular genome (hg38, mm10, tair10, etc.). The background sequences match almost perfectly A/T content. The background sequences either match exactly the length of DNA sequences from the foreground set, or user defines the same length for all background sequences using a special parameters.
 ## 2. Synthetic background sequence generation approach
-The alternative program [mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp) generates synthetic background sequences that exactly match the nucleotide content of the foreground sequences.
+The alternative program [mix0.cpp](https://github.com/parthian-sterlet/antinoise/blob/master/src/mix0.cpp) generates synthetic background sequences that exactly match the nucleotide content of the foreground sequences.
 
 ## Supporting C++ programs for the genomic approach
 * The program [area_self_overlap.cpp](https://github.com/parthian-sterlet/antinoise/blob/main/src/area_self_overlap.cpp) converts a genomic annotation file in BED format with possibly overlapping genomic fragments to a file in the same BED format with non- overlapping genomic fragments.
@@ -61,7 +61,7 @@ chmod a+x build.sh
 separate compilation of all source files in VC++
 ## 1. Background sequences generaration: Genomic
 
-[background_genome_mono.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/background_genome_mono.cpp)
+[background_genome_mono.cpp](https://github.com/parthian-sterlet/antinoise/blob/master/src/background_genome_mono.cpp)
 1. path to whole genome sequences of chromosomes in plain format (the last symbol of path must be '/' and '\\' for Linux and Windows platforms, respectively), see the example of these files in PLAIN format for [the reference sequence of *S. cerevisiae* genome](https://github.com/parthian-sterlet/antinoise/blob/main/genomes/sc64/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa) in [this folder](https://github.com/parthian-sterlet/antinoise/tree/main/genomes/sc64)
 2. input FASTA file (foreground set)
 3. output FASTA file name without extension (background set), two extensions ".fa" and ".bed" define output files in FASTA and BED formats
@@ -80,7 +80,7 @@ separate compilation of all source files in VC++
 Example run [command_line_simple](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_simple) uses a Perl script [simple.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/simple.pl). Top 1000 peaks from [GTRD](https://gtrd20-06.biouml.org/) for [ChIP-seq data](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM1470164) for TF GCN4 [(Spivak and Stormo, 2016)](https://doi.org/10.1534/g3.115.024331), [*S. cerevisiae* genome](https://ftp.ensemblgenomes.ebi.ac.uk/pub/fungi/release-57/fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz) here and below provide examples of the tool.
 
 ## 2. Background sequences generation: Synthetic
-[mix0.cpp](https://github.com/parthian-sterlet/sitega/blob/master/src/mix0.cpp)
+[mix0.cpp](https://github.com/parthian-sterlet/antinoise/blob/master/src/mix0.cpp)
 1. input FASTA file (foreground set)
 2. output FASTA file (background set)
 3. required number of found background sequences per one foreground sequence, Rbf (default value 5)
