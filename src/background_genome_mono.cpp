@@ -739,7 +739,8 @@ int main(int argc, char *argv[])
 		printf("Background sequences cannot be found since their required length %d exceeds the minimal length %d of foreground sequences!\n", len_back, len_min);
 		exit(1);
 	}
-	int pr_tot = 0, dpr_tot = 0;
+	int pr_tot = 0;
+	int zero_tot = 0;
 	int fl = 0;
 	int trys = nseq * back_iter / 5;
 	int iter = 0;
@@ -776,11 +777,13 @@ int main(int argc, char *argv[])
 	for (i = 1; i < NBIN; i++)val[i] = val[i - 1] + step_fr;
 	int di[16], ditotback[16], ditotbak_len = 0;
 	for (j = 0; j < 16; j++)ditotback[j] = di[j] = 0; 
-	int iter_attempts = 0;	
+	int iter_attempts = 0;
+	int sort_step=100, out_step=1000, big_step = 10000;
+	int add_seq = 0;
 	while (iter < trys && heis < nseq)
 	{
 		iter_attempts++;
-	//	if (iter_attempts % 10000 == 0)printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAdded BackSeq %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, dpr_tot, gomol);
+	//	if (iter_attempts % big_step == 0)printf("Attempts %d Iterations %5d\t Nseq_Background %5d\tLenMax %d Fraction_Done %5f\tAddSeq %d\tZero Iter %d\tHomol %d\n", iter_attempts, iter, pr_tot, len_max, (double)heis / nseq, add_seq, zero_tot, gomol);
 		int rr = rand();
 		int chr_z = 1, sum = 0, ra = rr % tot_len;
 		for (i = 0; i < n_chr; i++)
@@ -804,6 +807,7 @@ int main(int argc, char *argv[])
 		char alfavit4[] = "ATGCatgc";
 		int len_max1 = len_max - 1;
 		int good;
+		int done = 0;
 		while (fgets(d, len_max, in_seq[chr_z]) != NULL)
 		{			
 			int lend = strlen(d);			
@@ -865,7 +869,7 @@ int main(int argc, char *argv[])
 					//if ((d[i] == 'A' || d[i] == 'T') || (d[i] == 'a' || d[i] == 't')) cat++;
 				}
 				int len_cur = len_min;
-				int done = 0;
+				done = 0;
 				for (i = 0; i < nseq; i++)
 				{
 					if (sort[i].hei >= height)continue;
@@ -914,14 +918,20 @@ int main(int argc, char *argv[])
 					len_cur = sort[i].len;
 					if (done == 1)
 					{
+						add_seq++;
 						pr_tot++;
-						dpr_tot++;
+						zero_tot = 0;
 						break;
-					}
+					}										
 				}
 			}
 		}
-		if (iter % 100 == 0)
+		if(done==0)
+		{
+			zero_tot++;
+			add_seq = 0;
+		}
+		if (iter % sort_step == 0)
 		{
 			if (mode_lf == 1)
 			{
@@ -933,8 +943,9 @@ int main(int argc, char *argv[])
 				qsort((void*)(&sort[0]), nseq, sizeof(sort[0]), compare_len1);
 				mode_lf = 1;
 			}
-			if (iter % 1000 == 0)
+			if (iter % out_step == 0)
 			{
+				if (zero_tot >= empty_iter)break;
 				int inx = nseq - 1;
 				for (i = nseq - 1; i >= 0; i--)
 				{
@@ -945,7 +956,7 @@ int main(int argc, char *argv[])
 						break;
 					}
 				}
-				if (iter % 10000 == 0)
+				if (iter % big_step == 0)
 				{
 					FILE* out_log;
 					if ((out_log = fopen(file_log, "wt")) == NULL)
@@ -955,12 +966,7 @@ int main(int argc, char *argv[])
 					}
 					fprintf(out_log, "Required %d genomic sequences are found for %d input sequences out of total %d\n", height, heis, nseq);
 					fclose(out_log);
-				}
-				if (iter % empty_iter == 0)
-				{
-					if (dpr_tot == 0)break;
-					dpr_tot = 0;
-				}
+				}								
 				if (heis >= stop)break;
 			}
 		}
