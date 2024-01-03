@@ -11,8 +11,9 @@ The perl script [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/
 + background sequences are extracted from an unmasked reference genome, [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl), [command_line_no_mask](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_no_mask).
  
 The perl script [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl)  applies masking for the reference genome:
-+ background sequences are extracted from a masked reference genome: either 'Exclusion of blacklisted regions' or 'Retention of whitelisted regions' options are available, [mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/mask.pl). 
-The blacklisted option excludes specific genomic loci from the entire reference genome, the extraction procedure is applied to the remaining genomic loci, [command_line_blacklisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_blacklisted). The whitelisted option extracts background sequences only from particular given regions, all remaining loci are excluded from the analysis, [command_line_whitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_whitelisted).
++ background sequences are extracted from a masked reference genome, two options are available:
+  + 'Exclusion of blacklisted regions', excludes specific genomic loci from the entire reference genome, the extraction procedure is applied to the remaining genomic loci, [command_line_blacklisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_blacklisted). 
+  + 'Retention of whitelisted regions', extracts background sequences only from particular given regions, all remaining loci are excluded from the analysis, [command_line_whitelisted](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_whitelisted).
 
 The web service [AntiNoise](https://denovosea.icgbio.ru/antinoise/) implements the genomic approach of background sequences extraction.
 
