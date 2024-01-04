@@ -5,7 +5,7 @@ Here we introduce a tool that implements an approach to generate a set of backgr
 
 Input data of this tool include foreground sequences in BED or FASTA format, and the reference genome sequences in PLAIN format. 
 
-The [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) propgram runs from a [command_line_simple](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_simple) using a perl script [simple.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/simple.pl). This run requires a version of the reference genome in PLAIN format, this version can be either unmasked or masked. 
+The [major](https://github.com/parthian-sterlet/antinoise/blob/main/src/background_genome_mono.cpp) propgram runs from a [command_line_simple](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_simple) using the perl script [simple.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/simple.pl). This run requires a version of the reference genome in PLAIN format, this version can be either unmasked or masked. 
 
 The perl script [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl) prepares an unmasked version of the reference genome: 
 + background sequences are extracted from an unmasked reference genome, [no_mask.pl](https://github.com/parthian-sterlet/antinoise/blob/main/run/no_mask.pl), [command_line_no_mask](https://github.com/parthian-sterlet/antinoise/blob/main/run/command_line_no_mask).
