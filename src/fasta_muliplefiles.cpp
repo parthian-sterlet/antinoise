@@ -24,11 +24,11 @@ FILE *in, *out;
 char head[SEQLEN], basename[80], file[80], str[50];// , d[DELTA];
 int string_len=50000;
 int shift=200;
-char ext[]=".fa";
+char ext[20];
 
-if(argc!=4)
+if(argc!=5)
 {
-	printf("Command line error: %s 1 file_input_fasta 2file_out_name 3int output filenames: 1 = 1,2,3, etc; 0 = from headers of sequences", argv[0]);
+	printf("Command line error: %s 1 file_input_fasta 2file_out_name 3int output filenames: 1 = 1,2,3, etc; 0 = from headers of sequences 4 out file ext", argv[0]);
     exit(1);
 }
 if((in=fopen(argv[1],"rt"))==NULL)
@@ -38,15 +38,19 @@ if((in=fopen(argv[1],"rt"))==NULL)
 }
 int length=0;
 strcpy(basename,argv[2]);
+if (strcmp(basename, "empty") == 0)memset(basename, '\0', sizeof(basename));
+
 int mode = atoi(argv[3]);
+strcpy(ext, argv[4]);
 char c, symbol;
 symbol=getc(in);
 rewind(in);
 int part;
 out = NULL;
-char test1[10], test2[10], sep1 = ' ', sep2 = '\t';
+char test1[10], test2[10], test3[10], sep1 = ' ', sep2 = '\t', sep3 = '-';
 strcpy(test1, "chr");
 strcpy(test2, "Chr");
+strcpy(test3, "MOTIF ");
   while((c=getc(in))!=EOF)
   {
 	if(c==symbol)
@@ -71,7 +75,7 @@ strcpy(test2, "Chr");
 			int j;			
 			for (j = 0; j < hlen; j++)
 			{
-				if (head[j] == sep1 || head[j] == sep2)
+				if ((head[j] == sep1 || head[j] == sep2) || head[j] == sep3)
 				{					
 					continue;
 				}
@@ -81,10 +85,11 @@ strcpy(test2, "Chr");
 			//if (hlen - j0 >= 3)
 			{
 				if (strncmp(&head[j0], test1, 3) == 0 || strncmp(&head[j0], test2, 3) == 0)j0 += 3;
+				if (strncmp(&head[j0], test3, 6) == 0)j0 += 6;
 			}
 			for (j = j0;j<hlen; j++)
 			{
-				if (head[j] == sep1 || head[j] == sep2)
+				if ((head[j] == sep1 || head[j] == sep2) || head[j] == sep3)
 				{
 					if (slen == 0)
 					{
