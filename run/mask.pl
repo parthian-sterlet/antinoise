@@ -53,7 +53,7 @@ else{
    or die("Can't create directory \"$path_out\": $!\n");
 }
 
-$cmd= "$path_exe/fasta_muliplefiles.exe ${path_in}${genome_fa} ${path_in}${chr} 0";
+$cmd= "$path_exe/fasta_muliplefiles.exe ${path_in}${genome_fa} ${path_in}${chr} 0 .fa";
 print "$cmd\n";
 system $cmd;
 
