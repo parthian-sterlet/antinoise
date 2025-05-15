@@ -50,15 +50,12 @@ The alternative program [mix0.cpp](https://github.com/parthian-sterlet/antinoise
 
 # How to compile
 * In Linux system: 
-
-git clone https://github.com/parthian-sterlet/antinoise
-
-cd antinoise/run
-
-chmod a+x build.sh
-
-./build.sh
-
+```
+git clone https://github.com/parthian-sterlet/antinoise\
+cd antinoise/run\
+chmod a+x build.sh\
+./build.sh\
+```
 * In Windows system:
 
 separate compilation of all source files in VC++
